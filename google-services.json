@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "976831443659",
+    "project_id": "experimento-583d1",
+    "storage_bucket": "experimento-583d1.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:976831443659:android:181ee25a36292f7d23614e",
+        "android_client_info": {
+          "package_name": "com.BlueSwitch.firebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "976831443659-nadomb7itru936vrafpmfcmj6d54nrao.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.BlueSwitch.firebase",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "976831443659-31eaqedeqe11fjll3mghptnrp3s4an61.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJurrwwRhL8ydfdB6t-SDk-rjLw4dcXJg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "976831443659-31eaqedeqe11fjll3mghptnrp3s4an61.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "976831443659-us3i9jbfe7o5dkme5g1n85vo1iqi2i8e.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.BlueSwitch.firebase"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
