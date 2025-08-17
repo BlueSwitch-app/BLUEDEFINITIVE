@@ -75,7 +75,7 @@ export default function MyModal({
     const fetchTeams = async () => {
       if (!email) return;
       try {
-        const response = await fetch("http://127.0.0.1:5000/read_teams", {
+        const response = await fetch("https://buedefinitiveb-production.up.railway.app/read_teams", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -122,7 +122,7 @@ export default function MyModal({
     };
     
     try {
-      const response = await fetch("http://127.0.0.1:5000/crear-device", {
+      const response = await fetch("https://buedefinitiveb-production.up.railway.app/crear-device", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

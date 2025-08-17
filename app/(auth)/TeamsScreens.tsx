@@ -62,7 +62,7 @@ const CreateTeamModal: React.FC<CreateTeamModalProps> = ({
     }
     setIsLoading(true);
     try {
-      const response = await fetch("http://127.0.0.1:5000/create_team", {
+      const response = await fetch("https://buedefinitiveb-production.up.railway.app/create_team", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -157,7 +157,7 @@ const JoinTeamModal: React.FC<JoinTeamModalProps> = ({
     }
     setIsLoading(true);
     try {
-      const response = await fetch("http://127.0.0.1:5000/join_team", {
+      const response = await fetch("https://buedefinitiveb-production.up.railway.app/join_team", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -259,7 +259,7 @@ const TeamsScreen: React.FC<TeamsScreenProps> = ({ email }) => {
       
       setIsLoading(true);
       try {
-        const response = await fetch("http://127.0.0.1:5000/read_teams", {
+        const response = await fetch("https://buedefinitiveb-production.up.railway.app/read_teams", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

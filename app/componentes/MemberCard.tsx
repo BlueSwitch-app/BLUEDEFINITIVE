@@ -68,7 +68,7 @@ const MembersAdminCard: React.FC<MembersAdminCardProps> = ({
     }
     
     try {
-      const response = await fetch("http://127.0.0.1:5000/update_members", {
+      const response = await fetch("https://buedefinitiveb-production.up.railway.app/update_members", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

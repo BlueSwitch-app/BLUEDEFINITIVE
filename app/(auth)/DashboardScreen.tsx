@@ -1,3 +1,4 @@
+import { getTranslation } from "@/Translations/i18n";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import {
   ActivityIndicator,
@@ -11,7 +12,6 @@ import {
 } from "react-native";
 import MyModal from "../componentes/MyModal";
 import DeviceCard from "../componentes/deviceCard";
-import { getTranslation } from "@/Translations/i18n";
 // Define the Device interface
 export interface Device {
   id: string;
@@ -47,7 +47,7 @@ const DashboardScreen: React.FC<DashboardScreenProps> = ({ email }) => {
     if (!email) return;
     
     try {
-      const response = await fetch("http://127.0.0.1:5000/get_devices", {
+      const response = await fetch("https://buedefinitiveb-production.up.railway.app/get_devices", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -76,7 +76,7 @@ const DashboardScreen: React.FC<DashboardScreenProps> = ({ email }) => {
     if (!email) return;
     
     try {
-      const response = await fetch("http://127.0.0.1:5000/read-CO2", {
+      const response = await fetch("https://buedefinitiveb-production.up.railway.app/read-CO2", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

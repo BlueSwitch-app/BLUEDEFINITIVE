@@ -40,7 +40,7 @@ const AssistantTeamScreen: React.FC<AssistantTeamScreenProps> = ({
     const fetchTeamsDevices = async () => {
       if (!team.code) return;
       try {
-        const response = await fetch("http://127.0.0.1:5000/get_devices", {
+        const response = await fetch("https://buedefinitiveb-production.up.railway.app/get_devices", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -64,7 +64,7 @@ useEffect(() => {
   if (!team.code) return;
   const fetchCO2 = async () => {
     try {
-      const response = await fetch("http://127.0.0.1:5000/read-CO2", {
+      const response = await fetch("https://buedefinitiveb-production.up.railway.app/read-CO2", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ team_code: team.code }),
@@ -91,7 +91,7 @@ useEffect(() => {
     const fetchTeamsMembers = async () => {
       if (!team.code) return;
       try {
-        const response = await fetch("http://127.0.0.1:5000/get_members", {
+        const response = await fetch("https://buedefinitiveb-production.up.railway.app/get_members", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -126,7 +126,7 @@ useEffect(() => {
           style: "destructive",
           onPress: async () => {
             try {
-              const response = await fetch("http://127.0.0.1:5000/leave_team", {
+              const response = await fetch("https://buedefinitiveb-production.up.railway.app/leave_team", {
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",

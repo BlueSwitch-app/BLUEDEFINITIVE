@@ -35,7 +35,7 @@ const MemberTeamScreen: React.FC<MemberTeamScreenProps> = ({
           onPress: async () => {
             if (!team.code || !email) return;
             try {
-              const response = await fetch("http://127.0.0.1:5000/leave_team", {
+              const response = await fetch("https://buedefinitiveb-production.up.railway.app/leave_team", {
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",
@@ -62,7 +62,7 @@ const MemberTeamScreen: React.FC<MemberTeamScreenProps> = ({
     const fetchTeamsDevices = async () => {
       if (!team.code) return;
       try {
-        const response = await fetch("http://127.0.0.1:5000/get_devices", {
+        const response = await fetch("https://buedefinitiveb-production.up.railway.app/get_devices", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -86,7 +86,7 @@ const MemberTeamScreen: React.FC<MemberTeamScreenProps> = ({
     const fetchTeamsMembers = async () => {
       if (!team.code) return;
       try {
-        const response = await fetch("http://127.0.0.1:5000/get_members", {
+        const response = await fetch("https://buedefinitiveb-production.up.railway.app/get_members", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

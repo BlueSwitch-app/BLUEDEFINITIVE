@@ -1,4 +1,5 @@
 
+import { getTranslation } from "@/Translations/i18n";
 import * as Clipboard from 'expo-clipboard';
 import React, { useEffect, useState } from "react";
 import { Alert, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
@@ -6,7 +7,6 @@ import DeviceTeamAdCard from "../componentes/deviceTeamAdCard";
 import MembersAdminCard from "../componentes/MemberCard";
 import CarbonFootprintModal from "../componentes/ModalCO2";
 import { Device, Team, TeamMember } from "./types";
-import { getTranslation } from "@/Translations/i18n";
 interface AdminTeamScreenProps {
   team: Team;
 }
@@ -37,7 +37,7 @@ const AdminTeamScreen: React.FC<AdminTeamScreenProps> = ({
     const fetchTeamsDevices = async () => {
       if (!team.code) return;
       try {
-        const response = await fetch("http://127.0.0.1:5000/get_devices", {
+        const response = await fetch("https://buedefinitiveb-production.up.railway.app/get_devices", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -61,7 +61,7 @@ useEffect(() => {
   if (!team.code) return;
   const fetchCO2 = async () => {
     try {
-      const response = await fetch("http://127.0.0.1:5000/read-CO2", {
+      const response = await fetch("https://buedefinitiveb-production.up.railway.app/read-CO2", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ team_code: team.code }),
@@ -89,7 +89,7 @@ useEffect(() => {
     const fetchTeamsMembers = async () => {
       if (!team.code) return;
       try {
-        const response = await fetch("http://127.0.0.1:5000/get_members", {
+        const response = await fetch("https://buedefinitiveb-production.up.railway.app/get_members", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -122,7 +122,7 @@ useEffect(() => {
           style: "destructive",
           onPress: async () => {
             try {
-              const response = await fetch("http://127.0.0.1:5000/delete_team", {
+              const response = await fetch("https://buedefinitiveb-production.up.railway.app/delete_team", {
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",

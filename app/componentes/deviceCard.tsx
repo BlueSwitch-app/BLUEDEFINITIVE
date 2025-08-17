@@ -89,7 +89,7 @@ const DeviceCard: React.FC<DeviceCardProps> = ({
         return;
     }
     try {
-      const response = await fetch("http://127.0.0.1:5000/update-status", {
+      const response = await fetch("https://buedefinitiveb-production.up.railway.app/update-status", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

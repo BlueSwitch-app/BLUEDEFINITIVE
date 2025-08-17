@@ -43,7 +43,7 @@ const pickAvatar = async () => {
       console.log('User cancelled image picker');
     }
     if(result){
-      const response= await fetch("http://127.0.0.1:5000/upload_avatar", {
+      const response= await fetch("https://buedefinitiveb-production.up.railway.app/upload_avatar", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -73,7 +73,7 @@ const [userdata, setUserData] = useState<UserData>({
       const fetchDevices = async () => {
         if (!email) return;
         try {
-          const response = await fetch("http://127.0.0.1:5000/get_user", {
+          const response = await fetch("https://buedefinitiveb-production.up.railway.app/get_user", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -119,7 +119,7 @@ const handleProfileUpdate = async () => {
       email: userdata.email // para identificar el usuario en el servidor
     };
 
-    const response = await fetch("http://127.0.0.1:5000/update_user", {
+    const response = await fetch("https://buedefinitiveb-production.up.railway.app/update_user", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
