@@ -2,7 +2,7 @@ import { ToastProvider } from '@/components/ui/toast';
 import { Stack, useRouter, useSegments } from 'expo-router';
 import { onAuthStateChanged, User } from 'firebase/auth';
 import { useEffect, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, View } from 'react-native';
 import { auth2 } from './firebaseConfig'; // ajusta la ruta según la ubicación
 
 export default function RootLayout() {
@@ -33,11 +33,15 @@ export default function RootLayout() {
     }
   }, [user, initializing]);
 
-  // 🔹 Splash Screen personalizado
+  // 🔹 Splash Screen personalizado con fondo blanco y logo
   if (initializing)
     return (
       <View style={styles.splash}>
-        <Text style={styles.text}>Cargando...</Text>
+        <Image
+          source={require('../assets/images/BlueLogo.png')}
+          style={styles.logo}
+          resizeMode="contain"
+        />
       </View>
     );
 
@@ -54,13 +58,12 @@ export default function RootLayout() {
 const styles = StyleSheet.create({
   splash: {
     flex: 1,
-    backgroundColor: '#007BFF', // 🔵 Fondo azul
+    backgroundColor: '#FFFFFF', // ⚪ Fondo blanco
     alignItems: 'center',
     justifyContent: 'center',
   },
-  text: {
-    color: '#fff',
-    fontSize: 24,
-    fontWeight: 'bold',
+  logo: {
+    width: 180,   // puedes ajustar el tamaño
+    height: 180,
   },
 });
