@@ -107,7 +107,7 @@ export default function AuthScreen() {
             });
         } finally {
             setLoading(false);
-           const response = await fetch("https://buedefinitiveb-production.up.railway.app/create_user", {
+           const response = await fetch("https://buedefinitiveb.onrender.com/create_user", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

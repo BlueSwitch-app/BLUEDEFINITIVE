@@ -89,7 +89,7 @@ const DeviceCard: React.FC<DeviceCardProps> = ({
         return;
     }
     try {
-      const response = await fetch("https://buedefinitiveb-production.up.railway.app/update-status", {
+      const response = await fetch("https://buedefinitiveb-1.onrender.com/update-status", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

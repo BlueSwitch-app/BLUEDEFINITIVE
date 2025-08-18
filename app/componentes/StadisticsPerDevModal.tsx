@@ -71,7 +71,7 @@ const StatisticsPerDevModal: React.FC<StatisticsModalProps> = ({
   useEffect(() => {
     const fetchTeams = async () => {
       try {
-        const response = await fetch("https://buedefinitiveb-production.up.railway.app/read_perDev", {
+        const response = await fetch("https://buedefinitiveb.onrender.com/read_perDev", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

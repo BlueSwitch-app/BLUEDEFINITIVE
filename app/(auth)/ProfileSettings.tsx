@@ -43,7 +43,7 @@ const pickAvatar = async () => {
       console.log('User cancelled image picker');
     }
     if(result){
-      const response= await fetch("https://buedefinitiveb-production.up.railway.app/upload_avatar", {
+      const response= await fetch("https://buedefinitiveb-2.onrender.com/upload_avatar", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -73,7 +73,7 @@ const [userdata, setUserData] = useState<UserData>({
       const fetchDevices = async () => {
         if (!email) return;
         try {
-          const response = await fetch("https://buedefinitiveb-production.up.railway.app/get_user", {
+          const response = await fetch("https://buedefinitiveb-2.onrender.com/get_user", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -94,13 +94,6 @@ const [userdata, setUserData] = useState<UserData>({
   phone: userdata["phone"],
   city: userdata["city"] 
   });
-  const [notificationSettings, setNotificationSettings] = useState({
-    accountUpdates: true,
-    marketingEmails: false,
-    securityAlerts: true,
-    mobilePush: true,
-    browserNotifications: false,
-  });
 
   const showPanel = (panelId:any) => {
     setActivePanel(panelId);
@@ -119,7 +112,7 @@ const handleProfileUpdate = async () => {
       email: userdata.email // para identificar el usuario en el servidor
     };
 
-    const response = await fetch("https://buedefinitiveb-production.up.railway.app/update_user", {
+    const response = await fetch("https://buedefinitiveb-2.onrender.com/update_user", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -166,7 +159,6 @@ const handleProfileUpdate = async () => {
         {[
           { id: 'profile', icon: 'person-outline', label: getTranslation('Edit Profile') },
           { id: 'security', icon: 'shield-checkmark-outline', label: getTranslation('Security') },
-          { id: 'notifications', icon: 'notifications-outline', label: getTranslation('Notifications') },
           { id: 'terms', icon: 'document-text-outline', label: getTranslation('Terms & Conditions') },
           { id: 'help', icon: 'help-circle-outline', label: getTranslation('Help & Support') },
         ].map((item) => (
@@ -275,61 +267,6 @@ const handleProfileUpdate = async () => {
     </View>
   );
 
-  const renderNotificationsPanel = () => (
-    <View style={styles.panel}>
-      <View style={styles.panelHeader}>
-        <Text style={styles.panelTitle}>{getTranslation("Notifications")}</Text>
-        <Text style={styles.panelSubtitle}>{getTranslation("Choose what notifications you want to receive")}</Text>
-      </View>
-
-      <Text style={styles.sectionTitle}>{getTranslation("Email Notifications")}</Text>
-
-      <View style={styles.settingItem}>
-        <View style={styles.settingInfo}>
-          <Text style={styles.settingTitle}>{getTranslation("Account Updates")}</Text>
-          <Text style={styles.settingDescription}>{getTranslation("Important updates about your account")}</Text>
-        </View>
-        <Switch
-          value={notificationSettings.accountUpdates}
-          trackColor={{ false: '#cbd5e0', true: '#319795' }}
-          thumbColor={Platform.OS === 'android' ? '#ffffff' : undefined}
-        />
-      </View>
-
-
-      <View style={styles.settingItem}>
-        <View style={styles.settingInfo}>
-          <Text style={styles.settingTitle}>{getTranslation("Security Alerts")}</Text>
-          <Text style={styles.settingDescription}>{getTranslation("Critical security notifications")}</Text>
-        </View>
-        <Switch
-          value={notificationSettings.securityAlerts}
-          trackColor={{ false: '#cbd5e0', true: '#319795' }}
-          thumbColor={Platform.OS === 'android' ? '#ffffff' : undefined}
-        />
-      </View>
-
-      <Text style={styles.sectionTitle}>{getTranslation("Push Notifications")}</Text>
-
-      <View style={styles.settingItem}>
-        <View style={styles.settingInfo}>
-          <Text style={styles.settingTitle}>{getTranslation("Mobile Push")}</Text>
-          <Text style={styles.settingDescription}>{getTranslation("Receive notifications on your mobile device")}</Text>
-        </View>
-        <Switch
-          value={notificationSettings.mobilePush}
-          trackColor={{ false: '#cbd5e0', true: '#319795' }}
-          thumbColor={Platform.OS === 'android' ? '#ffffff' : undefined}
-        />
-      </View>
-
-
-      <TouchableOpacity style={styles.primaryButton}>
-        <Ionicons name="save-outline" size={18} color="white" />
-        <Text style={styles.buttonText}>{getTranslation("Save Preferences")}</Text>
-      </TouchableOpacity>
-    </View>
-  );
 
   const renderTermsPanel = () => (
     <View style={styles.panel}>
@@ -401,7 +338,6 @@ const handleProfileUpdate = async () => {
             {[
               { id: 'profile', icon: 'person-outline', label: 'Profile' },
               { id: 'security', icon: 'shield-checkmark-outline', label: 'Security' },
-              { id: 'notifications', icon: 'notifications-outline', label: 'Notifications' },
               { id: 'terms', icon: 'document-text-outline', label: 'Terms' },
               { id: 'help', icon: 'help-circle-outline', label: 'Help' },
             ].map((item) => (
@@ -431,7 +367,6 @@ const handleProfileUpdate = async () => {
 
         {activePanel === 'profile' && renderProfilePanel()}
         {activePanel === 'security' && renderSecurityPanel()}
-        {activePanel === 'notifications' && renderNotificationsPanel()}
         {activePanel === 'terms' && renderTermsPanel()}
         {activePanel === 'help' && renderHelpPanel()}
       </ScrollView>

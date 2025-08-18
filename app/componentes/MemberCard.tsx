@@ -68,7 +68,7 @@ const MembersAdminCard: React.FC<MembersAdminCardProps> = ({
     }
     
     try {
-      const response = await fetch("https://buedefinitiveb-production.up.railway.app/update_members", {
+      const response = await fetch("https://buedefinitiveb.onrender.com/update_members", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

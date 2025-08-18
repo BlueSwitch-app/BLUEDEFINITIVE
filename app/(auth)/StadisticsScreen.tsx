@@ -34,7 +34,7 @@ const StatisticsScreen: React.FC<StadisticsScreenProps> = ({ email }) => {
       if (!email) return;
       setIsLoading(true);
       try {
-        const response = await fetch("https://buedefinitiveb-production.up.railway.app/get_devices", {
+        const response = await fetch("https://buedefinitiveb-2.onrender.com/get_devices", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -45,7 +45,7 @@ const StatisticsScreen: React.FC<StadisticsScreenProps> = ({ email }) => {
         if (response.ok) {
           setDevices(data);
           // Obtener huellas de carbono por dispositivo
-          const response2 = await fetch("https://buedefinitiveb-production.up.railway.app/read_perDev", {
+          const response2 = await fetch("https://buedefinitiveb-2.onrender.com/read_perDev", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -90,7 +90,7 @@ const StatisticsScreen: React.FC<StadisticsScreenProps> = ({ email }) => {
   const CO2func = async () => {
     if (!email) return;
     try {
-      const response = await fetch("https://buedefinitiveb-production.up.railway.app/read-CO2", {
+      const response = await fetch("https://buedefinitiveb-2.onrender.com/read-CO2", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

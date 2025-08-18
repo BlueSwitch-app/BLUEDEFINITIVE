@@ -37,7 +37,7 @@ const AdminTeamScreen: React.FC<AdminTeamScreenProps> = ({
     const fetchTeamsDevices = async () => {
       if (!team.code) return;
       try {
-        const response = await fetch("https://buedefinitiveb-production.up.railway.app/get_devices", {
+        const response = await fetch("https://buedefinitiveb-4.onrender.com/get_devices", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -61,7 +61,7 @@ useEffect(() => {
   if (!team.code) return;
   const fetchCO2 = async () => {
     try {
-      const response = await fetch("https://buedefinitiveb-production.up.railway.app/read-CO2", {
+      const response = await fetch("https://buedefinitiveb-4.onrender.com/read-CO2", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ team_code: team.code }),
@@ -89,7 +89,7 @@ useEffect(() => {
     const fetchTeamsMembers = async () => {
       if (!team.code) return;
       try {
-        const response = await fetch("https://buedefinitiveb-production.up.railway.app/get_members", {
+        const response = await fetch("https://buedefinitiveb-4.onrender.com/get_members", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -122,7 +122,7 @@ useEffect(() => {
           style: "destructive",
           onPress: async () => {
             try {
-              const response = await fetch("https://buedefinitiveb-production.up.railway.app/delete_team", {
+              const response = await fetch("https://buedefinitiveb-4.onrender.com/delete_team", {
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",
