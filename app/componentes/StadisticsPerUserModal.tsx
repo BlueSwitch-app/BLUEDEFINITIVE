@@ -10,6 +10,9 @@ import {
   View,
 } from 'react-native';
 
+// API Base URL
+const API_BASE_URL = 'https://bluebackend.vercel.app';
+
 interface StatCardProps {
   title: string;
   value: string;
@@ -37,8 +40,6 @@ interface ChartBarProps {
   maxValue: number;
   color: string;
 }
-
-
 
 interface StatisticsModalProps {
   visible: boolean;
@@ -77,29 +78,43 @@ const StatisticsModal: React.FC<StatisticsModalProps> = ({
   const [watts, setWatts] = useState(0);
   const [dev, setDev] = useState(0);
   const [trees, setTrees] = useState(0);
-    useEffect(() => {
-      const fetchTeams = async () => {
-        try {
-          const response = await fetch("https://blueswitch-jet.vercel.app/readstatisdics_peruser", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({email, team_code}),
-          });
-          const data = await response.json();
-          console.log(data)
-          setCO2(data.data["CO2"])
-          setWatts(data.data["watts"])
-          setDev(data.data["numdevices"])
-          setTrees(data.data["trees"])
-            
-        } catch (error) {
-          console.error(error);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchStatistics = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch(`${API_BASE_URL}/read_statistics_peruser`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, team_code }),
+        });
+        
+        const data = await response.json();
+        console.log(data);
+        
+        if (response.ok && data.success) {
+          setCO2(data.data.CO2);
+          setWatts(data.data.watts);
+          setDev(data.data.numdevices);
+          setTrees(data.data.trees);
+        } else {
+          console.error("Error fetching statistics:", data.error);
         }
-      };
-      fetchTeams();
-    }, []);
+      } catch (error) {
+        console.error("Error fetching statistics:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    if (visible && email && team_code) {
+      fetchStatistics();
+    }
+  }, [visible, email, team_code]);
+
   return (
     <Modal
       visible={visible}
@@ -116,44 +131,47 @@ const StatisticsModal: React.FC<StatisticsModalProps> = ({
               <Text style={styles.closeButtonText}>✕</Text>
             </TouchableOpacity>
           </View>
-
+          
           <ScrollView style={styles.modalBody} showsVerticalScrollIndicator={false}>
-            {/* Summary Cards */}
-            <View style={styles.summarySection}>
-              <StatCard
-                title={getTranslation("Huella Total")}
-                value={`${C02} kg`}
-                subtitle={"CO₂"}
-                icon="🌍"
-                color="#4F46E5"
-              />
-              <StatCard
-                title={getTranslation("Dispositivos")}
-                value={dev.toString()}
-                subtitle={getTranslation("Dispositivos Totales")}
-                icon="💻"
-                color="#10B981"
-              />
-              <StatCard
-                title={getTranslation("Consumo en Watts")}
-                value={`${watts/1000} kW`}
-                subtitle={getTranslation("Avarage Consumtion")}
-                icon="⚡"
-                color="#F59E0B"
-              />
-              <StatCard
-                title={getTranslation("Equivalente en Árboles")}
-                value={trees.toString()}
-                subtitle={getTranslation("Basado en el consumo de todos los dispositivos")}
-                icon="🌳"
-                color="#10B981"
-              />
-            </View>
-
-
-           
-
-         
+            {loading ? (
+              <View style={styles.loadingContainer}>
+                <Text style={styles.loadingText}>{getTranslation("Cargando estadísticas...")}</Text>
+              </View>
+            ) : (
+              <>
+                {/* Summary Cards */}
+                <View style={styles.summarySection}>
+                  <StatCard
+                    title={getTranslation("Huella Total")}
+                    value={`${C02} kg`}
+                    subtitle={"CO₂"}
+                    icon="🌍"
+                    color="#4F46E5"
+                  />
+                  <StatCard
+                    title={getTranslation("Dispositivos")}
+                    value={dev.toString()}
+                    subtitle={getTranslation("Dispositivos Totales")}
+                    icon="💻"
+                    color="#10B981"
+                  />
+                  <StatCard
+                    title={getTranslation("Consumo en Watts")}
+                    value={`${watts/1000} kW`}
+                    subtitle={getTranslation("Avarage Consumtion")}
+                    icon="⚡"
+                    color="#F59E0B"
+                  />
+                  <StatCard
+                    title={getTranslation("Equivalente en Árboles")}
+                    value={trees.toString()}
+                    subtitle={getTranslation("Basado en el consumo de todos los dispositivos")}
+                    icon="🌳"
+                    color="#10B981"
+                  />
+                </View>
+              </>
+            )}
           </ScrollView>
         </View>
       </View>
@@ -359,7 +377,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 16,
   },
-
   activityIconContainer: {
     marginRight: 16,
   },
@@ -386,6 +403,15 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '600',
     color: '#111827',
+  },
+  loadingContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 40,
+  },
+  loadingText: {
+    fontSize: 16,
+    color: '#6B7280',
   },
 });
 

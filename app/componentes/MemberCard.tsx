@@ -9,6 +9,9 @@ import React, { useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import StatisticsModal from "./StadisticsPerUserModal"; // Import the StatisticsModal component
 
+// API Base URL
+const API_BASE_URL = 'https://bluebackend.vercel.app';
+
 interface MenuItemProps {
   icon: string;
   label: string;
@@ -53,7 +56,6 @@ const MembersAdminCard: React.FC<MembersAdminCardProps> = ({
   email,
   role,
   activeDevicesCount,
-
   teamcode
 }) => {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
@@ -68,16 +70,22 @@ const MembersAdminCard: React.FC<MembersAdminCardProps> = ({
     }
     
     try {
-      const response = await fetch("https://blueswitch-jet.vercel.app/update_members", {
+      const response = await fetch(`${API_BASE_URL}/update_members`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ teamcode, email, action })
+        body: JSON.stringify({ team_code: teamcode, email, action })
       });
+      
       const data = await response.json();
+      
       if (response.ok) {
         console.log(data);
+        // Actualizar la lista de miembros después de una acción exitosa
+        if (typeof window !== 'undefined' && window.dispatchEvent) {
+          window.dispatchEvent(new CustomEvent('refreshMembers'));
+        }
       } else {
         console.log(data);
       }
@@ -112,14 +120,14 @@ const MembersAdminCard: React.FC<MembersAdminCardProps> = ({
 
   // Sample data for the statistics modal
   const statsData = {
-      totalCO2: 0,                  // en kg o toneladas
-  totalDevices: 0,              // cantidad total de dispositivos
-  activeDevices: 0,             // dispositivos encendidos
-  inactiveDevices: 0,           // dispositivos apagados
-  averageConsumption: 0,        // consumo promedio (kWh)
-  highestImpactDevice: "N/A",   // dispositivo con mayor huella
-  savingsEquivalent: "0 árboles" // equivalente en ahorro
-     };
+    totalCO2: 0,                  // en kg o toneladas
+    totalDevices: 0,              // cantidad total de dispositivos
+    activeDevices: 0,             // dispositivos encendidos
+    inactiveDevices: 0,           // dispositivos apagados
+    averageConsumption: 0,        // consumo promedio (kWh)
+    highestImpactDevice: "N/A",   // dispositivo con mayor huella
+    savingsEquivalent: "0 árboles" // equivalente en ahorro
+  };
 
   return (
     <>
@@ -170,7 +178,7 @@ const MembersAdminCard: React.FC<MembersAdminCardProps> = ({
           )}
         </PopoverContent>
       </Popover>
-
+      
       {/* Statistics Modal */}
       <StatisticsModal
         visible={showStatsModal}

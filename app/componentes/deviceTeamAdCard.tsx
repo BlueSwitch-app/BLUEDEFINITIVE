@@ -2,6 +2,9 @@ import { useThemeColor } from "@/hooks/useThemeColor";
 import React, { useState } from "react";
 import { StyleSheet, Switch, Text, TouchableOpacity, View } from "react-native";
 
+// API Base URL
+const API_BASE_URL = 'https://bluebackend.vercel.app';
+
 interface DeviceCardProps {
   name: string;
   type: string;
@@ -55,6 +58,7 @@ const DeviceTeamAdCard: React.FC<DeviceCardProps> = ({
   const handleToggle = async (argumentValue: string) => {
     let newState = isToggled;
     console.log(argumentValue);
+    
     switch (argumentValue) {
       case "Switch":
         newState = !isToggled;
@@ -70,23 +74,34 @@ const DeviceTeamAdCard: React.FC<DeviceCardProps> = ({
         console.warn(`Acción desconocida: ${argumentValue}`);
         return;
     }
+    
     try {
-      const response = await fetch("https://blueswitch-jet.vercel.app/update-status", {
-        method: "PUT",
+      const response = await fetch(`${API_BASE_URL}/update-status`, {
+        method: "POST", // Cambiado de PUT a POST para coincidir con el backend
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ id, status: newState, argument: argumentValue }),
       });
+      
       const data = await response.json();
+      
       if (response.ok) {
         console.log(data);
-      }
-      if (!response.ok) {
+        // Si la operación fue exitosa, podríamos emitir un evento para actualizar la lista
+        if (typeof window !== 'undefined' && window.dispatchEvent) {
+          window.dispatchEvent(new CustomEvent('refreshDevices'));
+        }
+      } else {
         console.log(data.mensaje);
+        // Revertir el estado si la operación falló
+        if (argumentValue === "Switch") {
+          setIsToggled(!newState);
+        }
       }
     } catch (error) {
       console.error(error);
+      // Revertir el estado si hay un error
       if (argumentValue === "Switch") {
         setIsToggled(!newState);
       }
@@ -95,8 +110,6 @@ const DeviceTeamAdCard: React.FC<DeviceCardProps> = ({
 
   return (
     <View style={styles.container}>
-    
-      
       <View style={styles.content}>
         <Text style={styles.name}>{name}</Text>
         <Text style={styles.type}>{type}</Text>

@@ -3,6 +3,10 @@ import React, { useEffect, useState } from 'react';
 import { Dimensions, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { RadarChart } from "react-native-gifted-charts";
 import CarbonFootprintModal from '../componentes/ModalCO2';
+
+// API Base URL
+const API_BASE_URL = 'https://bluebackend.vercel.app';
+
 // Define the Device interface for type safety
 export interface Device {
   id: string;
@@ -16,9 +20,11 @@ export interface Device {
   favorite: boolean;
   team_code: string;
 }
+
 interface StadisticsScreenProps {
   email: string;
 }
+
 // Statistics Screen Component
 const StatisticsScreen: React.FC<StadisticsScreenProps> = ({ email }) => {
   const [searchTerm, setSearchTerm] = useState<string>('');
@@ -29,12 +35,13 @@ const StatisticsScreen: React.FC<StadisticsScreenProps> = ({ email }) => {
   const [newDate, setNewDate] = useState("");
   const [mordev, setMordev] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     const fetchDevices = async () => {
       if (!email) return;
       setIsLoading(true);
       try {
-        const response = await fetch("https://blueswitch-jet.vercel.app/get_devices", {
+        const response = await fetch(`${API_BASE_URL}/get_devices`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -45,7 +52,7 @@ const StatisticsScreen: React.FC<StadisticsScreenProps> = ({ email }) => {
         if (response.ok) {
           setDevices(data);
           // Obtener huellas de carbono por dispositivo
-          const response2 = await fetch("https://blueswitch-jet.vercel.app/read_perDev", {
+          const response2 = await fetch(`${API_BASE_URL}/read_perDev`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -72,25 +79,29 @@ const StatisticsScreen: React.FC<StadisticsScreenProps> = ({ email }) => {
     };
     fetchDevices();
   }, [email]);
+
   // Filter devices based on search term
   const filteredDevices = !searchTerm
     ? devices
     : devices.filter(device =>
         device.nombre.toLowerCase().includes(searchTerm.toLowerCase())
       );
+
   // Prepare data for the bar chart
   const radarValues = filteredDevices.map((device, index) => {
     return (index !== -1 && totalCarbonFootprint[index])
       ? totalCarbonFootprint[index][0]
       : 0; // valor por defecto si no existe
   });
+
   const radarLabels = filteredDevices.map(device =>
     device.nombre.length > 6 ? device.nombre.substring(0, 8) + '...' : device.nombre
   );
+
   const CO2func = async () => {
     if (!email) return;
     try {
-      const response = await fetch("https://blueswitch-jet.vercel.app/read-CO2", {
+      const response = await fetch(`${API_BASE_URL}/read-CO2`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -114,6 +125,7 @@ const StatisticsScreen: React.FC<StadisticsScreenProps> = ({ email }) => {
       console.error(getTranslation("Error fetching CO2:"), e);
     }
   };
+
   const generateTicket = () => {
     setNewDate(new Date().toLocaleString("en-US", { 
       month: "long", 
@@ -126,6 +138,7 @@ const StatisticsScreen: React.FC<StadisticsScreenProps> = ({ email }) => {
     CO2func();
     setModalVisible(true);
   };
+
   if (isLoading) {
     return (
       <View style={styles.loadingContainer}>
@@ -135,6 +148,7 @@ const StatisticsScreen: React.FC<StadisticsScreenProps> = ({ email }) => {
       </View>
     );
   }
+
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       {/* Header */}
@@ -150,6 +164,7 @@ const StatisticsScreen: React.FC<StadisticsScreenProps> = ({ email }) => {
           <Text style={styles.ticketButtonText}>🎫</Text>
         </TouchableOpacity>
       </View>
+
       {/* Search Bar */}
       <View style={styles.searchBarContainer}>
         <View style={styles.searchBar}>
@@ -168,6 +183,7 @@ const StatisticsScreen: React.FC<StadisticsScreenProps> = ({ email }) => {
           )}
         </View>
       </View>
+
       {/* Summary Cards */}
       <View style={styles.summaryCardsContainer}>
         <View style={styles.summaryCard}>
@@ -207,6 +223,7 @@ const StatisticsScreen: React.FC<StadisticsScreenProps> = ({ email }) => {
           </Text>
         </View>
       </View>
+
       {/* Chart Section */}
       <View style={styles.chartContainer}>
         <View style={styles.chartHeader}>
@@ -229,6 +246,7 @@ const StatisticsScreen: React.FC<StadisticsScreenProps> = ({ email }) => {
           )}
         </View>
       </View>
+
       {/* Table Section */}
       <View style={styles.tableContainer}>
         <View style={styles.tableHeader}>
@@ -283,6 +301,7 @@ const StatisticsScreen: React.FC<StadisticsScreenProps> = ({ email }) => {
           )}
         </View>
       </View>
+
       <CarbonFootprintModal
         visible={modalVisible}
         onClose={() => setModalVisible(false)}
@@ -301,7 +320,9 @@ const StatisticsScreen: React.FC<StadisticsScreenProps> = ({ email }) => {
     </ScrollView>
   );
 };
+
 const { width } = Dimensions.get('window');
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -587,4 +608,5 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
+
 export default StatisticsScreen;

@@ -10,6 +10,10 @@ import { Eye, EyeOff, Lock, Mail, MapPin, Phone, User } from 'lucide-react-nativ
 import React, { useState } from 'react';
 import { Linking, Pressable, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { auth2 } from './firebaseConfig';
+
+// API Base URL
+const API_BASE_URL = 'https://bluebackend.vercel.app';
+
 // Custom Input Component
 interface CustomInputProps {
     placeholder: string;
@@ -21,6 +25,7 @@ interface CustomInputProps {
     keyboardType?: 'default' | 'email-address' | 'numeric' | 'phone-pad';
     rightComponent?: React.ReactNode;
 }
+
 const CustomInput: React.FC<CustomInputProps> = ({
     placeholder,
     icon,
@@ -34,6 +39,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
     const [isFocused, setIsFocused] = useState(false);
     const borderColor = error ? '#EF5350' : isFocused ? '#2E7D32' : '#E5E7EB';
     const backgroundColor = error ? '#FFEBEE' : isFocused ? '#E8F5E9' : '#FFFFFF';
+    
     return (
         <View style={styles.inputContainer}>
             <View style={[styles.inputWrapper, { borderColor, backgroundColor }]}>
@@ -87,35 +93,46 @@ export default function AuthScreen() {
             });
             return;
         }
+        
         setLoading(true);
         try {
+            // Create user in Firebase
             await createUserWithEmailAndPassword(auth2, email, password);
-        
+            
+            // Create user in backend
+            const response = await fetch(`${API_BASE_URL}/create_user`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ nombre, email, password, city, phone }),
+            });
+            
+            const data = await response.json();
+            console.log(data);
+            
+            if (!response.ok) {
+                throw new Error(data.error || 'Failed to create user in backend');
+            }
+            
             toast({
                 title: getTranslation('Success!'),
                 description: getTranslation('User created successfully.'),
                 variant: 'success',
                 duration: 2000
             });
+            
             router.push({ pathname: '/home', params: { email } });
         } catch (e: any) {
+            console.error('Signup error:', e);
             toast({
                 title: getTranslation('Error!'),
-                description: e.message,
+                description: e.message || getTranslation('An error occurred during signup'),
                 variant: 'error',
                 duration: 2000
             });
         } finally {
             setLoading(false);
-           const response = await fetch("https://blueswitch-jet.vercel.app/create_user", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ nombre, email, password, city, phone }),
-        });
-        const data = await response.json();
-        console.log(data);
         }
     };
 
@@ -129,19 +146,41 @@ export default function AuthScreen() {
             });
             return;
         }
+        
         setLoading(true);
         try {
+            // Sign in with Firebase
             await signInWithEmailAndPassword(auth2, email, password);
+            
+            // Get user data from backend
+            const response = await fetch(`${API_BASE_URL}/get_user`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ email }),
+            });
+            
+            const data = await response.json();
+            console.log(data);
+            
+            if (!response.ok) {
+                throw new Error(data.error || 'Failed to get user data');
+            }
+            
             toast({
                 title: getTranslation('Success!'),
                 description: getTranslation('Logged in successfully.'),
                 variant: 'success',
                 duration: 2000
             });
+            
+            router.push({ pathname: '/home', params: { email } });
         } catch (e: any) {
+            console.error('Login error:', e);
             toast({
                 title: getTranslation('Error!'),
-                description: e.message,
+                description: e.message || getTranslation('An error occurred during login'),
                 variant: 'error',
                 duration: 2000
             });

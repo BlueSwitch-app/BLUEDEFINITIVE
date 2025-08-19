@@ -16,143 +16,148 @@ import {
   View
 } from 'react-native';
 import { auth2 } from '../firebaseConfig';
+
+// API Base URL
+const API_BASE_URL = 'https://bluebackend.vercel.app';
+
 const { width } = Dimensions.get('window');
+
 interface props{
   email: string;
-}const ProfileSettingsScreen: React.FC<props> = ({email}) => {
-  const [activePanel, setActivePanel] = useState('profile');
-  interface UserData {
-  nombre: string;
-  email: string;
-  avatar: string;
-  phone: string;
-  city : string;
-  // agrega aquí otras propiedades que tenga tu usuario
 }
 
-const pickAvatar = async () => {
-  const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
-   let result = await ImagePicker.launchImageLibraryAsync({
+const ProfileSettingsScreen: React.FC<props> = ({email}) => {
+  const [activePanel, setActivePanel] = useState('profile');
+
+  interface UserData {
+    nombre: string;
+    email: string;
+    avatar: string;
+    phone: string;
+    city : string;
+    // agrega aquí otras propiedades que tenga tu usuario
+  }
+
+  const pickAvatar = async () => {
+    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ['images'],
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
     });
-
+    
     if (result.canceled){
       console.log('User cancelled image picker');
     }
+    
     if(result){
-      const response= await fetch("https://blueswitch-jet.vercel.app/upload_avatar", {
+      const response = await fetch(`${API_BASE_URL}/upload_avatar`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            email,
-imageUri: result.assets?.[0].uri
-            })
-
+        },
+        body: JSON.stringify({
+          email,
+          imageUri: result.assets?.[0].uri
+        })
       });
       const data = await response.json();
       console.log(data);
-
     }
+  };
 
-};
-
-const [userdata, setUserData] = useState<UserData>({
-  nombre: '',   // valor inicial
-  email: '',    // valor inicial
-  avatar: '',
-  phone: '',
-  city: ''   // valor inicial
-});
+  const [userdata, setUserData] = useState<UserData>({
+    nombre: '',   // valor inicial
+    email: '',    // valor inicial
+    avatar: '',
+    phone: '',
+    city: ''   // valor inicial
+  });
 
   useEffect(() => {
-      const fetchDevices = async () => {
-        if (!email) return;
-        try {
-          const response = await fetch("https://blueswitch-jet.vercel.app/get_user", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ email }),
-          });
-          const data = await response.json();
-         setUserData(data)
-        } catch (error) {
-          console.error("Error fetching teams:", error);
-        } 
-      };
-      fetchDevices();
-    }, [email]);
-      const [newprofileData, setnewProfileData] = useState({
+    const fetchDevices = async () => {
+      if (!email) return;
+      try {
+        const response = await fetch(`${API_BASE_URL}/get_user`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email }),
+        });
+        const data = await response.json();
+        setUserData(data);
+      } catch (error) {
+        console.error("Error fetching teams:", error);
+      } 
+    };
+    fetchDevices();
+  }, [email]);
+
+  const [newprofileData, setnewProfileData] = useState({
     nombre: userdata["nombre"],   
-  avatar: userdata["avatar"],
-  phone: userdata["phone"],
-  city: userdata["city"] 
+    avatar: userdata["avatar"],
+    phone: userdata["phone"],
+    city: userdata["city"] 
   });
 
   const showPanel = (panelId:any) => {
     setActivePanel(panelId);
   };
 
-
-
-const handleProfileUpdate = async () => {
-  try {
-    // Crear un objeto con los datos actualizados o los existentes
-    const updatedData = {
-      nombre: newprofileData.nombre || userdata.nombre,
-      avatar: newprofileData.avatar || userdata.avatar,
-      phone: newprofileData.phone || userdata.phone,
-      city: newprofileData.city || userdata.city,
-      email: userdata.email // para identificar el usuario en el servidor
-    };
-
-    const response = await fetch("https://blueswitch-jet.vercel.app/update_user", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(updatedData),
-    });
-
-    const data = await response.json();
-    if (data.success) {
-      alert("Profile updated successfully!");
-      setUserData(updatedData); // Actualizar en el estado local
-    } else {
-      alert("Error updating profile.");
+  const handleProfileUpdate = async () => {
+    try {
+      // Crear un objeto con los datos actualizados o los existentes
+      const updatedData = {
+        nombre: newprofileData.nombre || userdata.nombre,
+        avatar: newprofileData.avatar || userdata.avatar,
+        phone: newprofileData.phone || userdata.phone,
+        city: newprofileData.city || userdata.city,
+        email: userdata.email // para identificar el usuario en el servidor
+      };
+      
+      const response = await fetch(`${API_BASE_URL}/update_user`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedData),
+      });
+      
+      const data = await response.json();
+      if (data.success) {
+        alert("Profile updated successfully!");
+        setUserData(updatedData); // Actualizar en el estado local
+      } else {
+        alert("Error updating profile.");
+      }
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      alert("An error occurred while updating.");
     }
-  } catch (error) {
-    console.error("Error updating profile:", error);
-    alert("An error occurred while updating.");
-  }
-};
+  };
 
   const renderSidebar = () => (
     <View style={styles.sidebar}>
       <View style={styles.userSection}>
         <TouchableOpacity onPress={pickAvatar} style={styles.avatar}>
-  <Image
-    source={{ uri: userdata.avatar }}
-    style={{ width: 50, height: 50, borderRadius: 25 }}
-  />
-</TouchableOpacity>
+          <Image
+            source={{ uri: userdata.avatar }}
+            style={{ width: 50, height: 50, borderRadius: 25 }}
+          />
+        </TouchableOpacity>
         <View>
           <Text style={styles.userName}>{userdata["nombre"]}</Text>
           <Text style={styles.userEmail}>{email}</Text>
-        <TouchableOpacity onPress={
-          async ()=>{
-            await signOut(auth2)
-          }
-        } style={styles.primaryButton}>
-        <Text style={styles.buttonText} >{getTranslation("Log Out")}</Text>
-        </TouchableOpacity></View>
-        
+          <TouchableOpacity onPress={
+            async ()=>{
+              await signOut(auth2)
+            }
+          } style={styles.primaryButton}>
+            <Text style={styles.buttonText} >{getTranslation("Log Out")}</Text>
+          </TouchableOpacity>
+        </View>
       </View>
       
       <View style={styles.navMenu}>
@@ -193,7 +198,6 @@ const handleProfileUpdate = async () => {
         <Text style={styles.panelTitle}>{getTranslation("Edit Profile")}</Text>
         <Text style={styles.panelSubtitle}>{getTranslation("Update your personal information and preferences")}</Text>
       </View>
-
       <View style={styles.formGroup}>
         <Text style={styles.formLabel}>{getTranslation("Name")}</Text>
         <TextInput
@@ -202,14 +206,11 @@ const handleProfileUpdate = async () => {
           onChangeText={(text) => setnewProfileData(prev => ({ ...prev, nombre: text }))}
         />
       </View>
-
       
-
       <View style={styles.formGroup}>
         <Text style={styles.formLabel}>{getTranslation("Email Address")}</Text>
         <Text>{email}</Text>
       </View>
-
       <View style={styles.formGroup}>
         <Text style={styles.formLabel}>{getTranslation("Phone Number")}</Text>
         <TextInput
@@ -219,8 +220,7 @@ const handleProfileUpdate = async () => {
           keyboardType="phone-pad"
         />
       </View>
-
-          <View style={styles.formGroup}>
+      <View style={styles.formGroup}>
         <Text style={styles.formLabel}>{getTranslation("City")}</Text>
         <TextInput
           style={styles.formInput}
@@ -228,15 +228,12 @@ const handleProfileUpdate = async () => {
           onChangeText={(text) => setnewProfileData(prev => ({ ...prev, city: text }))}
         />
       </View>
-
       <View style={styles.buttonContainer}>
         <TouchableOpacity
-         style={styles.primaryButton} onPress={handleProfileUpdate}>
+          style={styles.primaryButton} onPress={handleProfileUpdate}>
           <Ionicons name="save-outline" size={18} color="white" />
           <Text style={styles.buttonText}>{getTranslation("Save Changes")}</Text>
         </TouchableOpacity>
-    
-
       </View>
     </View>
   );
@@ -248,25 +245,21 @@ const handleProfileUpdate = async () => {
         <Text style={styles.panelSubtitle}>{getTranslation("Manage your account security and privacy settings")}</Text>
       </View>
 
-
       <View style={styles.settingItem}>
         <View style={styles.settingInfo}>
           <Text style={styles.settingTitle}>{getTranslation("Change Password")}</Text>
         </View>
         <TouchableOpacity 
-        onPress={async () => {
-          await sendPasswordResetEmail(auth2, email);
-        }}
-        style={styles.secondaryButton}>
+          onPress={async () => {
+            await sendPasswordResetEmail(auth2, email);
+          }}
+          style={styles.secondaryButton}>
           <Ionicons name="key-outline" size={18} color="#4a5568" />
           <Text style={styles.secondaryButtonText}>{getTranslation("Change Password")}</Text>
         </TouchableOpacity>
       </View>
-
-
     </View>
   );
-
 
   const renderTermsPanel = () => (
     <View style={styles.panel}>
@@ -274,16 +267,13 @@ const handleProfileUpdate = async () => {
         <Text style={styles.panelTitle}>{getTranslation("Terms & Conditions")}</Text>
         <Text style={styles.panelSubtitle}>{getTranslation("Review our terms of service and privacy policy")}</Text>
       </View>
-    <View style={{ flex: 1 }}>
-      <iframe
-        src="https://drive.google.com/file/d/1i1r4xRQnzhvCVsNH3EestwHwd7rI5ewx/preview"
-        style={{ width: '100%', height: 550 }}
-        title="PDF Viewer"
-      />
-    </View>
-
-
-      
+      <View style={{ flex: 1 }}>
+        <iframe
+          src="https://drive.google.com/file/d/1i1r4xRQnzhvCVsNH3EestwHwd7rI5ewx/preview"
+          style={{ width: '100%', height: 550 }}
+          title="PDF Viewer"
+        />
+      </View>
     </View>
   );
 
@@ -293,7 +283,6 @@ const handleProfileUpdate = async () => {
         <Text style={styles.panelTitle}>{getTranslation("Help & Support")}</Text>
         <Text style={styles.panelSubtitle}>{getTranslation("Get help and find answers to common questions")}</Text>
       </View>
-
       <Text style={styles.sectionTitle}>{getTranslation("Frequently Asked Questions")}</Text>
       
       <View style={styles.faqItem}>
@@ -302,7 +291,6 @@ const handleProfileUpdate = async () => {
         <Text style={styles.faqAnswer}> </Text>
         <Text style={styles.faqAnswer}>{getTranslation("Click on Security on the Settings page and follow the instructions sent to your email.")}</Text>
       </View>
-
       <Text style={styles.sectionTitle}>{getTranslation("Contact Support")}</Text>
       
       <View style={styles.contactGrid}>
@@ -313,13 +301,7 @@ const handleProfileUpdate = async () => {
 </Text>
           <Text style={styles.contactDetail}>{getTranslation("Response within 24 hours")}</Text>
         </TouchableOpacity>
-        
-      
-   
       </View>
-
-     
-     
     </View>
   );
 
@@ -364,7 +346,6 @@ const handleProfileUpdate = async () => {
             ))}
           </ScrollView>
         )}
-
         {activePanel === 'profile' && renderProfilePanel()}
         {activePanel === 'security' && renderSecurityPanel()}
         {activePanel === 'terms' && renderTermsPanel()}
@@ -373,6 +354,7 @@ const handleProfileUpdate = async () => {
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

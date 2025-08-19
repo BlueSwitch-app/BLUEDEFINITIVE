@@ -9,6 +9,9 @@ import React, { useState } from "react";
 import { StyleSheet, Switch, Text, TouchableOpacity, View } from "react-native";
 import StatisticsModal from "./StadisticsPerDevModal"; // Import the StatisticsModal component
 
+// API Base URL
+const API_BASE_URL = 'https://bluebackend.vercel.app';
+
 interface DeviceCardProps {
   name: string;
   type: string;
@@ -20,12 +23,14 @@ interface DeviceCardProps {
   color: string;
   created_at: string;
 }
+
 interface MenuItemProps {
   icon: string;
   label: string;
   onPress: () => void;
   destructive?: boolean;
 }
+
 function MenuItem({
   icon,
   label,
@@ -49,6 +54,7 @@ function MenuItem({
     </TouchableOpacity>
   );
 }
+
 const DeviceCard: React.FC<DeviceCardProps> = ({
   id,
   name,
@@ -57,11 +63,13 @@ const DeviceCard: React.FC<DeviceCardProps> = ({
   watts,
   favorite,
   teamcode,
-  created_at
+  created_at,
+  color
 }) => {
   const [isToggled, setIsToggled] = useState(status);
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const [showStatsModal, setShowStatsModal] = useState(false);
+
   const handleMenuAction = (action: string) => {
     console.log(`Menu action: ${action}`);
     setIsPopoverOpen(false);
@@ -70,9 +78,11 @@ const DeviceCard: React.FC<DeviceCardProps> = ({
       setShowStatsModal(true);
     }
   };
+
   const handleToggle = async (argumentValue: string) => {
     let newState = isToggled;
     console.log(argumentValue);
+    
     switch (argumentValue) {
       case "Switch":
         newState = !isToggled;
@@ -88,40 +98,53 @@ const DeviceCard: React.FC<DeviceCardProps> = ({
         console.warn(`Acción desconocida: ${argumentValue}`);
         return;
     }
+    
     try {
-      const response = await fetch("https://blueswitch-jet.vercel.app/update-status", {
-        method: "PUT",
+      const response = await fetch(`${API_BASE_URL}/update-status`, {
+        method: "POST", // Cambiado de PUT a POST para coincidir con el backend
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ id, status: newState, argument: argumentValue }),
       });
+      
       const data = await response.json();
+      
       if (response.ok) {
         console.log(data);
-      }
-      if (!response.ok) {
+        // Si la operación fue exitosa, podríamos emitir un evento para actualizar la lista
+        if (typeof window !== 'undefined' && window.dispatchEvent) {
+          window.dispatchEvent(new CustomEvent('refreshDevices'));
+        }
+      } else {
         console.log(data.mensaje);
+        // Revertir el estado si la operación falló
+        if (argumentValue === "Switch") {
+          setIsToggled(!newState);
+        }
       }
     } catch (error) {
       console.error(error);
+      // Revertir el estado si hay un error
       if (argumentValue === "Switch") {
         setIsToggled(!newState);
       }
     }
   };
+
   // Sample data for the statistics modal
   const statsData = {
     name: name,
     type: type,
     status: status,
     watts: watts,
-     color: "blue",
-     favorite: favorite,
-     team_code: teamcode,
-     carbonFootprint: 22,
-     created_at: created_at
+    color: color,
+    favorite: favorite,
+    team_code: teamcode,
+    carbonFootprint: 0, // Inicializado en 0, se calculará en el modal
+    created_at: created_at
   };
+
   return (
     <>
       <View style={styles.container}>
@@ -178,6 +201,7 @@ const DeviceCard: React.FC<DeviceCardProps> = ({
           </Text>
         </View>
       </View>
+      
       {/* Statistics Modal */}
       <StatisticsModal
         visible={showStatsModal}
@@ -187,6 +211,7 @@ const DeviceCard: React.FC<DeviceCardProps> = ({
     </>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',

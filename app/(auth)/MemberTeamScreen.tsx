@@ -4,6 +4,9 @@ import { Alert, Dimensions, ScrollView, StyleSheet, Text, TouchableOpacity, View
 import DeviceCard from "../componentes/deviceTeamCard";
 import { Device, Team, TeamMember } from "./types";
 
+// API Base URL
+const API_BASE_URL = 'https://bluebackend.vercel.app';
+
 interface MemberTeamScreenProps {
   team: Team;
   email: string;
@@ -35,12 +38,12 @@ const MemberTeamScreen: React.FC<MemberTeamScreenProps> = ({
           onPress: async () => {
             if (!team.code || !email) return;
             try {
-              const response = await fetch("https://blueswitch-jet.vercel.app/leave_team", {
+              const response = await fetch(`${API_BASE_URL}/leave_team`, {
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ teamcode: team.code, email: email }),
+                body: JSON.stringify({ team_code: team.code, email: email }), // Corregido el nombre del parámetro
               });
               const data = await response.json();
               if (response.ok) {
@@ -62,7 +65,7 @@ const MemberTeamScreen: React.FC<MemberTeamScreenProps> = ({
     const fetchTeamsDevices = async () => {
       if (!team.code) return;
       try {
-        const response = await fetch("https://blueswitch-jet.vercel.app/get_devices", {
+        const response = await fetch(`${API_BASE_URL}/get_devices`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -86,7 +89,7 @@ const MemberTeamScreen: React.FC<MemberTeamScreenProps> = ({
     const fetchTeamsMembers = async () => {
       if (!team.code) return;
       try {
-        const response = await fetch("https://blueswitch-jet.vercel.app/get_members", {
+        const response = await fetch(`${API_BASE_URL}/get_members`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -273,6 +276,7 @@ const MemberTeamScreen: React.FC<MemberTeamScreenProps> = ({
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

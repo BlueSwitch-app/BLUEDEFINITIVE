@@ -1,3 +1,4 @@
+import { getTranslation } from "@/Translations/i18n";
 import React, { useEffect, useState } from "react";
 import {
   Alert,
@@ -15,12 +16,16 @@ import AdminTeamScreen from "./AdminTeamScreen";
 import AssistantTeamScreen from "./AssistanTeamScreen";
 import MemberTeamScreen from "./MemberTeamScreen";
 import { Team } from "./types";
-import { getTranslation } from "@/Translations/i18n";
+
+// API Base URL
+const API_BASE_URL = 'https://bluebackend.vercel.app';
+
 // Interface para MessageBox
 interface MessageBoxProps {
   message: string;
   onClose: () => void;
 }
+
 // MessageBox Component
 const MessageBox: React.FC<MessageBoxProps> = ({ message, onClose }) => (
   <Modal
@@ -39,6 +44,7 @@ const MessageBox: React.FC<MessageBoxProps> = ({ message, onClose }) => (
     </View>
   </Modal>
 );
+
 // Interface para CreateTeamModal
 interface CreateTeamModalProps {
   isVisible: boolean;
@@ -46,6 +52,7 @@ interface CreateTeamModalProps {
   showMessageBox: (message: string) => void;
   email: string;
 }
+
 // CreateTeamModal Component
 const CreateTeamModal: React.FC<CreateTeamModalProps> = ({
   isVisible,
@@ -55,20 +62,23 @@ const CreateTeamModal: React.FC<CreateTeamModalProps> = ({
 }) => {
   const [newTeamName, setNewTeamName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
   const handleCreate = async () => {
     if (newTeamName.trim() === "" || newTeamName.length < 3) {
       showMessageBox(getTranslation("El nombre del equipo debe tener al menos 3 caracteres"));
       return;
     }
+    
     setIsLoading(true);
     try {
-      const response = await fetch("https://blueswitch-jet.vercel.app/create_team", {
+      const response = await fetch(`${API_BASE_URL}/create_team`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ team_name: newTeamName, email: email }),
       });
+      
       const data = await response.json();
       
       if (response.ok) {
@@ -84,7 +94,9 @@ const CreateTeamModal: React.FC<CreateTeamModalProps> = ({
       setIsLoading(false);
     }
   };
+
   if (!isVisible) return null;
+
   return (
     <Modal
       transparent={true}
@@ -133,6 +145,7 @@ const CreateTeamModal: React.FC<CreateTeamModalProps> = ({
     </Modal>
   );
 };
+
 // Interface para JoinTeamModal
 interface JoinTeamModalProps {
   isVisible: boolean;
@@ -140,6 +153,7 @@ interface JoinTeamModalProps {
   showMessageBox: (message: string) => void;
   email: string;
 }
+
 // JoinTeamModal Component
 const JoinTeamModal: React.FC<JoinTeamModalProps> = ({
   isVisible,
@@ -150,14 +164,16 @@ const JoinTeamModal: React.FC<JoinTeamModalProps> = ({
   const [joinTeamName, setJoinTeamName] = useState("");
   const [joinTeamCode, setJoinTeamCode] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
   const handleJoin = async () => {
     if (joinTeamName.trim() === "" || joinTeamCode.trim() === "") {
       showMessageBox(getTranslation("Por favor, ingresa el nombre y el código del equipo"));
       return;
     }
+    
     setIsLoading(true);
     try {
-      const response = await fetch("https://blueswitch-jet.vercel.app/join_team", {
+      const response = await fetch(`${API_BASE_URL}/join_team`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -168,6 +184,7 @@ const JoinTeamModal: React.FC<JoinTeamModalProps> = ({
           team_code: joinTeamCode,
         }),
       });
+      
       const data = await response.json();
       
       if (response.ok) {
@@ -183,7 +200,9 @@ const JoinTeamModal: React.FC<JoinTeamModalProps> = ({
       setIsLoading(false);
     }
   };
+
   if (!isVisible) return null;
+
   return (
     <Modal
       transparent={true}
@@ -240,10 +259,13 @@ const JoinTeamModal: React.FC<JoinTeamModalProps> = ({
     </Modal>
   );
 };
+
 interface TeamsScreenProps {
   email: string;
 }
+
 const { width } = Dimensions.get('window');
+
 const TeamsScreen: React.FC<TeamsScreenProps> = ({ email }) => {
   const [allAvailableTeams, setAllAvailableTeams] = useState<Team[]>([]);
   const [selectedTeamId, setSelectedTeamId] = useState<string | null>(null);
@@ -253,19 +275,21 @@ const TeamsScreen: React.FC<TeamsScreenProps> = ({ email }) => {
   const [messageBoxContent, setMessageBoxContent] = useState("");
   const [userRole, setUserRole] = useState<"admin" | "member" | "assistant"| null>(null);
   const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     const fetchTeams = async () => {
       if (!email) return;
       
       setIsLoading(true);
       try {
-        const response = await fetch("https://blueswitch-jet.vercel.app/read_teams", {
+        const response = await fetch(`${API_BASE_URL}/read_teams`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({ email }),
         });
+        
         const data = await response.json();
         
         if (response.ok) {
@@ -282,6 +306,7 @@ const TeamsScreen: React.FC<TeamsScreenProps> = ({ email }) => {
     
     fetchTeams();
   }, [email]);
+
   useEffect(() => {
     if (selectedTeamId) {
       const team = allAvailableTeams.find((t) => t.code === selectedTeamId);
@@ -292,17 +317,21 @@ const TeamsScreen: React.FC<TeamsScreenProps> = ({ email }) => {
       setUserRole(null);
     }
   }, [selectedTeamId, allAvailableTeams]);
+
   const showMessageBox = (message: string) => {
     setMessageBoxContent(message);
     setMessageBoxVisible(true);
   };
+
   const hideMessageBox = () => {
     setMessageBoxVisible(false);
     setMessageBoxContent("");
   };
+
   const selectedTeam = allAvailableTeams.find(
     (team) => team.code === selectedTeamId
   );
+
   if (isLoading) {
     return (
       <SafeAreaView style={styles.safeArea}>
@@ -312,6 +341,7 @@ const TeamsScreen: React.FC<TeamsScreenProps> = ({ email }) => {
       </SafeAreaView>
     );
   }
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
@@ -333,6 +363,7 @@ const TeamsScreen: React.FC<TeamsScreenProps> = ({ email }) => {
             </TouchableOpacity>
           </View>
         </View>
+        
         {/* Content */}
         {allAvailableTeams.length > 0 ? (
           <ScrollView style={styles.contentArea} showsVerticalScrollIndicator={false}>
@@ -370,6 +401,7 @@ const TeamsScreen: React.FC<TeamsScreenProps> = ({ email }) => {
                 ))}
               </ScrollView>
             </View>
+            
             {/* Team Details */}
             {selectedTeamId && selectedTeam && userRole ? (
               <View style={styles.teamDetailsContainer}>
@@ -414,6 +446,7 @@ const TeamsScreen: React.FC<TeamsScreenProps> = ({ email }) => {
             </View>
           </View>
         )}
+        
         {/* Modals */}
         <CreateTeamModal
           isVisible={isCreatingTeam}
@@ -428,6 +461,7 @@ const TeamsScreen: React.FC<TeamsScreenProps> = ({ email }) => {
           email={email}
         />
       </View>
+      
       {/* Message Box */}
       {messageBoxVisible && (
         <MessageBox message={messageBoxContent} onClose={hideMessageBox} />
@@ -435,6 +469,7 @@ const TeamsScreen: React.FC<TeamsScreenProps> = ({ email }) => {
     </SafeAreaView>
   );
 };
+
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,

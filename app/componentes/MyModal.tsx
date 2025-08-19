@@ -28,12 +28,17 @@ import {
 import ColorPicker from "react-native-wheel-color-picker";
 import { Device } from "../(auth)/DashboardScreen";
 import { getContrastColor } from "../utils/getContrastColor";
+
+// API Base URL
+const API_BASE_URL = 'https://bluebackend.vercel.app';
+
 // Define la interfaz del equipo para el combobox
 interface UserTeam {
   name: string;
   code: string;
   role: string;
 }
+
 interface MyModalProps {
   isModalOpen: boolean;
   setIsModalOpen: (open: boolean) => void;
@@ -41,6 +46,7 @@ interface MyModalProps {
   devices: Device[];
   setDevices: React.Dispatch<React.SetStateAction<Device[]>>;
 }
+
 // Categorías
 const categories = [
   { value: "electronica", label: "Electrónica", searchValue: "electronica" },
@@ -50,6 +56,7 @@ const categories = [
   { value: "climatizacion", label: "Climatización", searchValue: "climatizacion" },
   { value: "otros", label: "Otros", searchValue: "otros" },
 ];
+
 export default function MyModal({
   isModalOpen,
   setIsModalOpen,
@@ -71,49 +78,50 @@ export default function MyModal({
   const [teamNamesList, setTeamNamesList] = useState<string[]>([]);
   // Estado para guardar el equipo seleccionado
   const [selectedTeam, setSelectedTeam] = useState("no_team");
+  
   useEffect(() => {
-  const fetchTeams = async () => {
-    if (!email) return;
-
-    try {
-      const response = await fetch("https://blueswitch-jet.vercel.app/read_teams", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email }),
-      });
-
-      interface ReadTeamsResponse {
-        teams?: UserTeam[];
-      }
-
-      const data: ReadTeamsResponse = await response.json();
-
-      const defaultTeam: UserTeam = { name: getTranslation("Sin equipo"), code: "no_team", role: "none" };
-
-      if (response.ok && data.teams) {
-        const teamsWithDefault: UserTeam[] = [defaultTeam, ...data.teams];
-        setUserTeams(teamsWithDefault);
-        setTeamNamesList(teamsWithDefault.map(team => team.name));
-      } else {
+    const fetchTeams = async () => {
+      if (!email) return;
+      try {
+        const response = await fetch(`${API_BASE_URL}/read_teams`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email }),
+        });
+        
+        interface ReadTeamsResponse {
+          teams?: UserTeam[];
+        }
+        
+        const data: ReadTeamsResponse = await response.json();
+        const defaultTeam: UserTeam = { name: getTranslation("Sin equipo"), code: "no_team", role: "none" };
+        
+        if (response.ok && data.teams) {
+          const teamsWithDefault: UserTeam[] = [defaultTeam, ...data.teams];
+          setUserTeams(teamsWithDefault);
+          setTeamNamesList(teamsWithDefault.map(team => team.name));
+        } else {
+          setUserTeams([defaultTeam]);
+          setTeamNamesList([defaultTeam.name]);
+        }
+      } catch (error) {
+        const defaultTeam: UserTeam = { name: getTranslation("Sin equipo"), code: "no_team", role: "none" };
         setUserTeams([defaultTeam]);
         setTeamNamesList([defaultTeam.name]);
       }
-    } catch (error) {
-      const defaultTeam: UserTeam = { name: getTranslation("Sin equipo"), code: "no_team", role: "none" };
-      setUserTeams([defaultTeam]);
-      setTeamNamesList([defaultTeam.name]);
-    }
-  };
+    };
+    
+    fetchTeams();
+  }, [email]);
 
-  fetchTeams();
-}, [email]);
   const handleSave = async () => {
     if (!nombre || !categoria || !watts) {
       Alert.alert(getTranslation("Campos incompletos"), getTranslation("Por favor completa todos los campos obligatorios"));
       return;
     }
+    
     setIsLoading(true);
     
     const deviceData = {
@@ -127,15 +135,17 @@ export default function MyModal({
     };
     
     try {
-      const response = await fetch("https://blueswitch-jet.vercel.app/crear-device", {
+      const response = await fetch(`${API_BASE_URL}/crear-device`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(deviceData),
       });
+      
       const data = await response.json();
-      console.log(data)
+      console.log(data);
+      
       if (response.ok) {
         const nuevoDispositivo: Device = {
           id: "nuevo_id",
@@ -149,6 +159,7 @@ export default function MyModal({
           favorite: false,
           team: selectedTeam,
         };
+        
         setDevices([...devices, nuevoDispositivo]);
         resetForm();
         setIsModalOpen(false);
@@ -162,6 +173,7 @@ export default function MyModal({
       setIsLoading(false);
     }
   };
+
   const resetForm = () => {
     setNombre("");
     setCategoria("");
@@ -170,10 +182,12 @@ export default function MyModal({
     setSelectedFiles([]);
     setSelectedTeam("no_team");
   };
+
   const handleCloseModal = () => {
     setIsModalOpen(false);
     resetForm();
   };
+
   return (
     <Modal 
       visible={isModalOpen} 
@@ -339,6 +353,7 @@ export default function MyModal({
     </Modal>
   );
 }
+
 const styles = StyleSheet.create({
   centeredView: {
     flex: 1,

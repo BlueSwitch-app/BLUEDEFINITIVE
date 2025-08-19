@@ -8,6 +8,10 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+
+// API Base URL
+const API_BASE_URL = 'https://bluebackend.vercel.app';
+
 interface DeviceData {
   name: string;
   type: string;
@@ -19,6 +23,7 @@ interface DeviceData {
   team_code: string;
   created_at: string;
 }
+
 interface StatCardProps {
   title: string;
   value: string;
@@ -26,6 +31,7 @@ interface StatCardProps {
   icon: string;
   color: string;
 }
+
 const StatCard: React.FC<StatCardProps> = ({ title, value, subtitle, icon, color }) => (
   <View style={styles.statCard}>
     <View style={[styles.statCardIcon, { backgroundColor: `${color}20` }]}>
@@ -38,12 +44,14 @@ const StatCard: React.FC<StatCardProps> = ({ title, value, subtitle, icon, color
     </View>
   </View>
 );
+
 interface DeviceDetailCardProps {
   label: string;
   value: string;
   icon: string;
   color: string;
 }
+
 const DeviceDetailCard: React.FC<DeviceDetailCardProps> = ({ label, value, icon, color }) => (
   <View style={styles.deviceDetailCard}>
     <View style={[styles.deviceDetailIcon, { backgroundColor: `${color}20` }]}>
@@ -55,40 +63,60 @@ const DeviceDetailCard: React.FC<DeviceDetailCardProps> = ({ label, value, icon,
     </View>
   </View>
 );
+
 interface StatisticsModalProps {
   visible: boolean;
   onClose: () => void;
   device: DeviceData;
 }
+
 const StatisticsPerDevModal: React.FC<StatisticsModalProps> = ({
   visible,
   onClose,
   device
 }) => {
   // Calculate tree equivalent based on carbon footprint
-  const [ treeEquivalent, setTreeEquivalent] = React.useState(0);
+  const [treeEquivalent, setTreeEquivalent] = React.useState(0);
   const [Co2, setCo2] = useState(0);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
-    const fetchTeams = async () => {
+    const fetchDeviceData = async () => {
+      if (!device) return;
+      
       try {
-        const response = await fetch("https://blueswitch-jet.vercel.app/read_perDev", {
+        setLoading(true);
+        const response = await fetch(`${API_BASE_URL}/read_perDev`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({data:[device] }),
+          body: JSON.stringify({ data: [device] }),
         });
-        const data = await response.json();
-        console.log(data[0][0]);
         
-        setCo2((data[0][0]))
-        setTreeEquivalent(Math.ceil(data[0][0]/22))
+        const data = await response.json();
+        console.log(data);
+        
+        if (response.ok) {
+          // Assuming the response is the CO2 value directly
+          const co2Value = data;
+          setCo2(co2Value);
+          setTreeEquivalent(Math.ceil(co2Value / 22));
+        } else {
+          console.error("Error fetching device data:", data);
+        }
       } catch (error) {
-        console.error(error);
+        console.error("Error fetching device data:", error);
+      } finally {
+        setLoading(false);
       }
     };
-    fetchTeams();
-  }, [device]);
+    
+    if (visible && device) {
+      fetchDeviceData();
+    }
+  }, [visible, device]);
+
   return (
     <Modal
       visible={visible}
@@ -105,7 +133,8 @@ const StatisticsPerDevModal: React.FC<StatisticsModalProps> = ({
               <Text style={styles.closeButtonText}>✕</Text>
             </TouchableOpacity>
           </View>
-          <View style={styles.modalBody} >
+          
+          <View style={styles.modalBody}>
             {/* Device Info Card */}
             <View style={styles.deviceInfoCard}>
               <View style={styles.deviceInfoHeader}>
@@ -128,78 +157,86 @@ const StatisticsPerDevModal: React.FC<StatisticsModalProps> = ({
               </View>
             </View>
             
-            {/* Summary Cards */}
-            <View style={styles.summarySection}>
-              <StatCard
-                title={getTranslation("Mi Carbon Footprint")}
-                value={`${Co2} kg`}
-                subtitle={"CO₂"}
-                icon="🌍"
-                color="#2E7D32"
-              />
-              <StatCard
-                title={getTranslation("Consumo en Watts")}
-                value={`${device.watts/1000} KW`}
-                subtitle={getTranslation("Average Consumption")}
-                icon="⚡"
-                color="#FFA726"
-              />
-              <StatCard
-                title={getTranslation("Equivalente en Árboles")}
-                value={`${treeEquivalent} tree(s)`}
-                subtitle={getTranslation("Árboles necesarios para compensar esta huella")}
-                icon="🌳"
-                color="#4CAF50"
-              />
-      
-            </View>
-            
-            {/* Device Details in Two Columns */}
-            <View style={styles.detailsSection}>
-              <Text style={styles.sectionTitle}>{getTranslation("Detalles de Dispositivos")}</Text>
-              <View style={styles.detailsContainer}>
-                {/* First Column */}
-                <View style={styles.detailsColumn}>
-                  <DeviceDetailCard
-                    label="Status"
-                    value={device.status ? getTranslation("Activo") : getTranslation("Inactivo")}
-                    icon={device.status ? "✅" : "❌"}
-                    color={device.status ? "#4CAF50" : "#90A4AE"}
+            {/* Loading State */}
+            {loading ? (
+              <View style={styles.loadingContainer}>
+                <Text style={styles.loadingText}>{getTranslation("Calculando estadísticas...")}</Text>
+              </View>
+            ) : (
+              <>
+                {/* Summary Cards */}
+                <View style={styles.summarySection}>
+                  <StatCard
+                    title={getTranslation("Mi Carbon Footprint")}
+                    value={`${Co2.toFixed(2)} kg`}
+                    subtitle={"CO₂"}
+                    icon="🌍"
+                    color="#2E7D32"
                   />
-                  <DeviceDetailCard
-                    label="Favorite"
-                    value={device.favorite ? getTranslation("Yes") : getTranslation("No")}
-                    icon={device.favorite ? "⭐" : "☆"}
-                    color="#FFCA28"
+                  <StatCard
+                    title={getTranslation("Consumo en Watts")}
+                    value={`${device.watts/1000} KW`}
+                    subtitle={getTranslation("Average Consumption")}
+                    icon="⚡"
+                    color="#FFA726"
+                  />
+                  <StatCard
+                    title={getTranslation("Equivalente en Árboles")}
+                    value={`${treeEquivalent} tree(s)`}
+                    subtitle={getTranslation("Árboles necesarios para compensar esta huella")}
+                    icon="🌳"
+                    color="#4CAF50"
                   />
                 </View>
                 
-                {/* Second Column */}
-                <View style={styles.detailsColumn}>
-                  <DeviceDetailCard
-                    label={getTranslation("Categoría")}
-                    value={device.type}
-                    icon="📱"
-                    color="#0288D1"
-                  />
-                  <DeviceDetailCard
-                    label={getTranslation("Código del equipo")}
-                    value={device.team_code}
-                    icon="🔑"
-                    color="#00897B"
-                  />
+                {/* Device Details in Two Columns */}
+                <View style={styles.detailsSection}>
+                  <Text style={styles.sectionTitle}>{getTranslation("Detalles de Dispositivos")}</Text>
+                  <View style={styles.detailsContainer}>
+                    {/* First Column */}
+                    <View style={styles.detailsColumn}>
+                      <DeviceDetailCard
+                        label="Status"
+                        value={device.status ? getTranslation("Activo") : getTranslation("Inactivo")}
+                        icon={device.status ? "✅" : "❌"}
+                        color={device.status ? "#4CAF50" : "#90A4AE"}
+                      />
+                      <DeviceDetailCard
+                        label="Favorite"
+                        value={device.favorite ? getTranslation("Yes") : getTranslation("No")}
+                        icon={device.favorite ? "⭐" : "☆"}
+                        color="#FFCA28"
+                      />
+                    </View>
+                    
+                    {/* Second Column */}
+                    <View style={styles.detailsColumn}>
+                      <DeviceDetailCard
+                        label={getTranslation("Categoría")}
+                        value={device.type}
+                        icon="📱"
+                        color="#0288D1"
+                      />
+                      <DeviceDetailCard
+                        label={getTranslation("Código del equipo")}
+                        value={device.team_code}
+                        icon="🔑"
+                        color="#00897B"
+                      />
+                    </View>
+                  </View>
                 </View>
-              </View>
-            </View>
-            
-       
+              </>
+            )}
           </View>
         </View>
       </View>
     </Modal>
   );
 };
+
 const { width, height } = Dimensions.get('window');
+
 const styles = StyleSheet.create({
   modalOverlay: {
     flex: 1,
@@ -428,5 +465,15 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     lineHeight: 20,
   },
+  loadingContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 40,
+  },
+  loadingText: {
+    fontSize: 16,
+    color: '#6B7280',
+  },
 });
+
 export default StatisticsPerDevModal;

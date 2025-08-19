@@ -1,4 +1,3 @@
-
 import { getTranslation } from "@/Translations/i18n";
 import * as Clipboard from 'expo-clipboard';
 import React, { useEffect, useState } from "react";
@@ -7,6 +6,10 @@ import DeviceTeamAdCard from "../componentes/deviceTeamAdCard";
 import MembersAdminCard from "../componentes/MemberCard";
 import CarbonFootprintModal from "../componentes/ModalCO2";
 import { Device, Team, TeamMember } from "./types";
+
+// API Base URL
+const API_BASE_URL = 'https://bluebackend.vercel.app';
+
 interface AdminTeamScreenProps {
   team: Team;
 }
@@ -32,12 +35,13 @@ const AdminTeamScreen: React.FC<AdminTeamScreenProps> = ({
     const roleB = roleHierarchy[b.role];
     return roleA - roleB;
   });
+
   // Effect to fetch devices
   useEffect(() => {
     const fetchTeamsDevices = async () => {
       if (!team.code) return;
       try {
-        const response = await fetch("https://blueswitch-jet.vercel.app/get_devices", {
+        const response = await fetch(`${API_BASE_URL}/get_devices`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -56,40 +60,41 @@ const AdminTeamScreen: React.FC<AdminTeamScreenProps> = ({
     };
     fetchTeamsDevices();
   }, [team.code]);
-// Agrega esto debajo de tus otros useEffect
-useEffect(() => {
-  if (!team.code) return;
-  const fetchCO2 = async () => {
-    try {
-      const response = await fetch("https://blueswitch-jet.vercel.app/read-CO2", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ team_code: team.code }),
-      });
-      const data = await response.json();
-      if (response.ok) {
-        setCO2(data.total_CO2 || 0);
-        const maxDevice = data.device_mas_CO2;
-        if (maxDevice) {
-          setMordev(`${maxDevice.nombre}\n${maxDevice.email}`);
+
+  // Agrega esto debajo de tus otros useEffect
+  useEffect(() => {
+    if (!team.code) return;
+    const fetchCO2 = async () => {
+      try {
+        const response = await fetch(`${API_BASE_URL}/read-CO2`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ team_code: team.code }),
+        });
+        const data = await response.json();
+        if (response.ok) {
+          setCO2(data.total_CO2 || 0);
+          const maxDevice = data.device_mas_CO2;
+          if (maxDevice) {
+            setMordev(`${maxDevice.nombre}\n${maxDevice.email}`);
+          } else {
+            setMordev("No hay dispositivo registrado");
+          }
         } else {
-          setMordev("No hay dispositivo registrado");
+          console.error("Error en respuesta del servidor o no hay dispositivos:", data);
         }
-      } else {
-        console.error("Error en respuesta del servidor o no hay dispositivos:", data);
+      } catch (e) {
+        console.error("Error fetching CO2:", e);
       }
-    } catch (e) {
-      console.error("Error fetching CO2:", e);
-    }
-  };
-  fetchCO2();
-}, [team.code, devices]); // <-- se ejecuta cuando cambian los dispositivos o el código del equipo
+    };
+    fetchCO2();
+  }, [team.code, devices]); // <-- se ejecuta cuando cambian los dispositivos o el código del equipo
  
   useEffect(() => {
     const fetchTeamsMembers = async () => {
       if (!team.code) return;
       try {
-        const response = await fetch("https://blueswitch-jet.vercel.app/get_members", {
+        const response = await fetch(`${API_BASE_URL}/get_members`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -108,6 +113,7 @@ useEffect(() => {
     };
     fetchTeamsMembers();
   }, [team.code]);
+
   const deleteTeam = async () => {
     Alert.alert(
       getTranslation("Eliminar Equipo"),
@@ -122,7 +128,7 @@ useEffect(() => {
           style: "destructive",
           onPress: async () => {
             try {
-              const response = await fetch("https://blueswitch-jet.vercel.app/delete_team", {
+              const response = await fetch(`${API_BASE_URL}/delete_team`, {
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",
@@ -144,11 +150,12 @@ useEffect(() => {
       ]
     );
   };
+
   const copyTeamCode = () => {
     Clipboard.setStringAsync(`${getTranslation("Nombre")}: ${team.name}\n${getTranslation("Código")}: ${team.code}`);
-
     Alert.alert(getTranslation("Código Copiado"), getTranslation("El código del equipo se ha copiado al portapapeles"));
   };
+
   const generateTicket = () => {
     setNewDate(new Date().toLocaleString("en-US", { 
       month: "long", 
@@ -160,12 +167,14 @@ useEffect(() => {
     }));
     setModalVisible(true);
   };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>{team.name}</Text>
         <Text style={styles.subtitle}>{getTranslation("Panel de Administrador")}</Text>
       </View>
+
       {/* Navigation Tabs */}
       <View style={styles.tabsContainer}>
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
@@ -207,6 +216,7 @@ useEffect(() => {
           </TouchableOpacity>
         </ScrollView>
       </View>
+
       {/* Action Buttons */}
       <View style={styles.actionsContainer}>
         <TouchableOpacity onPress={copyTeamCode} style={styles.actionButton}>
@@ -222,6 +232,7 @@ useEffect(() => {
           <Text style={styles.deleteText}>{getTranslation("Eliminar equipo")}</Text>
         </TouchableOpacity>
       </View>
+
       {/* Content Area */}
       <View style={styles.contentContainer}>
         {viewAdmin === "Devices" && (
@@ -249,6 +260,7 @@ useEffect(() => {
             )}
           </ScrollView>
         )}
+
         {viewAdmin === "Members" && (
           <ScrollView style={styles.contentScroll}>
             {members.length > 0 ? (
@@ -279,6 +291,7 @@ useEffect(() => {
             )}
           </ScrollView>
         )}
+
         {viewAdmin === "Statistics" && (
           <View style={styles.statsContainer}>
             <View style={styles.statCard}>
@@ -307,6 +320,7 @@ useEffect(() => {
           </View>
         )}
       </View>
+
       <CarbonFootprintModal
         visible={modalVisible}
         onClose={() => setModalVisible(false)}
@@ -325,6 +339,7 @@ useEffect(() => {
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -474,4 +489,5 @@ const styles = StyleSheet.create({
     lineHeight: 16,
   },
 });
+
 export default AdminTeamScreen;

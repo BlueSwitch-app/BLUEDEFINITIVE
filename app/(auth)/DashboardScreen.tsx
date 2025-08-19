@@ -38,7 +38,7 @@ const DashboardScreen: React.FC<DashboardScreenProps> = ({ email }) => {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [apiUrl] = useState<string>("http://localhost:3000"); // URL del backend
+  const [apiUrl] = useState<string>("https://bluebackend.vercel.app"); // URL del backend
 
   // Memoize filtered devices for performance
   const filteredDevices = useMemo(() => {
