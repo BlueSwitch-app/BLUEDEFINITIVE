@@ -62,7 +62,7 @@ const CreateTeamModal: React.FC<CreateTeamModalProps> = ({
     }
     setIsLoading(true);
     try {
-      const response = await fetch("https://buedefinitiveb-1.onrender.com/create_team", {
+      const response = await fetch("https://blueswitch-jet.vercel.app/create_team", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -157,7 +157,7 @@ const JoinTeamModal: React.FC<JoinTeamModalProps> = ({
     }
     setIsLoading(true);
     try {
-      const response = await fetch("https://buedefinitiveb-1.onrender.com/join_team", {
+      const response = await fetch("https://blueswitch-jet.vercel.app/join_team", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -259,7 +259,7 @@ const TeamsScreen: React.FC<TeamsScreenProps> = ({ email }) => {
       
       setIsLoading(true);
       try {
-        const response = await fetch("https://buedefinitiveb-1.onrender.com/read_teams", {
+        const response = await fetch("https://blueswitch-jet.vercel.app/read_teams", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

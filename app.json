@@ -4,7 +4,6 @@
     "slug": "BlueSwitch",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/BlueLogo.png",
     "scheme": "BlueSwitch",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,

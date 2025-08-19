@@ -75,7 +75,7 @@ export default function MyModal({
     const fetchTeams = async () => {
       if (!email) return;
       try {
-        const response = await fetch("https://buedefinitiveb.onrender.com/read_teams", {
+        const response = await fetch("https://blueswitch-jet.vercel.app/read_teams", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -122,7 +122,7 @@ export default function MyModal({
     };
     
     try {
-      const response = await fetch("https://buedefinitiveb.onrender.com/crear-device", {
+      const response = await fetch("https://blueswitch-jet.vercel.app/crear-device", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

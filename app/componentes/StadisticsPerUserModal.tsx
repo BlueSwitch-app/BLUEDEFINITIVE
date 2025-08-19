@@ -80,7 +80,7 @@ const StatisticsModal: React.FC<StatisticsModalProps> = ({
     useEffect(() => {
       const fetchTeams = async () => {
         try {
-          const response = await fetch("https://buedefinitiveb.onrender.com/readstatisdics_peruser", {
+          const response = await fetch("https://blueswitch-jet.vercel.app/readstatisdics_peruser", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

@@ -43,7 +43,7 @@ const pickAvatar = async () => {
       console.log('User cancelled image picker');
     }
     if(result){
-      const response= await fetch("https://buedefinitiveb-2.onrender.com/upload_avatar", {
+      const response= await fetch("https://blueswitch-jet.vercel.app/upload_avatar", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -73,7 +73,7 @@ const [userdata, setUserData] = useState<UserData>({
       const fetchDevices = async () => {
         if (!email) return;
         try {
-          const response = await fetch("https://buedefinitiveb-2.onrender.com/get_user", {
+          const response = await fetch("https://blueswitch-jet.vercel.app/get_user", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -112,7 +112,7 @@ const handleProfileUpdate = async () => {
       email: userdata.email // para identificar el usuario en el servidor
     };
 
-    const response = await fetch("https://buedefinitiveb-2.onrender.com/update_user", {
+    const response = await fetch("https://blueswitch-jet.vercel.app/update_user", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

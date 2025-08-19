@@ -47,7 +47,7 @@ const DashboardScreen: React.FC<DashboardScreenProps> = ({ email }) => {
     if (!email) return;
     
     try {
-      const response = await fetch("https://buedefinitiveb-3.onrender.com/get_devices", {
+      const response = await fetch("https://blueswitch-jet.vercel.app/get_devices", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -76,7 +76,7 @@ const DashboardScreen: React.FC<DashboardScreenProps> = ({ email }) => {
     if (!email) return;
     
     try {
-      const response = await fetch("https://buedefinitiveb-3.onrender.com/read-CO2", {
+      const response = await fetch("https://blueswitch-jet.vercel.app/read-CO2", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
