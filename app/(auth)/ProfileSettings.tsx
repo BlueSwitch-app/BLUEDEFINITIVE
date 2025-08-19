@@ -18,7 +18,7 @@ import {
 import { auth2 } from '../firebaseConfig';
 
 // API Base URL
-const API_BASE_URL = 'https://bluebackend.vercel.app';
+const API_BASE_URL = 'https://bluebackend-blues-projects-c71d4d1f.vercel.app';
 
 const { width } = Dimensions.get('window');
 

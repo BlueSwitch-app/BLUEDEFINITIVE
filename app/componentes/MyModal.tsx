@@ -30,7 +30,7 @@ import { Device } from "../(auth)/DashboardScreen";
 import { getContrastColor } from "../utils/getContrastColor";
 
 // API Base URL
-const API_BASE_URL = 'https://bluebackend.vercel.app';
+const API_BASE_URL = 'https://bluebackend-blues-projects-c71d4d1f.vercel.app';
 
 // Define la interfaz del equipo para el combobox
 interface UserTeam {

@@ -5,7 +5,7 @@ import { RadarChart } from "react-native-gifted-charts";
 import CarbonFootprintModal from '../componentes/ModalCO2';
 
 // API Base URL
-const API_BASE_URL = 'https://bluebackend.vercel.app';
+const API_BASE_URL = 'https://bluebackend-blues-projects-c71d4d1f.vercel.app';
 
 // Define the Device interface for type safety
 export interface Device {

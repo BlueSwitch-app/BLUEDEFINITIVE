@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { StyleSheet, Switch, Text, TouchableOpacity, View } from "react-native";
 
 // API Base URL
-const API_BASE_URL = 'https://bluebackend.vercel.app';
+const API_BASE_URL = 'https://bluebackend-blues-projects-c71d4d1f.vercel.app';
 
 interface DeviceCardProps {
   name: string;

@@ -10,7 +10,7 @@ import { StyleSheet, Switch, Text, TouchableOpacity, View } from "react-native";
 import StatisticsModal from "./StadisticsPerDevModal"; // Import the StatisticsModal component
 
 // API Base URL
-const API_BASE_URL = 'https://bluebackend.vercel.app';
+const API_BASE_URL = 'https://bluebackend-blues-projects-c71d4d1f.vercel.app';
 
 interface DeviceCardProps {
   name: string;

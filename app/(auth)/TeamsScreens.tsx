@@ -18,7 +18,7 @@ import MemberTeamScreen from "./MemberTeamScreen";
 import { Team } from "./types";
 
 // API Base URL
-const API_BASE_URL = 'https://bluebackend.vercel.app';
+const API_BASE_URL = 'https://bluebackend-blues-projects-c71d4d1f.vercel.app';
 
 // Interface para MessageBox
 interface MessageBoxProps {

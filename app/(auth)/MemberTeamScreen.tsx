@@ -5,7 +5,7 @@ import DeviceCard from "../componentes/deviceTeamCard";
 import { Device, Team, TeamMember } from "./types";
 
 // API Base URL
-const API_BASE_URL = 'https://bluebackend.vercel.app';
+const API_BASE_URL = 'https://bluebackend-blues-projects-c71d4d1f.vercel.app';
 
 interface MemberTeamScreenProps {
   team: Team;
