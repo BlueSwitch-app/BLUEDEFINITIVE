@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import MyModal from "../componentes/MyModal";
 import DeviceCard from "../componentes/deviceCard";
+
 // Define the Device interface
 export interface Device {
   id: string;
@@ -25,9 +26,11 @@ export interface Device {
   favorite: boolean;
   team: string;
 }
+
 interface DashboardScreenProps {
   email: string;
 }
+
 const DashboardScreen: React.FC<DashboardScreenProps> = ({ email }) => {
   const [devices, setDevices] = useState<Device[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -35,6 +38,8 @@ const DashboardScreen: React.FC<DashboardScreenProps> = ({ email }) => {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [apiUrl] = useState<string>("http://localhost:3000"); // URL del backend
+
   // Memoize filtered devices for performance
   const filteredDevices = useMemo(() => {
     if (!searchTerm) return devices;
@@ -42,12 +47,13 @@ const DashboardScreen: React.FC<DashboardScreenProps> = ({ email }) => {
       device.nombre.toLowerCase().includes(searchTerm.toLowerCase())
     );
   }, [devices, searchTerm]);
-  // Fetch devices data
+
+  // Fetch devices data - MODIFICADO
   const fetchDevices = useCallback(async () => {
     if (!email) return;
     
     try {
-      const response = await fetch("https://blueswitch-jet.vercel.app/get_devices", {
+      const response = await fetch(`${apiUrl}/get_devices`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -58,9 +64,21 @@ const DashboardScreen: React.FC<DashboardScreenProps> = ({ email }) => {
       const data = await response.json();
       
       if (response.ok) {
-        setDevices(data);
-        console.log(data);
+        // Transformar los datos para que coincidan con la interfaz Device
+        const transformedDevices = data.map((device: any) => ({
+          nombre: device.nombre,
+          state: device.state,
+          created_at: device.created_at[0][0], // Tomar la primera fecha de inicio
+          categoria: device.categoria,
+          watts: device.watts,
+          stringid: device.stringid,
+          color: device.color,
+          favorite: device.favorite || false,
+          team: device.team
+        }));
         
+        setDevices(transformedDevices);
+        console.log("Dispositivos cargados:", transformedDevices);
         setError(null);
       } else {
         setError("Error en respuesta del servidor o no hay equipos");
@@ -68,15 +86,16 @@ const DashboardScreen: React.FC<DashboardScreenProps> = ({ email }) => {
       }
     } catch (err) {
       setError("Error fetching devices");
-      console.error("Error fetching teams:", err);
+      console.error("Error fetching devices:", err);
     }
-  }, [email]);
-  // Fetch CO2 data
+  }, [email, apiUrl]);
+
+  // Fetch CO2 data - MODIFICADO
   const fetchCO2Data = useCallback(async () => {
     if (!email) return;
     
     try {
-      const response = await fetch("https://blueswitch-jet.vercel.app/read-CO2", {
+      const response = await fetch(`${apiUrl}/read-CO2`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -87,7 +106,8 @@ const DashboardScreen: React.FC<DashboardScreenProps> = ({ email }) => {
       const data = await response.json();
       
       if (response.ok) {
-        setTotalFootprint(data.total_CO2);
+        setTotalFootprint(data.total_CO2 || 0);
+        console.log("Huella de carbono:", data.total_CO2);
       } else {
         setError("Error fetching CO2 data");
         console.error("CO2 error:", data);
@@ -96,7 +116,8 @@ const DashboardScreen: React.FC<DashboardScreenProps> = ({ email }) => {
       setError("Error fetching CO2 data");
       console.error("Error fetching CO2:", err);
     }
-  }, [email]);
+  }, [email, apiUrl]);
+
   // Load all data
   const loadData = useCallback(async () => {
     setIsLoading(true);
@@ -109,25 +130,30 @@ const DashboardScreen: React.FC<DashboardScreenProps> = ({ email }) => {
     
     setIsLoading(false);
   }, [fetchDevices, fetchCO2Data]);
+
   // Initial data load
   useEffect(() => {
     loadData();
   }, [loadData]);
+
   // Refresh data when modal closes
   const handleModalClose = () => {
     setIsModalOpen(false);
     loadData();
   };
+
   // Show error alert
   useEffect(() => {
     if (error) {
       Alert.alert("Error", error, [{ text: "OK" }]);
     }
   }, [error]);
+
   // Sort devices by favorite status
   const sortedDevices = useMemo(() => {
     return [...filteredDevices].sort((a, b) => Number(b.favorite) - Number(a.favorite));
   }, [filteredDevices]);
+
   if (isLoading) {
     return (
       <View style={dashboardStyles.loadingContainer}>
@@ -136,6 +162,7 @@ const DashboardScreen: React.FC<DashboardScreenProps> = ({ email }) => {
       </View>
     );
   }
+
   return (
     <View style={dashboardStyles.container}>
       <ScrollView 
@@ -156,6 +183,7 @@ const DashboardScreen: React.FC<DashboardScreenProps> = ({ email }) => {
             <Text style={dashboardStyles.refreshIcon}>↻</Text>
           </TouchableOpacity>
         </View>
+
         {/* Carbon Footprint Card */}
         <View style={dashboardStyles.footprintCard}>
           <View style={dashboardStyles.footprintHeader}>
@@ -170,8 +198,8 @@ const DashboardScreen: React.FC<DashboardScreenProps> = ({ email }) => {
               {getTranslation("Basado en el consumo de tus dispositivos")}
             </Text>
           </View>
-       
         </View>
+
         {/* Devices Section */}
         <View style={dashboardStyles.devicesSection}>
           <View style={dashboardStyles.sectionHeader}>
@@ -218,7 +246,7 @@ const DashboardScreen: React.FC<DashboardScreenProps> = ({ email }) => {
                   type={device.categoria}
                   favorite={device.favorite}
                   watts={device.watts}
-                  color= {device.color}
+                  color={device.color}
                   teamcode={device.team}
                   created_at={device.created_at}
                 />
@@ -241,6 +269,7 @@ const DashboardScreen: React.FC<DashboardScreenProps> = ({ email }) => {
           </View>
         </View>
       </ScrollView>
+
       {/* Modal */}
       <MyModal
         isModalOpen={isModalOpen}
@@ -252,6 +281,7 @@ const DashboardScreen: React.FC<DashboardScreenProps> = ({ email }) => {
     </View>
   );
 };
+
 const dashboardStyles = StyleSheet.create({
   container: {
     flex: 1,
@@ -272,7 +302,7 @@ const dashboardStyles = StyleSheet.create({
   loadingText: {
     marginTop: 16,
     fontSize: 16,
-    color: '#607D8B', // Blue Gray
+    color: '#607D8B',
     fontFamily: 'System',
   },
   // Header
@@ -287,12 +317,12 @@ const dashboardStyles = StyleSheet.create({
   headerTitle: {
     fontSize: 28,
     fontWeight: '700',
-    color: '#2E7D32', // Forest Green
+    color: '#2E7D32',
     fontFamily: 'System',
   },
   headerSubtitle: {
     fontSize: 16,
-    color: '#607D8B', // Blue Gray
+    color: '#607D8B',
     marginTop: 4,
     fontFamily: 'System',
   },
@@ -300,18 +330,18 @@ const dashboardStyles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: '#E8F5E9', // Light Green
+    backgroundColor: '#E8F5E9',
     justifyContent: 'center',
     alignItems: 'center',
   },
   refreshIcon: {
     fontSize: 20,
-    color: '#2E7D32', // Forest Green
+    color: '#2E7D32',
   },
   // Carbon Footprint Card
   footprintCard: {
     marginHorizontal: 24,
-    backgroundColor: '#F1F8E9', // Light Green background
+    backgroundColor: '#F1F8E9',
     borderRadius: 20,
     padding: 24,
     shadowColor: '#000',
@@ -330,12 +360,7 @@ const dashboardStyles = StyleSheet.create({
   footprintTitle: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#37474F', // Charcoal Gray
-    fontFamily: 'System',
-  },
-  footprintPeriod: {
-    fontSize: 14,
-    color: '#607D8B', // Blue Gray
+    color: '#37474F',
     fontFamily: 'System',
   },
   footprintValueContainer: {
@@ -346,14 +371,14 @@ const dashboardStyles = StyleSheet.create({
   footprintValue: {
     fontSize: 48,
     fontWeight: '700',
-    color: '#2E7D32', // Forest Green
+    color: '#2E7D32',
     lineHeight: 56,
     fontFamily: 'System',
   },
   footprintUnit: {
     fontSize: 18,
     fontWeight: '500',
-    color: '#607D8B', // Blue Gray
+    color: '#607D8B',
     marginBottom: 8,
     marginLeft: 4,
     fontFamily: 'System',
@@ -363,27 +388,7 @@ const dashboardStyles = StyleSheet.create({
   },
   footprintDescription: {
     fontSize: 14,
-    color: '#607D8B', // Blue Gray
-    fontFamily: 'System',
-  },
-  footprintFooter: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  footprintIndicator: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  indicatorDot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    marginRight: 6,
-    backgroundColor: '#2E7D32', // Forest Green
-  },
-  indicatorText: {
-    fontSize: 12,
-    color: '#607D8B', // Blue Gray
+    color: '#607D8B',
     fontFamily: 'System',
   },
   // Devices Section
@@ -399,11 +404,11 @@ const dashboardStyles = StyleSheet.create({
   sectionTitle: {
     fontSize: 20,
     fontWeight: '600',
-    color: '#37474F', // Charcoal Gray
+    color: '#37474F',
     fontFamily: 'System',
   },
   addButton: {
-    backgroundColor: '#2E7D32', // Forest Green
+    backgroundColor: '#2E7D32',
     paddingVertical: 10,
     paddingHorizontal: 16,
     borderRadius: 12,
@@ -439,12 +444,12 @@ const dashboardStyles = StyleSheet.create({
   searchIcon: {
     fontSize: 18,
     marginRight: 12,
-    color: '#607D8B', // Blue Gray
+    color: '#607D8B',
   },
   searchInput: {
     flex: 1,
     fontSize: 16,
-    color: '#37474F', // Charcoal Gray
+    color: '#37474F',
     fontFamily: 'System',
   },
   clearButton: {
@@ -452,7 +457,7 @@ const dashboardStyles = StyleSheet.create({
   },
   clearButtonText: {
     fontSize: 16,
-    color: '#607D8B', // Blue Gray
+    color: '#607D8B',
   },
   // Device List
   deviceList: {
@@ -471,21 +476,21 @@ const dashboardStyles = StyleSheet.create({
   emptyStateTitle: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#37474F', // Charcoal Gray
+    color: '#37474F',
     marginBottom: 8,
     textAlign: 'center',
     fontFamily: 'System',
   },
   emptyStateDescription: {
     fontSize: 14,
-    color: '#607D8B', // Blue Gray
+    color: '#607D8B',
     textAlign: 'center',
     marginBottom: 24,
     lineHeight: 20,
     fontFamily: 'System',
   },
   emptyStateButton: {
-    backgroundColor: '#2E7D32', // Forest Green
+    backgroundColor: '#2E7D32',
     paddingVertical: 12,
     paddingHorizontal: 24,
     borderRadius: 12,

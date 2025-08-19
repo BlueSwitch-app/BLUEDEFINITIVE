@@ -72,38 +72,43 @@ export default function MyModal({
   // Estado para guardar el equipo seleccionado
   const [selectedTeam, setSelectedTeam] = useState("no_team");
   useEffect(() => {
-    const fetchTeams = async () => {
-      if (!email) return;
-      try {
-        const response = await fetch("https://blueswitch-jet.vercel.app/read_teams", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email }),
-        });
-        const data = await response.json();
-        if (response.ok && data.teams) {
-          const teamsWithDefault: UserTeam[] = [
-            { name: getTranslation("Sin equipo"), code: "no_team", role: "none" },
-            ...data.teams,
-          ];
-          setUserTeams(teamsWithDefault);
-          
-          const names = teamsWithDefault.map((team) => team.name);
-          setTeamNamesList(names);
-          
-        } else {
-          setUserTeams([{ name: getTranslation("Sin equipo"), code: "no_team", role: "none" }]);
-          setTeamNamesList([getTranslation("Sin equipo")]);
-        }
-      } catch (error) {
-        setUserTeams([{ name: getTranslation("Sin equipo"), code: "no_team", role: "none" }]);
-        setTeamNamesList([getTranslation("Sin equipo")]);
+  const fetchTeams = async () => {
+    if (!email) return;
+
+    try {
+      const response = await fetch("https://blueswitch-jet.vercel.app/read_teams", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      interface ReadTeamsResponse {
+        teams?: UserTeam[];
       }
-    };
-    fetchTeams();
-  }, [email]);
+
+      const data: ReadTeamsResponse = await response.json();
+
+      const defaultTeam: UserTeam = { name: getTranslation("Sin equipo"), code: "no_team", role: "none" };
+
+      if (response.ok && data.teams) {
+        const teamsWithDefault: UserTeam[] = [defaultTeam, ...data.teams];
+        setUserTeams(teamsWithDefault);
+        setTeamNamesList(teamsWithDefault.map(team => team.name));
+      } else {
+        setUserTeams([defaultTeam]);
+        setTeamNamesList([defaultTeam.name]);
+      }
+    } catch (error) {
+      const defaultTeam: UserTeam = { name: getTranslation("Sin equipo"), code: "no_team", role: "none" };
+      setUserTeams([defaultTeam]);
+      setTeamNamesList([defaultTeam.name]);
+    }
+  };
+
+  fetchTeams();
+}, [email]);
   const handleSave = async () => {
     if (!nombre || !categoria || !watts) {
       Alert.alert(getTranslation("Campos incompletos"), getTranslation("Por favor completa todos los campos obligatorios"));
