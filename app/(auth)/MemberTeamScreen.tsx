@@ -38,10 +38,11 @@ const MemberTeamScreen: React.FC<MemberTeamScreenProps> = ({
           onPress: async () => {
             if (!team.code || !email) return;
             try {
-              const response = await fetch(`${API_BASE_URL}/leave_team`, {
+              const response = await fetch(`${API_BASE_URL}/api/Teams/leave_team`, {
                 method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
+                 headers: {
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": "*"
                 },
                 body: JSON.stringify({ team_code: team.code, email: email }), // Corregido el nombre del parámetro
               });
@@ -65,11 +66,12 @@ const MemberTeamScreen: React.FC<MemberTeamScreenProps> = ({
     const fetchTeamsDevices = async () => {
       if (!team.code) return;
       try {
-        const response = await fetch(`${API_BASE_URL}/get_devices`, {
+        const response = await fetch(`${API_BASE_URL}/api/Devices/get_devices`, {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+           headers: {
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": "*"
+                },
           body: JSON.stringify({ team_code: team.code }),
         });
         const data = await response.json();
@@ -89,11 +91,12 @@ const MemberTeamScreen: React.FC<MemberTeamScreenProps> = ({
     const fetchTeamsMembers = async () => {
       if (!team.code) return;
       try {
-        const response = await fetch(`${API_BASE_URL}/get_members`, {
+        const response = await fetch(`${API_BASE_URL}/api/Teams/get_members`, {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+           headers: {
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": "*"
+                },
           body: JSON.stringify({ team_code: team.code }),
         });
         const data = await response.json();

@@ -70,11 +70,12 @@ const MembersAdminCard: React.FC<MembersAdminCardProps> = ({
     }
     
     try {
-      const response = await fetch(`${API_BASE_URL}/update_members`, {
+      const response = await fetch(`${API_BASE_URL}/api/Teams/update_members`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+         headers: {
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": "*"
+                },
         body: JSON.stringify({ team_code: teamcode, email, action })
       });
       

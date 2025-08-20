@@ -12,7 +12,8 @@ import { Linking, Pressable, StyleSheet, TextInput, TouchableOpacity } from 'rea
 import { auth2 } from './firebaseConfig';
 
 // API Base URL
-const API_BASE_URL = 'https://bluebackend.vercel.app';
+const API_BASE_URL = 'https://bluebackend-blues-projects-c71d4d1f.vercel.app';
+
 
 // Custom Input Component
 interface CustomInputProps {
@@ -37,8 +38,8 @@ const CustomInput: React.FC<CustomInputProps> = ({
     rightComponent,
 }) => {
     const [isFocused, setIsFocused] = useState(false);
-    const borderColor = error ? '#EF5350' : isFocused ? '#2E7D32' : '#E5E7EB';
-    const backgroundColor = error ? '#FFEBEE' : isFocused ? '#E8F5E9' : '#FFFFFF';
+    const borderColor = error ? '#EF5350' : isFocused ? '#1565C0' : '#E5E7EB';
+    const backgroundColor = error ? '#FFEBEE' : isFocused ? '#E3F2FD' : '#FFFFFF';
     
     return (
         <View style={styles.inputContainer}>
@@ -100,10 +101,11 @@ export default function AuthScreen() {
             await createUserWithEmailAndPassword(auth2, email, password);
             
             // Create user in backend
-            const response = await fetch(`${API_BASE_URL}/create_user`, {
+            const response = await fetch(`${API_BASE_URL}/api/User/create_user`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": "*"
                 },
                 body: JSON.stringify({ nombre, email, password, city, phone }),
             });
@@ -153,10 +155,11 @@ export default function AuthScreen() {
             await signInWithEmailAndPassword(auth2, email, password);
             
             // Get user data from backend
-            const response = await fetch(`${API_BASE_URL}/get_user`, {
+            const response = await fetch(`${API_BASE_URL}/api/User/get_user`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": "*"
                 },
                 body: JSON.stringify({ email }),
             });
@@ -197,7 +200,7 @@ export default function AuthScreen() {
                 
                 {loading ? (
                     <View style={styles.loadingContainer}>
-                        <Spinner color="#2E7D32" />
+                        <Spinner color="#1565C0" />
                     </View>
                 ) : (
                     <View style={styles.card}>
@@ -221,41 +224,41 @@ export default function AuthScreen() {
                             <View style={styles.formContainer}>
                                 <CustomInput
                                     placeholder={getTranslation('Full Name')}
-                                    icon={<User size={22} color="#607D8B" />}
+                                    icon={<User size={22} color="#1976D2" />}
                                     onChangeText={setNombre}
                                 />
                                 <CustomInput
                                     placeholder={getTranslation('Email Address')}
-                                    icon={<Mail size={22} color="#607D8B" />}
+                                    icon={<Mail size={22} color="#1976D2" />}
                                     keyboardType='email-address'
                                     onChangeText={setEmail}
                                     error={emailError}
                                 />
                                 <CustomInput
                                     placeholder={getTranslation('Password')}
-                                    icon={<Lock size={22} color="#607D8B" />}
+                                    icon={<Lock size={22} color="#1976D2" />}
                                     secureTextEntry={!showPassword}
                                     onChangeText={setPassword}
                                     error={passwordError}
                                     rightComponent={
                                         <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
                                             {showPassword ? (
-                                                <EyeOff size={22} color="#607D8B" />
+                                                <EyeOff size={22} color="#1976D2" />
                                             ) : (
-                                                <Eye size={22} color="#607D8B" />
+                                                <Eye size={22} color="#1976D2" />
                                             )}
                                         </TouchableOpacity>
                                     }
                                 />
                                 <CustomInput
                                     placeholder={getTranslation('Phone Number')}
-                                    icon={<Phone size={22} color="#607D8B" />}
+                                    icon={<Phone size={22} color="#1976D2" />}
                                     keyboardType='phone-pad'
                                     onChangeText={setPhone}
                                 />
                                 <CustomInput
                                     placeholder={getTranslation('City')}
-                                    icon={<MapPin size={22} color="#607D8B" />}
+                                    icon={<MapPin size={22} color="#1976D2" />}
                                     onChangeText={setCity}
                                 />
                                 
@@ -275,7 +278,7 @@ export default function AuthScreen() {
                             <View style={styles.formContainer}>
                                 <CustomInput
                                     placeholder={getTranslation('Email Address')}
-                                    icon={<Mail size={22} color="#607D8B" />}
+                                    icon={<Mail size={22} color="#1976D2" />}
                                     value={email}
                                     onChangeText={setEmail}
                                     error={emailError}
@@ -283,15 +286,15 @@ export default function AuthScreen() {
                                 />
                                 <CustomInput
                                     placeholder={getTranslation('Password')}
-                                    icon={<Lock size={22} color="#607D8B" />}
+                                    icon={<Lock size={22} color="#1976D2" />}
                                     secureTextEntry={!showPassword}
                                     onChangeText={setPassword}
                                     rightComponent={
                                         <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
                                             {showPassword ? (
-                                                <EyeOff size={22} color="#607D8B" />
+                                                <EyeOff size={22} color="#1976D2" />
                                             ) : (
-                                                <Eye size={22} color="#607D8B" />
+                                                <Eye size={22} color="#1976D2" />
                                             )}
                                         </TouchableOpacity>
                                     }
@@ -329,13 +332,13 @@ const styles = StyleSheet.create({
     logo: {
         fontSize: 36,
         fontWeight: '700',
-        color: '#2E7D32', // Forest Green
+        color: '#1565C0', // Azul oscuro
         marginBottom: 8,
         letterSpacing: 1,
     },
     tagline: {
         fontSize: 16,
-        color: '#607D8B', // Blue Gray
+        color: '#42A5F5', // Azul brillante
         marginBottom: 40,
         textAlign: 'center',
     },
@@ -358,7 +361,7 @@ const styles = StyleSheet.create({
     },
     tabContainer: {
         flexDirection: 'row',
-        backgroundColor: '#F1F8E9', // Light Green
+        backgroundColor: '#E3F2FD', // Azul claro
         borderRadius: 16,
         marginBottom: 32,
         padding: 4,
@@ -370,10 +373,10 @@ const styles = StyleSheet.create({
         borderRadius: 12,
     },
     activeTab: {
-        backgroundColor: '#2E7D32', // Forest Green
+        backgroundColor: '#1565C0', // Azul oscuro
     },
     tabText: {
-        color: '#607D8B', // Blue Gray
+        color: '#1976D2', // Azul medio
         fontWeight: '600',
         fontSize: 16,
     },
@@ -385,7 +388,7 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     button: {
-        backgroundColor: '#2E7D32', // Forest Green
+        backgroundColor: '#1565C0', // Azul oscuro
         paddingVertical: 16,
         borderRadius: 12,
         alignItems: 'center',
@@ -398,13 +401,13 @@ const styles = StyleSheet.create({
         fontSize: 16,
     },
     terms: {
-        color: '#0288D1', // Sky Blue
+        color: '#0288D1', // Azul cielo
         fontSize: 14,
         textAlign: 'center',
         textDecorationLine: 'underline',
     },
     forgotPasswordLink: {
-        color: '#0288D1', // Sky Blue
+        color: '#0288D1', // Azul cielo
         fontSize: 14,
         textAlign: 'center',
         textDecorationLine: 'underline',
@@ -433,13 +436,13 @@ const styles = StyleSheet.create({
     input: {
         flex: 1,
         fontSize: 16,
-        color: '#37474F', // Charcoal Gray
+        color: '#37474F', // Gris carbón
     },
     inputRight: {
         marginLeft: 16,
     },
     inputError: {
-        color: '#EF5350', // Coral Red
+        color: '#EF5350', // Rojo coral
         fontSize: 12,
         marginTop: 6,
         marginLeft: 4,

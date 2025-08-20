@@ -38,7 +38,7 @@ const DashboardScreen: React.FC<DashboardScreenProps> = ({ email }) => {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [apiUrl] = useState<string>("https://bluebackend-blues-projects-c71d4d1f.vercel.app"); // URL del backend
+  const [apiUrl] = useState<string>("https://backend-mu-one-x263dh4j0n.vercel.app"); // URL del backend
 
   // Memoize filtered devices for performance
   const filteredDevices = useMemo(() => {
@@ -55,9 +55,10 @@ const DashboardScreen: React.FC<DashboardScreenProps> = ({ email }) => {
     try {
       const response = await fetch(`${apiUrl}/get_devices`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+         headers: {
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": "*"
+                },
         body: JSON.stringify({ email }),
       });
       
@@ -95,11 +96,11 @@ const DashboardScreen: React.FC<DashboardScreenProps> = ({ email }) => {
     if (!email) return;
     
     try {
-      const response = await fetch(`${apiUrl}/read-CO2`, {
+      const response = await fetch(`${apiUrl}/read_CO2`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+         headers: {
+                    "Content-Type": "application/json"
+                },
         body: JSON.stringify({ email }),
       });
       

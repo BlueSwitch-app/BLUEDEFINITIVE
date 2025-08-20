@@ -84,11 +84,12 @@ const StatisticsModal: React.FC<StatisticsModalProps> = ({
     const fetchStatistics = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`${API_BASE_URL}/read_statistics_peruser`, {
+        const response = await fetch(`${API_BASE_URL}/api/User/read_statistics_peruser`, {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+           headers: {
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": "*"
+                },
           body: JSON.stringify({ email, team_code }),
         });
         

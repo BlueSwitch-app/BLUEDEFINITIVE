@@ -52,11 +52,12 @@ const ProfileSettingsScreen: React.FC<props> = ({email}) => {
     }
     
     if(result){
-      const response = await fetch(`${API_BASE_URL}/upload_avatar`, {
+      const response = await fetch(`${API_BASE_URL}/api/User/upload_avatar`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+         headers: {
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": "*"
+                },
         body: JSON.stringify({
           email,
           imageUri: result.assets?.[0].uri
@@ -79,11 +80,12 @@ const ProfileSettingsScreen: React.FC<props> = ({email}) => {
     const fetchDevices = async () => {
       if (!email) return;
       try {
-        const response = await fetch(`${API_BASE_URL}/get_user`, {
+        const response = await fetch(`${API_BASE_URL}/api/User/get_user`, {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+           headers: {
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": "*"
+                },
           body: JSON.stringify({ email }),
         });
         const data = await response.json();
@@ -117,11 +119,12 @@ const ProfileSettingsScreen: React.FC<props> = ({email}) => {
         email: userdata.email // para identificar el usuario en el servidor
       };
       
-      const response = await fetch(`${API_BASE_URL}/update_user`, {
+      const response = await fetch(`${API_BASE_URL}/api/User/update_user`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+         headers: {
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": "*"
+                },
         body: JSON.stringify(updatedData),
       });
       

@@ -71,11 +71,12 @@ const CreateTeamModal: React.FC<CreateTeamModalProps> = ({
     
     setIsLoading(true);
     try {
-      const response = await fetch(`${API_BASE_URL}/create_team`, {
+      const response = await fetch(`${API_BASE_URL}/api/Teams/create_team`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+         headers: {
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": "*"
+                },
         body: JSON.stringify({ team_name: newTeamName, email: email }),
       });
       
@@ -173,11 +174,12 @@ const JoinTeamModal: React.FC<JoinTeamModalProps> = ({
     
     setIsLoading(true);
     try {
-      const response = await fetch(`${API_BASE_URL}/join_team`, {
+      const response = await fetch(`${API_BASE_URL}/api/Teams/join_team`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+         headers: {
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": "*"
+                },
         body: JSON.stringify({
           email: email,
           team_name: joinTeamName,
@@ -282,11 +284,12 @@ const TeamsScreen: React.FC<TeamsScreenProps> = ({ email }) => {
       
       setIsLoading(true);
       try {
-        const response = await fetch(`${API_BASE_URL}/read_teams`, {
+        const response = await fetch(`${API_BASE_URL}/api/Teams/read_teams`, {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+           headers: {
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": "*"
+                },
           body: JSON.stringify({ email }),
         });
         

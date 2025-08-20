@@ -86,11 +86,12 @@ const StatisticsPerDevModal: React.FC<StatisticsModalProps> = ({
       
       try {
         setLoading(true);
-        const response = await fetch(`${API_BASE_URL}/read_perDev`, {
+        const response = await fetch(`${API_BASE_URL}/api/CO2/read_perDev`, {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+           headers: {
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": "*"
+                },
           body: JSON.stringify({ data: [device] }),
         });
         

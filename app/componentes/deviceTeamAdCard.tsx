@@ -76,11 +76,12 @@ const DeviceTeamAdCard: React.FC<DeviceCardProps> = ({
     }
     
     try {
-      const response = await fetch(`${API_BASE_URL}/update-status`, {
+      const response = await fetch(`${API_BASE_URL}/api/Teams/update-status`, {
         method: "POST", // Cambiado de PUT a POST para coincidir con el backend
-        headers: {
-          "Content-Type": "application/json",
-        },
+         headers: {
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": "*"
+                },
         body: JSON.stringify({ id, status: newState, argument: argumentValue }),
       });
       
