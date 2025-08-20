@@ -8,7 +8,7 @@ import CarbonFootprintModal from "../componentes/ModalCO2";
 import { Device, Team, TeamMember } from "./types";
 
 // API Base URL
-const API_BASE_URL = 'https://bluebackend-blues-projects-c71d4d1f.vercel.app';
+const API_BASE_URL = 'http://10.161.22.203:5000';
 
 interface AdminTeamScreenProps {
   team: Team;
@@ -41,7 +41,7 @@ const AdminTeamScreen: React.FC<AdminTeamScreenProps> = ({
     const fetchTeamsDevices = async () => {
       if (!team.code) return;
       try {
-        const response = await fetch(`${API_BASE_URL}/api/Devices/get_devices`, {
+        const response = await fetch(`${API_BASE_URL}/get_devices`, {
           method: "POST",
           headers: {
                     "Content-Type": "application/json",
@@ -67,11 +67,11 @@ const AdminTeamScreen: React.FC<AdminTeamScreenProps> = ({
     if (!team.code) return;
     const fetchCO2 = async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/api/Teams/read-CO2`, {
+        const response = await fetch(`${API_BASE_URL}/read-CO2`, {
           method: "POST",
         headers: {
                     "Content-Type": "application/json",
-                    "Access-Control-Allow-Origin": "true"
+                    "Access-Control-Allow-Origin": "*"
                 },
           body: JSON.stringify({ team_code: team.code }),
         });
@@ -98,7 +98,7 @@ const AdminTeamScreen: React.FC<AdminTeamScreenProps> = ({
     const fetchTeamsMembers = async () => {
       if (!team.code) return;
       try {
-        const response = await fetch(`${API_BASE_URL}/api/Teams/get_members`, {
+        const response = await fetch(`${API_BASE_URL}/get_members`, {
           method: "POST",
        headers: {
                     "Content-Type": "application/json",
@@ -133,7 +133,7 @@ const AdminTeamScreen: React.FC<AdminTeamScreenProps> = ({
           style: "destructive",
           onPress: async () => {
             try {
-              const response = await fetch(`${API_BASE_URL}/api/Teams/delete_team`, {
+              const response = await fetch(`${API_BASE_URL}/delete_team`, {
                 method: "POST",
                headers: {
                     "Content-Type": "application/json",

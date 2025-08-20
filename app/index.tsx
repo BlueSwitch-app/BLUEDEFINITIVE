@@ -101,7 +101,7 @@ export default function AuthScreen() {
             await createUserWithEmailAndPassword(auth2, email, password);
             
             // Create user in backend
-            const response = await fetch(`${API_BASE_URL}/api/User/create_user`, {
+            const response = await fetch(`${API_BASE_URL}/create_user`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -155,7 +155,7 @@ export default function AuthScreen() {
             await signInWithEmailAndPassword(auth2, email, password);
             
             // Get user data from backend
-            const response = await fetch(`${API_BASE_URL}/api/User/get_user`, {
+            const response = await fetch(`${API_BASE_URL}/get_user`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

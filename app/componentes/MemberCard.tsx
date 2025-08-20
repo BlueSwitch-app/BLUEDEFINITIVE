@@ -10,7 +10,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import StatisticsModal from "./StadisticsPerUserModal"; // Import the StatisticsModal component
 
 // API Base URL
-const API_BASE_URL = 'https://bluebackend-blues-projects-c71d4d1f.vercel.app';
+const API_BASE_URL = 'http://10.161.22.203:5000';
 
 interface MenuItemProps {
   icon: string;
@@ -70,7 +70,7 @@ const MembersAdminCard: React.FC<MembersAdminCardProps> = ({
     }
     
     try {
-      const response = await fetch(`${API_BASE_URL}/api/Teams/update_members`, {
+      const response = await fetch(`${API_BASE_URL}/update_members`, {
         method: 'POST',
          headers: {
                     "Content-Type": "application/json",

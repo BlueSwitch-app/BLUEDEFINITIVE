@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 
 // API Base URL
-const API_BASE_URL = 'https://bluebackend-blues-projects-c71d4d1f.vercel.app';
+const API_BASE_URL = 'http://10.161.22.203:5000';
 
 interface StatCardProps {
   title: string;

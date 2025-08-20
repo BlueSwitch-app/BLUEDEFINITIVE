@@ -5,7 +5,7 @@ import DeviceCard from "../componentes/deviceTeamCard";
 import { Device, Team, TeamMember } from "./types";
 
 // API Base URL
-const API_BASE_URL = 'https://bluebackend-blues-projects-c71d4d1f.vercel.app';
+const API_BASE_URL = 'http://10.161.22.203:5000';
 
 interface MemberTeamScreenProps {
   team: Team;
@@ -38,7 +38,7 @@ const MemberTeamScreen: React.FC<MemberTeamScreenProps> = ({
           onPress: async () => {
             if (!team.code || !email) return;
             try {
-              const response = await fetch(`${API_BASE_URL}/api/Teams/leave_team`, {
+              const response = await fetch(`${API_BASE_URL}/leave_team`, {
                 method: "POST",
                  headers: {
                     "Content-Type": "application/json",
@@ -66,7 +66,7 @@ const MemberTeamScreen: React.FC<MemberTeamScreenProps> = ({
     const fetchTeamsDevices = async () => {
       if (!team.code) return;
       try {
-        const response = await fetch(`${API_BASE_URL}/api/Devices/get_devices`, {
+        const response = await fetch(`${API_BASE_URL}/get_devices`, {
           method: "POST",
            headers: {
                     "Content-Type": "application/json",
@@ -91,7 +91,7 @@ const MemberTeamScreen: React.FC<MemberTeamScreenProps> = ({
     const fetchTeamsMembers = async () => {
       if (!team.code) return;
       try {
-        const response = await fetch(`${API_BASE_URL}/api/Teams/get_members`, {
+        const response = await fetch(`${API_BASE_URL}/get_members`, {
           method: "POST",
            headers: {
                     "Content-Type": "application/json",

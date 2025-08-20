@@ -18,7 +18,7 @@ import MemberTeamScreen from "./MemberTeamScreen";
 import { Team } from "./types";
 
 // API Base URL
-const API_BASE_URL = 'https://bluebackend-blues-projects-c71d4d1f.vercel.app';
+const API_BASE_URL = 'http://10.161.22.203:5000';
 
 // Interface para MessageBox
 interface MessageBoxProps {
@@ -71,7 +71,7 @@ const CreateTeamModal: React.FC<CreateTeamModalProps> = ({
     
     setIsLoading(true);
     try {
-      const response = await fetch(`${API_BASE_URL}/api/Teams/create_team`, {
+      const response = await fetch(`${API_BASE_URL}/create_team`, {
         method: "POST",
          headers: {
                     "Content-Type": "application/json",
@@ -174,7 +174,7 @@ const JoinTeamModal: React.FC<JoinTeamModalProps> = ({
     
     setIsLoading(true);
     try {
-      const response = await fetch(`${API_BASE_URL}/api/Teams/join_team`, {
+      const response = await fetch(`${API_BASE_URL}/join_team`, {
         method: "POST",
          headers: {
                     "Content-Type": "application/json",
@@ -284,7 +284,7 @@ const TeamsScreen: React.FC<TeamsScreenProps> = ({ email }) => {
       
       setIsLoading(true);
       try {
-        const response = await fetch(`${API_BASE_URL}/api/Teams/read_teams`, {
+        const response = await fetch(`${API_BASE_URL}/read_teams`, {
           method: "POST",
            headers: {
                     "Content-Type": "application/json",

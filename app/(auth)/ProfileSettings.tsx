@@ -6,10 +6,8 @@ import React, { useEffect, useState } from 'react';
 import {
   Dimensions,
   Image,
-  Platform,
   ScrollView,
   StyleSheet,
-  Switch,
   Text,
   TextInput,
   TouchableOpacity,
@@ -18,7 +16,7 @@ import {
 import { auth2 } from '../firebaseConfig';
 
 // API Base URL
-const API_BASE_URL = 'https://bluebackend-blues-projects-c71d4d1f.vercel.app';
+const API_BASE_URL = 'http://10.161.22.203:5000';
 
 const { width } = Dimensions.get('window');
 
@@ -52,7 +50,7 @@ const ProfileSettingsScreen: React.FC<props> = ({email}) => {
     }
     
     if(result){
-      const response = await fetch(`${API_BASE_URL}/api/User/upload_avatar`, {
+      const response = await fetch(`${API_BASE_URL}/upload_avatar`, {
         method: 'POST',
          headers: {
                     "Content-Type": "application/json",
@@ -80,7 +78,7 @@ const ProfileSettingsScreen: React.FC<props> = ({email}) => {
     const fetchDevices = async () => {
       if (!email) return;
       try {
-        const response = await fetch(`${API_BASE_URL}/api/User/get_user`, {
+        const response = await fetch(`${API_BASE_URL}/get_user`, {
           method: "POST",
            headers: {
                     "Content-Type": "application/json",
@@ -119,7 +117,7 @@ const ProfileSettingsScreen: React.FC<props> = ({email}) => {
         email: userdata.email // para identificar el usuario en el servidor
       };
       
-      const response = await fetch(`${API_BASE_URL}/api/User/update_user`, {
+      const response = await fetch(`${API_BASE_URL}/update_user`, {
         method: "POST",
          headers: {
                     "Content-Type": "application/json",
