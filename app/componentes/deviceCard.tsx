@@ -10,7 +10,7 @@ import { StyleSheet, Switch, Text, TouchableOpacity, View } from "react-native";
 import StatisticsModal from "./StadisticsPerDevModal"; // Import the StatisticsModal component
 
 // API Base URL
-const API_BASE_URL = 'http://10.161.22.203:5000';
+const API_BASE_URL = 'https://bluebackkk.vercel.app';
 
 interface DeviceCardProps {
   name: string;
@@ -103,8 +103,7 @@ const DeviceCard: React.FC<DeviceCardProps> = ({
       const response = await fetch(`${API_BASE_URL}/update-status`, {
         method: "POST", // Cambiado de PUT a POST para coincidir con el backend
          headers: {
-                    "Content-Type": "application/json",
-                    "Access-Control-Allow-Origin": "*"
+                    "Content-Type": "application/json"
                 },
         body: JSON.stringify({ id, status: newState, argument: argumentValue }),
       });

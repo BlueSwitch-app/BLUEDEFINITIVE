@@ -38,8 +38,40 @@ const DashboardScreen: React.FC<DashboardScreenProps> = ({ email }) => {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-const apiUrl = 'http://10.161.22.203:5000';
+const apiUrl = 'https://bluebackkk.vercel.app';
+const diagnoseNetwork = async () => {
+  try {
+    // Prueba 1: Conexión básica
+    const test1 = await fetch(`${apiUrl}/connection`, { method: 'GET' });
+    console.log("Test 1 (conexión básica):", test1.status);
+    
+    // Prueba 2: Preflight OPTIONS
+    const test2 = await fetch(`${apiUrl}/get_devices`, { 
+      method: 'OPTIONS',
+      headers: { 'Content-Type': 'application/json' }
+      
+    });
+    console.log("Test 2 (preflight):", test2.status);
+    
+    // Prueba 3: Solicitud real
+    const test3 = await fetch(`${apiUrl}/get_devices`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: 'test@example.com' })
+    });
+    console.log("Test 3 (solicitud real):", test3.status);
+    const test4 = await fetch(`${apiUrl}/read-CO2`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: 'crisesv4@gmail.com' })
+    });
+    console.log("Test 4 CO2 (solicitud real):", test4.status);
+  } catch (error) {
+    console.error("Diagnóstico de red falló:", error);
+  }
+};
 
+diagnoseNetwork();
 
   // Memoize filtered devices for performance
   const filteredDevices = useMemo(() => {
@@ -50,45 +82,48 @@ const apiUrl = 'http://10.161.22.203:5000';
   }, [devices, searchTerm]);
 
   // Fetch devices data - MODIFICADO
-  const fetchDevices = useCallback(async () => {
+const fetchDevices = useCallback(async () => {
     if (!email) return;
     
     try {
+      console.log("Intentando obtener dispositivos para:", email);
+      console.log("URL de la API:", `${apiUrl}/get_devices`);
+      
       const response = await fetch(`${apiUrl}/get_devices`, {
         method: "POST",
-         headers: {
-                    "Content-Type": "application/json",
-                    "Access-Control-Allow-Origin": "*"
-                },
+        headers: {
+          "Content-Type": "application/json"
+        },
         body: JSON.stringify({ email }),
       });
       
-      const data = await response.json();
-      
-      if (response.ok) {
-        // Transformar los datos para que coincidan con la interfaz Device
-        const transformedDevices = data.map((device: any) => ({
-          nombre: device.nombre,
-          state: device.state,
-          created_at: device.created_at[0][0], // Tomar la primera fecha de inicio
-          categoria: device.categoria,
-          watts: device.watts,
-          stringid: device.stringid,
-          color: device.color,
-          favorite: device.favorite || false,
-          team: device.team
-        }));
-        
-        setDevices(transformedDevices);
-        console.log("Dispositivos cargados:", transformedDevices);
-        setError(null);
-      } else {
-        setError("Error en respuesta del servidor o no hay equipos");
-        console.error("Server error:", data);
+      // Verificar si la respuesta es exitosa
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(`Error ${response.status}: ${errorData.error || errorData.mensaje || 'Error desconocido'}`);
       }
-    } catch (err) {
-      setError("Error fetching devices");
-      console.error("Error fetching devices:", err);
+      
+      const data = await response.json();
+      console.log("Respuesta del servidor:", data);
+      
+      // Transformar los datos para que coincidan con la interfaz Device
+      const transformedDevices = data.map((device: any) => ({
+        nombre: device.nombre,
+        state: device.state,
+        created_at: device.created_at[0][0], // Tomar la primera fecha de inicio
+        categoria: device.categoria,
+        watts: device.watts,
+        stringid: device.stringid,
+        color: device.color,
+        favorite: device.favorite || false,
+        team: device.team
+      }));
+      
+      setDevices(transformedDevices);
+      setError(null);
+    } catch (err:any) {
+      console.error("Error detallado:", err);
+      setError(`Error fetching devices: ${err.message}`);
     }
   }, [email, apiUrl]);
 
@@ -97,12 +132,11 @@ const apiUrl = 'http://10.161.22.203:5000';
     if (!email) return;
     
     try {
-      const response = await fetch(`${apiUrl}/read_CO2`, {
+      const response = await fetch(`${apiUrl}/read-CO2`, {
         method: "POST",
          headers: {
                     "Content-Type": "application/json"
-                    ,
-                    "Access-Control-Allow-Origin": "*"
+                    
                 },
         body: JSON.stringify({ email }),
       });
@@ -289,7 +323,7 @@ const apiUrl = 'http://10.161.22.203:5000';
 const dashboardStyles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#E7E3D6', // Sisal Light Shade 01
   },
   scrollView: {
     flex: 1,
@@ -301,12 +335,12 @@ const dashboardStyles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#E7E3D6',
   },
   loadingText: {
     marginTop: 16,
     fontSize: 16,
-    color: '#607D8B',
+    color: '#928D7C', // Sisal Dark Shade 02
     fontFamily: 'System',
   },
   // Header
@@ -321,12 +355,12 @@ const dashboardStyles = StyleSheet.create({
   headerTitle: {
     fontSize: 28,
     fontWeight: '700',
-    color: '#2E7D32',
+    color: '#344E7E', // East Bay Base
     fontFamily: 'System',
   },
   headerSubtitle: {
     fontSize: 16,
-    color: '#607D8B',
+    color: '#928D7C', // Sisal Dark Shade 02
     marginTop: 4,
     fontFamily: 'System',
   },
@@ -334,18 +368,18 @@ const dashboardStyles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: '#E8F5E9',
+    backgroundColor: '#44619120', // East Bay Light Shade 01 translúcido
     justifyContent: 'center',
     alignItems: 'center',
   },
   refreshIcon: {
     fontSize: 20,
-    color: '#2E7D32',
+    color: '#344E7E', // East Bay Base
   },
   // Carbon Footprint Card
   footprintCard: {
     marginHorizontal: 24,
-    backgroundColor: '#F1F8E9',
+    backgroundColor: '#FFFFFF',
     borderRadius: 20,
     padding: 24,
     shadowColor: '#000',
@@ -364,7 +398,7 @@ const dashboardStyles = StyleSheet.create({
   footprintTitle: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#37474F',
+    color: '#283F70', // East Bay Dark Shade 01
     fontFamily: 'System',
   },
   footprintValueContainer: {
@@ -375,14 +409,14 @@ const dashboardStyles = StyleSheet.create({
   footprintValue: {
     fontSize: 48,
     fontWeight: '700',
-    color: '#2E7D32',
+    color: '#344E7E', // East Bay Base
     lineHeight: 56,
     fontFamily: 'System',
   },
   footprintUnit: {
     fontSize: 18,
     fontWeight: '500',
-    color: '#607D8B',
+    color: '#928D7C', // Sisal Dark Shade 02
     marginBottom: 8,
     marginLeft: 4,
     fontFamily: 'System',
@@ -392,7 +426,7 @@ const dashboardStyles = StyleSheet.create({
   },
   footprintDescription: {
     fontSize: 14,
-    color: '#607D8B',
+    color: '#928D7C', // Sisal Dark Shade 02
     fontFamily: 'System',
   },
   // Devices Section
@@ -408,22 +442,22 @@ const dashboardStyles = StyleSheet.create({
   sectionTitle: {
     fontSize: 20,
     fontWeight: '600',
-    color: '#37474F',
+    color: '#283F70', // East Bay Dark Shade 01
     fontFamily: 'System',
   },
   addButton: {
-    backgroundColor: '#2E7D32',
+    backgroundColor: '#344E7E', // East Bay Base
     paddingVertical: 10,
     paddingHorizontal: 16,
     borderRadius: 12,
-    shadowColor: '#2E7D32',
+    shadowColor: '#1B3062',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 4,
     elevation: 4,
   },
   addButtonText: {
-    color: '#FFFFFF',
+    color: '#E7E3D6', // Sisal Light Shade 01
     fontSize: 14,
     fontWeight: '600',
     fontFamily: 'System',
@@ -448,12 +482,12 @@ const dashboardStyles = StyleSheet.create({
   searchIcon: {
     fontSize: 18,
     marginRight: 12,
-    color: '#607D8B',
+    color: '#928D7C', // Sisal Dark Shade 02
   },
   searchInput: {
     flex: 1,
     fontSize: 16,
-    color: '#37474F',
+    color: '#283F70', // East Bay Dark Shade 01
     fontFamily: 'System',
   },
   clearButton: {
@@ -461,7 +495,7 @@ const dashboardStyles = StyleSheet.create({
   },
   clearButtonText: {
     fontSize: 16,
-    color: '#607D8B',
+    color: '#928D7C', // Sisal Dark Shade 02
   },
   // Device List
   deviceList: {
@@ -480,36 +514,37 @@ const dashboardStyles = StyleSheet.create({
   emptyStateTitle: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#37474F',
+    color: '#283F70', // East Bay Dark Shade 01
     marginBottom: 8,
     textAlign: 'center',
     fontFamily: 'System',
   },
   emptyStateDescription: {
     fontSize: 14,
-    color: '#607D8B',
+    color: '#928D7C', // Sisal Dark Shade 02
     textAlign: 'center',
     marginBottom: 24,
     lineHeight: 20,
     fontFamily: 'System',
   },
   emptyStateButton: {
-    backgroundColor: '#2E7D32',
+    backgroundColor: '#344E7E', // East Bay Base
     paddingVertical: 12,
     paddingHorizontal: 24,
     borderRadius: 12,
-    shadowColor: '#2E7D32',
+    shadowColor: '#1B3062',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 4,
     elevation: 4,
   },
   emptyStateButtonText: {
-    color: '#FFFFFF',
+    color: '#E7E3D6', // Sisal Light Shade 01
     fontSize: 14,
     fontWeight: '600',
     fontFamily: 'System',
   },
 });
+
 
 export default DashboardScreen;

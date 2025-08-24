@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 
 // API Base URL
-const API_BASE_URL = 'http://10.161.22.203:5000';
+const API_BASE_URL = 'https://bluebackkk.vercel.app';
 
 interface DeviceData {
   name: string;
@@ -86,11 +86,10 @@ const StatisticsPerDevModal: React.FC<StatisticsModalProps> = ({
       
       try {
         setLoading(true);
-        const response = await fetch(`${API_BASE_URL}/api/CO2/read_perDev`, {
+        const response = await fetch(`${API_BASE_URL}/read_perDev`, {
           method: "POST",
            headers: {
-                    "Content-Type": "application/json",
-                    "Access-Control-Allow-Origin": "*"
+                    "Content-Type": "application/json"
                 },
           body: JSON.stringify({ data: [device] }),
         });

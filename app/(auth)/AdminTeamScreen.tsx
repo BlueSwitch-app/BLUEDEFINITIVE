@@ -8,7 +8,7 @@ import CarbonFootprintModal from "../componentes/ModalCO2";
 import { Device, Team, TeamMember } from "./types";
 
 // API Base URL
-const API_BASE_URL = 'http://10.161.22.203:5000';
+const API_BASE_URL = 'https://bluebackkk.vercel.app';
 
 interface AdminTeamScreenProps {
   team: Team;
@@ -44,8 +44,7 @@ const AdminTeamScreen: React.FC<AdminTeamScreenProps> = ({
         const response = await fetch(`${API_BASE_URL}/get_devices`, {
           method: "POST",
           headers: {
-                    "Content-Type": "application/json",
-                    "Access-Control-Allow-Origin": "*"
+                    "Content-Type": "application/json"
                 },
           body: JSON.stringify({ team_code: team.code }),
         });
@@ -70,8 +69,7 @@ const AdminTeamScreen: React.FC<AdminTeamScreenProps> = ({
         const response = await fetch(`${API_BASE_URL}/read-CO2`, {
           method: "POST",
         headers: {
-                    "Content-Type": "application/json",
-                    "Access-Control-Allow-Origin": "*"
+                    "Content-Type": "application/json"
                 },
           body: JSON.stringify({ team_code: team.code }),
         });
@@ -101,8 +99,7 @@ const AdminTeamScreen: React.FC<AdminTeamScreenProps> = ({
         const response = await fetch(`${API_BASE_URL}/get_members`, {
           method: "POST",
        headers: {
-                    "Content-Type": "application/json",
-                    "Access-Control-Allow-Origin": "*"
+                    "Content-Type": "application/json"
                 },
           body: JSON.stringify({ team_code: team.code }),
         });
@@ -136,8 +133,7 @@ const AdminTeamScreen: React.FC<AdminTeamScreenProps> = ({
               const response = await fetch(`${API_BASE_URL}/delete_team`, {
                 method: "POST",
                headers: {
-                    "Content-Type": "application/json",
-                    "Access-Control-Allow-Origin": "*"
+                    "Content-Type": "application/json"
                 },
                 body: JSON.stringify({ team_code: team.code }),
               });
@@ -349,7 +345,7 @@ const AdminTeamScreen: React.FC<AdminTeamScreenProps> = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F1F8E9", // Light Green
+    backgroundColor: "#E7E3D6", // Sisal Light Shade 01
     borderRadius: 16,
     padding: 20,
     shadowColor: "#000",
@@ -364,12 +360,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: "700",
-    color: "#2E7D32", // Forest Green
+    color: "#344E7E", // East Bay Base
     marginBottom: 4,
   },
   subtitle: {
     fontSize: 16,
-    color: "#607D8B", // Blue Gray
+    color: "#928D7C", // Sisal Dark Shade 02
   },
   tabsContainer: {
     marginBottom: 20,
@@ -379,18 +375,18 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     marginRight: 8,
     borderRadius: 8,
-    backgroundColor: "#ECEFF1", // Cloud Gray
+    backgroundColor: "#FFFFFF", // Neutral card background
   },
   activeTab: {
-    backgroundColor: "#E8F5E9", // Light Green
+    backgroundColor: "#E7E3D6", // Sisal Light Shade 01
   },
   tabText: {
     fontSize: 14,
     fontWeight: "500",
-    color: "#607D8B", // Blue Gray
+    color: "#928D7C", // Sisal Dark Shade 02
   },
   activeTabText: {
-    color: "#2E7D32", // Forest Green
+    color: "#344E7E", // East Bay Base
     fontWeight: "600",
   },
   actionsContainer: {
@@ -405,18 +401,18 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingVertical: 12,
     marginHorizontal: 4,
-    backgroundColor: "#E8F5E9", // Light Green
+    backgroundColor: "#FFFFFF", // Card-style
     borderRadius: 8,
   },
   actionIcon: {
     fontSize: 16,
     marginRight: 6,
-    color: "#2E7D32", // Forest Green
+    color: "#344E7E", // East Bay Base
   },
   actionText: {
     fontSize: 14,
     fontWeight: "500",
-    color: "#2E7D32", // Forest Green
+    color: "#344E7E", // East Bay Base
   },
   deleteButton: {
     flex: 1,
@@ -425,12 +421,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingVertical: 12,
     marginHorizontal: 4,
-    backgroundColor: "#FFEBEE", // Light Red
+    backgroundColor: "#FFEBEE", // Keep a subtle red for delete
     borderRadius: 8,
   },
   deleteIcon: {
     fontSize: 16,
     marginRight: 6,
+    color: "#EF5350", // Coral Red
   },
   deleteText: {
     fontSize: 14,
@@ -455,12 +452,12 @@ const styles = StyleSheet.create({
   emptyStateTitle: {
     fontSize: 18,
     fontWeight: "600",
-    color: "#37474F", // Charcoal Gray
+    color: "#283F70", // East Bay Dark Shade 01
     marginBottom: 8,
   },
   emptyStateDescription: {
     fontSize: 14,
-    color: "#607D8B", // Blue Gray
+    color: "#928D7C", // Sisal Dark Shade 02
     textAlign: "center",
     lineHeight: 20,
   },
@@ -480,20 +477,21 @@ const styles = StyleSheet.create({
   },
   statTitle: {
     fontSize: 14,
-    color: "#607D8B", // Blue Gray
+    color: "#928D7C", // Sisal Dark Shade 02
     marginBottom: 8,
   },
   statValue: {
     fontSize: 24,
     fontWeight: "700",
-    color: "#2E7D32", // Forest Green
+    color: "#344E7E", // East Bay Base
     marginBottom: 8,
   },
   statDescription: {
     fontSize: 12,
-    color: "#90A4AE", // Neutral Baseline
+    color: "#928D7C", // Sisal Dark Shade 02
     lineHeight: 16,
   },
 });
+
 
 export default AdminTeamScreen;

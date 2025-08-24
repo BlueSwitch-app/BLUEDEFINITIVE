@@ -12,7 +12,7 @@ import { Linking, Pressable, StyleSheet, TextInput, TouchableOpacity } from 'rea
 import { auth2 } from './firebaseConfig';
 
 // API Base URL
-const API_BASE_URL = 'https://bluebackend-blues-projects-c71d4d1f.vercel.app';
+const API_BASE_URL = 'https://bluebackkk.vercel.app';
 
 
 // Custom Input Component
@@ -104,8 +104,7 @@ export default function AuthScreen() {
             const response = await fetch(`${API_BASE_URL}/create_user`, {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json",
-                    "Access-Control-Allow-Origin": "*"
+                    "Content-Type": "application/json"
                 },
                 body: JSON.stringify({ nombre, email, password, city, phone }),
             });
@@ -158,8 +157,7 @@ export default function AuthScreen() {
             const response = await fetch(`${API_BASE_URL}/get_user`, {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json",
-                    "Access-Control-Allow-Origin": "*"
+                    "Content-Type": "application/json"
                 },
                 body: JSON.stringify({ email }),
             });
@@ -321,7 +319,7 @@ export default function AuthScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#FFFFFF',
+        backgroundColor: '#E7E3D6', // Sisal Light Shade 01 (fondo neutro claro)
     },
     content: {
         flex: 1,
@@ -332,13 +330,13 @@ const styles = StyleSheet.create({
     logo: {
         fontSize: 36,
         fontWeight: '700',
-        color: '#1565C0', // Azul oscuro
+        color: '#344E7E', // East Bay base (color principal del logo)
         marginBottom: 8,
         letterSpacing: 1,
     },
     tagline: {
         fontSize: 16,
-        color: '#42A5F5', // Azul brillante
+        color: '#1B3062', // East Bay Dark Shade 02 (texto secundario)
         marginBottom: 40,
         textAlign: 'center',
     },
@@ -355,13 +353,13 @@ const styles = StyleSheet.create({
         padding: 32,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 10 },
-        shadowOpacity: 0.05,
+        shadowOpacity: 0.08,
         shadowRadius: 15,
         elevation: 5,
     },
     tabContainer: {
         flexDirection: 'row',
-        backgroundColor: '#E3F2FD', // Azul claro
+        backgroundColor: '#283F70', // East Bay Dark Shade 01 (fondo de tabs)
         borderRadius: 16,
         marginBottom: 32,
         padding: 4,
@@ -373,22 +371,22 @@ const styles = StyleSheet.create({
         borderRadius: 12,
     },
     activeTab: {
-        backgroundColor: '#1565C0', // Azul oscuro
+        backgroundColor: '#446191', // East Bay Light Shade 01 (tab activo)
     },
     tabText: {
-        color: '#1976D2', // Azul medio
+        color: '#FFFFFF', // Texto blanco en tabs inactivos
         fontWeight: '600',
         fontSize: 16,
     },
     activeTabText: {
-        color: '#FFFFFF',
+        color: '#E7E3D6', // Sisal Light Shade 01 (texto activo contrastado)
         fontWeight: '700',
     },
     formContainer: {
         width: '100%',
     },
     button: {
-        backgroundColor: '#1565C0', // Azul oscuro
+        backgroundColor: '#344E7E', // East Bay base (botón principal)
         paddingVertical: 16,
         borderRadius: 12,
         alignItems: 'center',
@@ -396,18 +394,18 @@ const styles = StyleSheet.create({
         marginBottom: 16,
     },
     buttonText: {
-        color: '#FFFFFF',
+        color: '#E7E3D6', // Sisal Light Shade 01 (texto de botón)
         fontWeight: '600',
         fontSize: 16,
     },
     terms: {
-        color: '#0288D1', // Azul cielo
+        color: '#283F70', // East Bay Dark Shade 01 (enlace)
         fontSize: 14,
         textAlign: 'center',
         textDecorationLine: 'underline',
     },
     forgotPasswordLink: {
-        color: '#0288D1', // Azul cielo
+        color: '#283F70', // East Bay Dark Shade 01 (enlace)
         fontSize: 14,
         textAlign: 'center',
         textDecorationLine: 'underline',
@@ -420,6 +418,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         borderWidth: 1,
+        borderColor: '#B1AC9D', // Sisal Dark Shade 01 (borde inputs)
         borderRadius: 16,
         paddingHorizontal: 20,
         height: 56,
@@ -436,13 +435,13 @@ const styles = StyleSheet.create({
     input: {
         flex: 1,
         fontSize: 16,
-        color: '#37474F', // Gris carbón
+        color: '#344E7E', // East Bay base (texto input)
     },
     inputRight: {
         marginLeft: 16,
     },
     inputError: {
-        color: '#EF5350', // Rojo coral
+        color: '#928D7C', // Sisal Dark Shade 02 (errores suaves pero legibles)
         fontSize: 12,
         marginTop: 6,
         marginLeft: 4,

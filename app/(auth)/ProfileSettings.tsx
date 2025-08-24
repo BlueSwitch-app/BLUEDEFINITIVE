@@ -16,7 +16,7 @@ import {
 import { auth2 } from '../firebaseConfig';
 
 // API Base URL
-const API_BASE_URL = 'http://10.161.22.203:5000';
+const API_BASE_URL = 'https://bluebackkk.vercel.app';
 
 const { width } = Dimensions.get('window');
 
@@ -53,8 +53,7 @@ const ProfileSettingsScreen: React.FC<props> = ({email}) => {
       const response = await fetch(`${API_BASE_URL}/upload_avatar`, {
         method: 'POST',
          headers: {
-                    "Content-Type": "application/json",
-                    "Access-Control-Allow-Origin": "*"
+                    "Content-Type": "application/json"
                 },
         body: JSON.stringify({
           email,
@@ -81,8 +80,7 @@ const ProfileSettingsScreen: React.FC<props> = ({email}) => {
         const response = await fetch(`${API_BASE_URL}/get_user`, {
           method: "POST",
            headers: {
-                    "Content-Type": "application/json",
-                    "Access-Control-Allow-Origin": "*"
+                    "Content-Type": "application/json"
                 },
           body: JSON.stringify({ email }),
         });
@@ -120,8 +118,7 @@ const ProfileSettingsScreen: React.FC<props> = ({email}) => {
       const response = await fetch(`${API_BASE_URL}/update_user`, {
         method: "POST",
          headers: {
-                    "Content-Type": "application/json",
-                    "Access-Control-Allow-Origin": "*"
+                    "Content-Type": "application/json"
                 },
         body: JSON.stringify(updatedData),
       });
@@ -360,13 +357,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row',
-    backgroundColor: '#FFFFFF', // White background
+    backgroundColor: '#E7E3D6', // Sisal Light Shade 01
   },
   sidebar: {
     width: 280,
-    backgroundColor: '#FFFFFF', // White background
+    backgroundColor: '#FFFFFF',
     borderRightWidth: 1,
-    borderRightColor: '#ECEFF1', // Cloud Gray
+    borderRightColor: '#E7E3D6', // Sisal Light Shade 01
     paddingVertical: 30,
   },
   userSection: {
@@ -375,30 +372,35 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     paddingBottom: 30,
     borderBottomWidth: 1,
-    borderBottomColor: '#ECEFF1', // Cloud Gray
+    borderBottomColor: '#E7E3D6', // Sisal Light Shade 01
   },
   avatar: {
     width: 50,
     height: 50,
     borderRadius: 25,
-    backgroundColor: '#E8F5E9', // Light Green
+    backgroundColor: '#FFFFFF',
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 15,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.05,
+    shadowRadius: 12,
+    elevation: 4,
   },
   avatarText: {
-    color: '#2E7D32', // Forest Green
+    color: '#344E7E', // East Bay Base
     fontSize: 18,
     fontWeight: '500',
   },
   userName: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#37474F', // Charcoal Gray
+    color: '#283F70', // East Bay Dark Shade 01
   },
   userEmail: {
     fontSize: 14,
-    color: '#607D8B', // Blue Gray
+    color: '#928D7C', // Sisal Dark Shade 02
   },
   navMenu: {
     paddingTop: 20,
@@ -410,23 +412,23 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
   },
   navItemActive: {
-    backgroundColor: '#E8F5E9', // Light Green
+    backgroundColor: '#E7E3D6',
     borderRightWidth: 3,
-    borderRightColor: '#2E7D32', // Forest Green
+    borderRightColor: '#344E7E', // East Bay Base
   },
   navItemText: {
     marginLeft: 15,
     fontSize: 15,
-    color: '#607D8B', // Blue Gray
+    color: '#928D7C', // Sisal Dark Shade 02
     fontWeight: '500',
   },
   navItemTextActive: {
-    color: '#2E7D32', // Forest Green
+    color: '#344E7E', // East Bay Base
   },
   content: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#FFFFFF', // White background
+    backgroundColor: '#E7E3D6', // Sisal Light Shade 01
   },
   mobileHeader: {
     marginBottom: 20,
@@ -434,7 +436,7 @@ const styles = StyleSheet.create({
   mobileTitle: {
     fontSize: 24,
     fontWeight: '600',
-    color: '#2E7D32', // Forest Green
+    color: '#344E7E', // East Bay Base
   },
   mobileNav: {
     marginBottom: 20,
@@ -449,44 +451,47 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     backgroundColor: '#FFFFFF',
     borderWidth: 1,
-    borderColor: '#ECEFF1', // Cloud Gray
+    borderColor: '#E7E3D6',
     minWidth: 80,
   },
   mobileNavItemActive: {
-    backgroundColor: '#E8F5E9', // Light Green
-    borderColor: '#2E7D32', // Forest Green
+    backgroundColor: '#E7E3D6',
+    borderColor: '#344E7E',
   },
   mobileNavText: {
     fontSize: 12,
-    color: '#607D8B', // Blue Gray
+    color: '#928D7C',
     marginTop: 5,
   },
   mobileNavTextActive: {
-    color: '#2E7D32', // Forest Green
+    color: '#344E7E',
   },
   panel: {
     backgroundColor: '#FFFFFF',
-    borderRadius: 8,
+    borderRadius: 12,
     padding: 20,
     marginBottom: 20,
-    borderWidth: 1,
-    borderColor: '#ECEFF1', // Cloud Gray
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.05,
+    shadowRadius: 12,
+    elevation: 4,
   },
   panelHeader: {
     marginBottom: 20,
     paddingBottom: 15,
     borderBottomWidth: 1,
-    borderBottomColor: '#ECEFF1', // Cloud Gray
+    borderBottomColor: '#E7E3D6',
   },
   panelTitle: {
     fontSize: 24,
     fontWeight: '600',
-    color: '#2E7D32', // Forest Green
+    color: '#344E7E',
     marginBottom: 8,
   },
   panelSubtitle: {
     fontSize: 15,
-    color: '#607D8B', // Blue Gray
+    color: '#928D7C',
   },
   formGroup: {
     marginBottom: 20,
@@ -494,16 +499,16 @@ const styles = StyleSheet.create({
   formLabel: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#37474F', // Charcoal Gray
+    color: '#283F70',
     marginBottom: 8,
   },
   formInput: {
     borderWidth: 1,
-    borderColor: '#ECEFF1', // Cloud Gray
-    borderRadius: 6,
+    borderColor: '#E7E3D6',
+    borderRadius: 12,
     padding: 12,
     fontSize: 15,
-    color: '#37474F', // Charcoal Gray
+    color: '#283F70',
     backgroundColor: '#FFFFFF',
   },
   textArea: {
@@ -519,15 +524,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#2E7D32', // Forest Green
+    backgroundColor: '#344E7E',
     paddingVertical: 12,
     paddingHorizontal: 20,
-    borderRadius: 6,
+    borderRadius: 12,
     flex: 1,
     marginTop: 5
   },
   buttonText: {
-    color: '#FFFFFF',
+    color: '#E7E3D6',
     fontSize: 14,
     fontWeight: '500',
     marginLeft: 8,
@@ -538,14 +543,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#FFFFFF',
     borderWidth: 1,
-    borderColor: '#ECEFF1', // Cloud Gray
+    borderColor: '#E7E3D6',
     paddingVertical: 12,
     paddingHorizontal: 20,
-    borderRadius: 6,
+    borderRadius: 12,
     flex: 1,
   },
   secondaryButtonText: {
-    color: '#607D8B', // Blue Gray
+    color: '#928D7C',
     fontSize: 14,
     fontWeight: '500',
     marginLeft: 8,
@@ -556,11 +561,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 20,
     paddingHorizontal: 20,
-    borderWidth: 1,
-    borderColor: '#ECEFF1', // Cloud Gray
-    borderRadius: 6,
+    borderRadius: 12,
     marginBottom: 16,
     backgroundColor: '#FFFFFF',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.05,
+    shadowRadius: 12,
+    elevation: 4,
   },
   settingInfo: {
     flex: 1,
@@ -568,26 +576,26 @@ const styles = StyleSheet.create({
   settingTitle: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#37474F', // Charcoal Gray
+    color: '#283F70',
     marginBottom: 5,
   },
   settingDescription: {
     fontSize: 14,
-    color: '#607D8B', // Blue Gray
+    color: '#928D7C',
   },
   sectionTitle: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#37474F', // Charcoal Gray
+    color: '#283F70',
     marginBottom: 16,
     marginTop: 20,
   },
   securityTip: {
     flexDirection: 'row',
-    backgroundColor: '#FFF8E1', // Sand
+    backgroundColor: '#FFF8E1', // Sand, keeping for alert contrast
     borderWidth: 1,
-    borderColor: '#FFCA28', // Sunflower Yellow
-    borderRadius: 6,
+    borderColor: '#FFCA28',
+    borderRadius: 12,
     padding: 16,
     marginTop: 20,
   },
@@ -598,18 +606,18 @@ const styles = StyleSheet.create({
   tipTitle: {
     fontSize: 15,
     fontWeight: '600',
-    color: '#37474F', // Charcoal Gray
+    color: '#283F70',
     marginBottom: 5,
   },
   tipText: {
     fontSize: 14,
-    color: '#607D8B', // Blue Gray
+    color: '#928D7C',
   },
   termsContent: {
-    backgroundColor: '#F1F8E9', // Light Green
+    backgroundColor: '#E7E3D6',
     borderWidth: 1,
-    borderColor: '#ECEFF1', // Cloud Gray
-    borderRadius: 6,
+    borderColor: '#FFFFFF',
+    borderRadius: 12,
     padding: 20,
     maxHeight: 400,
     marginBottom: 20,
@@ -617,39 +625,42 @@ const styles = StyleSheet.create({
   termsTitle: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#37474F', // Charcoal Gray
+    color: '#283F70',
     marginBottom: 16,
   },
   termsSubtitle: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#37474F', // Charcoal Gray
+    color: '#283F70',
     marginTop: 20,
     marginBottom: 10,
   },
   termsText: {
     fontSize: 14,
-    color: '#607D8B', // Blue Gray
+    color: '#928D7C',
     lineHeight: 22,
     marginBottom: 16,
   },
   faqItem: {
-    borderWidth: 1,
-    borderColor: '#ECEFF1', // Cloud Gray
-    borderRadius: 6,
+    borderRadius: 12,
     padding: 16,
     marginBottom: 12,
     backgroundColor: '#FFFFFF',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.05,
+    shadowRadius: 12,
+    elevation: 4,
   },
   faqQuestion: {
     fontSize: 15,
     fontWeight: '600',
-    color: '#37474F', // Charcoal Gray
+    color: '#283F70',
     marginBottom: 5,
   },
   faqAnswer: {
     fontSize: 14,
-    color: '#607D8B', // Blue Gray
+    color: '#928D7C',
   },
   contactGrid: {
     flexDirection: 'row',
@@ -660,40 +671,43 @@ const styles = StyleSheet.create({
   contactCard: {
     flex: 1,
     minWidth: width > 480 ? '30%' : '100%',
-    borderWidth: 1,
-    borderColor: '#ECEFF1', // Cloud Gray
-    borderRadius: 6,
+    borderRadius: 12,
     padding: 20,
     alignItems: 'center',
     backgroundColor: '#FFFFFF',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.05,
+    shadowRadius: 12,
+    elevation: 4,
   },
   contactTitle: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#37474F', // Charcoal Gray
+    color: '#283F70',
     marginTop: 10,
     marginBottom: 5,
   },
   contactInfo: {
     fontSize: 14,
-    color: '#607D8B', // Blue Gray
+    color: '#928D7C',
     marginBottom: 5,
     textAlign: 'center',
   },
   contactDetail: {
     fontSize: 12,
-    color: '#607D8B', // Blue Gray
+    color: '#928D7C',
     textAlign: 'center',
   },
   primaryButtonSmall: {
-    backgroundColor: '#2E7D32', // Forest Green
+    backgroundColor: '#344E7E',
     paddingVertical: 8,
     paddingHorizontal: 16,
-    borderRadius: 6,
+    borderRadius: 12,
     marginTop: 10,
   },
   buttonTextSmall: {
-    color: '#FFFFFF',
+    color: '#E7E3D6',
     fontSize: 12,
     fontWeight: '500',
   },
@@ -703,5 +717,6 @@ const styles = StyleSheet.create({
     gap: 10,
   },
 });
+
 
 export default ProfileSettingsScreen;

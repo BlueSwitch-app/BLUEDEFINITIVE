@@ -10,7 +10,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import StatisticsModal from "./StadisticsPerUserModal"; // Import the StatisticsModal component
 
 // API Base URL
-const API_BASE_URL = 'http://10.161.22.203:5000';
+const API_BASE_URL = 'https://bluebackkk.vercel.app';
 
 interface MenuItemProps {
   icon: string;
@@ -73,8 +73,7 @@ const MembersAdminCard: React.FC<MembersAdminCardProps> = ({
       const response = await fetch(`${API_BASE_URL}/update_members`, {
         method: 'POST',
          headers: {
-                    "Content-Type": "application/json",
-                    "Access-Control-Allow-Origin": "*"
+                    "Content-Type": "application/json"
                 },
         body: JSON.stringify({ team_code: teamcode, email, action })
       });

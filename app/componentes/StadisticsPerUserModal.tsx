@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 
 // API Base URL
-const API_BASE_URL = 'http://10.161.22.203:5000';
+const API_BASE_URL = 'https://bluebackkk.vercel.app';
 
 interface StatCardProps {
   title: string;
@@ -84,11 +84,10 @@ const StatisticsModal: React.FC<StatisticsModalProps> = ({
     const fetchStatistics = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`${API_BASE_URL}/api/User/read_statistics_peruser`, {
+        const response = await fetch(`${API_BASE_URL}/readstatisdics_peruser`, {
           method: "POST",
            headers: {
-                    "Content-Type": "application/json",
-                    "Access-Control-Allow-Origin": "*"
+                    "Content-Type": "application/json"
                 },
           body: JSON.stringify({ email, team_code }),
         });

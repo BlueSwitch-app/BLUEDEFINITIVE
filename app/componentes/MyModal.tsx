@@ -30,7 +30,7 @@ import { Device } from "../(auth)/DashboardScreen";
 import { getContrastColor } from "../utils/getContrastColor";
 
 // API Base URL
-const API_BASE_URL = 'http://10.161.22.203:5000';
+const API_BASE_URL = 'https://bluebackkk.vercel.app';
 
 // Define la interfaz del equipo para el combobox
 interface UserTeam {
@@ -83,11 +83,10 @@ export default function MyModal({
     const fetchTeams = async () => {
       if (!email) return;
       try {
-        const response = await fetch(`${API_BASE_URL}/read_team`, {
+        const response = await fetch(`${API_BASE_URL}/read_teams`, {
           method: "POST",
            headers: {
-                    "Content-Type": "application/json",
-                    "Access-Control-Allow-Origin": "*"
+                    "Content-Type": "application/json"
                 },
           body: JSON.stringify({ email }),
         });
@@ -139,8 +138,7 @@ export default function MyModal({
       const response = await fetch(`${API_BASE_URL}/crear-device`, {
         method: "POST",
          headers: {
-                    "Content-Type": "application/json",
-                    "Access-Control-Allow-Origin": "*"
+                    "Content-Type": "application/json"
                 },
         body: JSON.stringify(deviceData),
       });

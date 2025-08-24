@@ -18,7 +18,7 @@ import MemberTeamScreen from "./MemberTeamScreen";
 import { Team } from "./types";
 
 // API Base URL
-const API_BASE_URL = 'http://10.161.22.203:5000';
+const API_BASE_URL = 'https://bluebackkk.vercel.app';
 
 // Interface para MessageBox
 interface MessageBoxProps {
@@ -74,8 +74,7 @@ const CreateTeamModal: React.FC<CreateTeamModalProps> = ({
       const response = await fetch(`${API_BASE_URL}/create_team`, {
         method: "POST",
          headers: {
-                    "Content-Type": "application/json",
-                    "Access-Control-Allow-Origin": "*"
+                    "Content-Type": "application/json"
                 },
         body: JSON.stringify({ team_name: newTeamName, email: email }),
       });
@@ -177,8 +176,7 @@ const JoinTeamModal: React.FC<JoinTeamModalProps> = ({
       const response = await fetch(`${API_BASE_URL}/join_team`, {
         method: "POST",
          headers: {
-                    "Content-Type": "application/json",
-                    "Access-Control-Allow-Origin": "*"
+                    "Content-Type": "application/json"
                 },
         body: JSON.stringify({
           email: email,
@@ -287,8 +285,7 @@ const TeamsScreen: React.FC<TeamsScreenProps> = ({ email }) => {
         const response = await fetch(`${API_BASE_URL}/read_teams`, {
           method: "POST",
            headers: {
-                    "Content-Type": "application/json",
-                    "Access-Control-Allow-Origin": "*"
+                    "Content-Type": "application/json"
                 },
           body: JSON.stringify({ email }),
         });
@@ -476,7 +473,7 @@ const TeamsScreen: React.FC<TeamsScreenProps> = ({ email }) => {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: "#ffffffff", // Light Green background
+    backgroundColor: "#E7E3D6", // Sisal Light Shade
   },
   container: {
     flex: 1,
@@ -489,7 +486,7 @@ const styles = StyleSheet.create({
   },
   loadingText: {
     fontSize: 16,
-    color: "#607D8B", // Blue Gray
+    color: "#928D7C", // Sisal Dark Shade
   },
   header: {
     flexDirection: "row",
@@ -500,7 +497,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     fontWeight: "700",
-    color: "#2E7D32", // Forest Green
+    color: "#344E7E", // East Bay Base
   },
   headerActions: {
     flexDirection: "row",
@@ -510,19 +507,19 @@ const styles = StyleSheet.create({
     width: 48,
     height: 48,
     borderRadius: 24,
-    backgroundColor: "#E8F5E9", // Light Green
+    backgroundColor: "#E7E3D6", // Sisal Light Shade
     justifyContent: "center",
     alignItems: "center",
   },
   actionIcon: {
     fontSize: 24,
-    color: "#2E7D32", // Forest Green
+    color: "#344E7E", // East Bay Base
   },
   contentArea: {
     flex: 1,
   },
   cardSection: {
-    backgroundColor: "#F1F8E9",
+    backgroundColor: "#E7E3D6", // Sisal Light Shade
     borderRadius: 16,
     padding: 20,
     marginBottom: 24,
@@ -535,7 +532,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 18,
     fontWeight: "600",
-    color: "#37474F", // Charcoal Gray
+    color: "#283F70", // East Bay Dark Shade
     marginBottom: 16,
   },
   teamsContainer: {
@@ -543,21 +540,21 @@ const styles = StyleSheet.create({
   },
   teamCard: {
     width: width * 0.7,
-    backgroundColor: "#E8F5E9", // Light Green
+    backgroundColor: "#E7E3D6", // Sisal Light Shade
     borderRadius: 12,
     padding: 16,
     marginRight: 16,
     borderWidth: 1,
-    borderColor: "#ECEFF1", // Cloud Gray
+    borderColor: "#928D7C", // Sisal Dark Shade
   },
   teamCardSelected: {
-    backgroundColor: "#E8F5E9", // Light Green
-    borderColor: "#2E7D32", // Forest Green
+    backgroundColor: "#E7E3D6",
+    borderColor: "#344E7E", // East Bay Base
   },
   teamCardTitle: {
     fontSize: 18,
     fontWeight: "600",
-    color: "#37474F", // Charcoal Gray
+    color: "#283F70", // East Bay Dark Shade
     marginBottom: 8,
   },
   teamCardRole: {
@@ -571,22 +568,22 @@ const styles = StyleSheet.create({
     fontWeight: "500",
   },
   adminRole: {
-    backgroundColor: "#E8F5E9", // Light Green
-    color: "#2E7D32", // Forest Green
-    borderRadius:10,
-    padding:5
+    backgroundColor: "#E7E3D6", // Sisal Light Shade
+    color: "#344E7E", // East Bay Base
+    borderRadius: 10,
+    padding: 5,
   },
   assistantRole: {
-    backgroundColor: "#E1F5FE", // Light Blue
-    color: "#0288D1", // Sky Blue
-    borderRadius:10,
-    padding:5
+    backgroundColor: "#DCEBF9", // Light Blue-ish
+    color: "#283F70", // East Bay Dark Shade
+    borderRadius: 10,
+    padding: 5,
   },
   memberRole: {
-    backgroundColor: "#ECEFF1", // Cloud Gray
-    color: "#607D8B", // Blue Gray
-    borderRadius:10,
-    padding:5
+    backgroundColor: "#F0F0F0", // Neutral Light Gray
+    color: "#928D7C", // Sisal Dark Shade
+    borderRadius: 10,
+    padding: 5,
   },
   teamDetailsContainer: {
     flex: 1,
@@ -606,7 +603,7 @@ const styles = StyleSheet.create({
   },
   noTeamSelectedText: {
     fontSize: 16,
-    color: "#607D8B", // Blue Gray
+    color: "#928D7C", // Sisal Dark Shade
     textAlign: "center",
   },
   noTeamsCard: {
@@ -629,12 +626,12 @@ const styles = StyleSheet.create({
   noTeamsTitle: {
     fontSize: 22,
     fontWeight: "600",
-    color: "#37474F", // Charcoal Gray
+    color: "#283F70", // East Bay Dark Shade
     marginBottom: 8,
   },
   noTeamsText: {
     fontSize: 16,
-    color: "#607D8B", // Blue Gray
+    color: "#928D7C", // Sisal Dark Shade
     textAlign: "center",
     marginBottom: 32,
     lineHeight: 24,
@@ -646,14 +643,14 @@ const styles = StyleSheet.create({
   noTeamsButton: {
     height: 48,
     borderRadius: 8,
-    backgroundColor: "#2E7D32", // Forest Green
+    backgroundColor: "#344E7E", // East Bay Base
     justifyContent: "center",
     alignItems: "center",
   },
   noTeamsSecondaryButton: {
     backgroundColor: "#FFFFFF",
     borderWidth: 1,
-    borderColor: "#ECEFF1", // Cloud Gray
+    borderColor: "#928D7C", // Sisal Dark Shade
   },
   noTeamsButtonText: {
     fontSize: 16,
@@ -661,7 +658,7 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
   },
   noTeamsSecondaryButtonText: {
-    color: "#2E7D32", // Forest Green
+    color: "#344E7E", // East Bay Base
   },
   // Modal Styles
   modalOverlay: {
@@ -690,28 +687,28 @@ const styles = StyleSheet.create({
   modalTitle: {
     fontSize: 22,
     fontWeight: "700",
-    color: "#2E7D32", // Forest Green
+    color: "#344E7E", // East Bay Base
   },
   closeButton: {
     width: 32,
     height: 32,
     borderRadius: 16,
-    backgroundColor: "#ECEFF1", // Cloud Gray
+    backgroundColor: "#F0F0F0", // Neutral Gray
     justifyContent: "center",
     alignItems: "center",
   },
   closeButtonText: {
     fontSize: 16,
-    color: "#37474F", // Charcoal Gray
+    color: "#283F70", // East Bay Dark Shade
   },
   modalInput: {
     height: 56,
-    borderColor: "#ECEFF1", // Cloud Gray
+    borderColor: "#928D7C", // Sisal Dark Shade
     borderWidth: 1,
     borderRadius: 12,
     paddingHorizontal: 16,
     fontSize: 16,
-    color: "#37474F", // Charcoal Gray
+    color: "#283F70", // East Bay Dark Shade
     backgroundColor: "#FFFFFF",
     marginBottom: 16,
   },
@@ -728,10 +725,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   modalCancelButton: {
-    backgroundColor: "#ECEFF1", // Cloud Gray
+    backgroundColor: "#F0F0F0", // Neutral Gray
   },
   modalConfirmButton: {
-    backgroundColor: "#2E7D32", // Forest Green
+    backgroundColor: "#344E7E", // East Bay Base
   },
   modalButtonText: {
     fontSize: 16,
@@ -741,7 +738,7 @@ const styles = StyleSheet.create({
   modalCancelButtonText: {
     fontSize: 16,
     fontWeight: "600",
-    color: "#37474F", // Charcoal Gray
+    color: "#283F70", // East Bay Dark Shade
   },
   // Message Box Styles
   messageBoxOverlay: {
@@ -762,7 +759,7 @@ const styles = StyleSheet.create({
   messageBoxText: {
     fontSize: 16,
     fontWeight: "500",
-    color: "#37474F", // Charcoal Gray
+    color: "#283F70", // East Bay Dark Shade
     textAlign: "center",
     marginBottom: 24,
     lineHeight: 24,
@@ -770,7 +767,7 @@ const styles = StyleSheet.create({
   messageBoxButton: {
     height: 48,
     borderRadius: 8,
-    backgroundColor: "#2E7D32", // Forest Green
+    backgroundColor: "#344E7E", // East Bay Base
     justifyContent: "center",
     alignItems: "center",
     paddingHorizontal: 24,
@@ -781,5 +778,6 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
   },
 });
+
 
 export default TeamsScreen;

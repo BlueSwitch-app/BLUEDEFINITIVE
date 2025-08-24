@@ -5,7 +5,7 @@ import DeviceCard from "../componentes/deviceTeamCard";
 import { Device, Team, TeamMember } from "./types";
 
 // API Base URL
-const API_BASE_URL = 'http://10.161.22.203:5000';
+const API_BASE_URL = 'https://bluebackkk.vercel.app';
 
 interface MemberTeamScreenProps {
   team: Team;
@@ -41,8 +41,7 @@ const MemberTeamScreen: React.FC<MemberTeamScreenProps> = ({
               const response = await fetch(`${API_BASE_URL}/leave_team`, {
                 method: "POST",
                  headers: {
-                    "Content-Type": "application/json",
-                    "Access-Control-Allow-Origin": "*"
+                    "Content-Type": "application/json"
                 },
                 body: JSON.stringify({ team_code: team.code, email: email }), // Corregido el nombre del parámetro
               });
@@ -69,8 +68,7 @@ const MemberTeamScreen: React.FC<MemberTeamScreenProps> = ({
         const response = await fetch(`${API_BASE_URL}/get_devices`, {
           method: "POST",
            headers: {
-                    "Content-Type": "application/json",
-                    "Access-Control-Allow-Origin": "*"
+                    "Content-Type": "application/json"
                 },
           body: JSON.stringify({ team_code: team.code }),
         });
@@ -94,8 +92,7 @@ const MemberTeamScreen: React.FC<MemberTeamScreenProps> = ({
         const response = await fetch(`${API_BASE_URL}/get_members`, {
           method: "POST",
            headers: {
-                    "Content-Type": "application/json",
-                    "Access-Control-Allow-Origin": "*"
+                    "Content-Type": "application/json"
                 },
           body: JSON.stringify({ team_code: team.code }),
         });
@@ -283,7 +280,7 @@ const MemberTeamScreen: React.FC<MemberTeamScreenProps> = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F1F8E9", // Light Green
+    backgroundColor: "#E7E3D6", // Sisal Light Shade 01
     borderRadius: 16,
     padding: 20,
     shadowColor: "#000",
@@ -296,12 +293,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#F1F8E9", // Light Green
+    backgroundColor: "#E7E3D6", // Sisal Light Shade 01
     borderRadius: 16,
   },
   loadingText: {
     fontSize: 16,
-    color: "#607D8B", // Blue Gray
+    color: "#928D7C", // Sisal Dark Shade 02
   },
   header: {
     marginBottom: 24,
@@ -309,12 +306,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: "700",
-    color: "#2E7D32", // Forest Green
+    color: "#344E7E", // East Bay Base
     marginBottom: 4,
   },
   subtitle: {
     fontSize: 16,
-    color: "#607D8B", // Blue Gray
+    color: "#928D7C", // Sisal Dark Shade 02
   },
   tabsContainer: {
     marginBottom: 20,
@@ -324,18 +321,18 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     marginRight: 8,
     borderRadius: 8,
-    backgroundColor: "#ECEFF1", // Cloud Gray
+    backgroundColor: "#FFFFFF", // Neutral card background
   },
   activeTab: {
-    backgroundColor: "#E8F5E9", // Light Green
+    backgroundColor: "#E7E3D6", // Sisal Light Shade 01
   },
   tabText: {
     fontSize: 14,
     fontWeight: "500",
-    color: "#607D8B", // Blue Gray
+    color: "#928D7C", // Sisal Dark Shade 02
   },
   activeTabText: {
-    color: "#2E7D32", // Forest Green
+    color: "#344E7E", // East Bay Base
     fontWeight: "600",
   },
   actionsContainer: {
@@ -350,18 +347,18 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingVertical: 12,
     marginHorizontal: 4,
-    backgroundColor: "#E8F5E9", // Light Green
+    backgroundColor: "#FFFFFF", // Card-style background
     borderRadius: 8,
   },
   actionIcon: {
     fontSize: 16,
     marginRight: 6,
-    color: "#2E7D32", // Forest Green
+    color: "#344E7E", // East Bay Base
   },
   actionText: {
     fontSize: 14,
     fontWeight: "500",
-    color: "#2E7D32", // Forest Green
+    color: "#344E7E", // East Bay Base
   },
   leaveButton: {
     flex: 1,
@@ -376,6 +373,7 @@ const styles = StyleSheet.create({
   leaveIcon: {
     fontSize: 16,
     marginRight: 6,
+    color: "#EF5350", // Coral Red
   },
   leaveText: {
     fontSize: 14,
@@ -400,12 +398,12 @@ const styles = StyleSheet.create({
   emptyStateTitle: {
     fontSize: 18,
     fontWeight: "600",
-    color: "#37474F", // Charcoal Gray
+    color: "#283F70", // East Bay Dark Shade 01
     marginBottom: 8,
   },
   emptyStateDescription: {
     fontSize: 14,
-    color: "#607D8B", // Blue Gray
+    color: "#928D7C", // Sisal Dark Shade 02
     textAlign: "center",
     lineHeight: 20,
   },
@@ -429,12 +427,12 @@ const styles = StyleSheet.create({
   memberEmail: {
     fontSize: 16,
     fontWeight: "600",
-    color: "#37474F", // Charcoal Gray
+    color: "#283F70", // East Bay Dark Shade 01
     marginBottom: 4,
   },
   memberRole: {
     fontSize: 14,
-    color: "#607D8B", // Blue Gray
+    color: "#928D7C", // Sisal Dark Shade 02
     textTransform: "capitalize",
   },
   memberDevicesContainer: {
@@ -443,11 +441,11 @@ const styles = StyleSheet.create({
   memberDevicesCount: {
     fontSize: 20,
     fontWeight: "700",
-    color: "#0288D1", // Sky Blue
+    color: "#344E7E", // East Bay Base
   },
   memberDevicesLabel: {
     fontSize: 12,
-    color: "#607D8B", // Blue Gray
+    color: "#928D7C", // Sisal Dark Shade 02
   },
   statsContainer: {
     flex: 1,
@@ -465,20 +463,21 @@ const styles = StyleSheet.create({
   },
   statTitle: {
     fontSize: 14,
-    color: "#607D8B", // Blue Gray
+    color: "#928D7C", // Sisal Dark Shade 02
     marginBottom: 8,
   },
   statValue: {
     fontSize: 24,
     fontWeight: "700",
-    color: "#2E7D32", // Forest Green
+    color: "#344E7E", // East Bay Base
     marginBottom: 8,
   },
   statDescription: {
     fontSize: 12,
-    color: "#90A4AE", // Neutral Baseline
+    color: "#928D7C", // Sisal Dark Shade 02
     lineHeight: 16,
   },
 });
+
 
 export default MemberTeamScreen;

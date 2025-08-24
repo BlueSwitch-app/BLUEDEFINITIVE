@@ -13,23 +13,54 @@
       "bundleIdentifier": "com.BlueSwitch.firebase",
       "googleServicesFile": "./GoogleService-Info.plist",
       "infoPlist": {
-        "ITSAppUsesNonExemptEncryption": false
+        "ITSAppUsesNonExemptEncryption": false,
+        "NSAppTransportSecurity": {
+          "NSAllowsArbitraryLoads": true,
+          "NSExceptionDomains": {
+            "localhost": {
+              "NSExceptionAllowsInsecureHTTPLoads": true,
+              "NSIncludesSubdomains": true,
+              "NSTemporaryExceptionAllowsInsecureHTTPLoads": true
+            },
+            "192.168.0.235": {
+              "NSExceptionAllowsInsecureHTTPLoads": true,
+              "NSIncludesSubdomains": true,
+              "NSTemporaryExceptionAllowsInsecureHTTPLoads": true
+            }
+          }
+        }
       }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/BlueLogo.png",
-
         "backgroundColor": "#000000"
       },
       "edgeToEdgeEnabled": true,
       "package": "com.BlueSwitch.firebase",
-      "googleServicesFile": "./Google-services.json"
+      "googleServicesFile": "./Google-services.json",
+      "networkSecurityConfig": {
+        "cleartextTrafficPermitted": true,
+        "domainConfig": [
+          {
+            "domain": "localhost",
+            "subdomains": true,
+            "cleartextTrafficPermitted": true
+          },
+          {
+            "domain": "192.168.0.235",
+            "subdomains": true,
+            "cleartextTrafficPermitted": true
+          }
+        ]
+      }
     },
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/BlueLogo.png"
+      "favicon": "./assets/images/BlueLogo.png",
+      "https": true,
+      "port": 19006
     },
     "plugins": [
       "expo-router",
@@ -60,6 +91,10 @@
       "router": {},
       "eas": {
         "projectId": "a884da0c-7fab-402e-aac2-8565f7836c45"
+      },
+      "devServer": {
+        "https": true,
+        "port": 19000
       }
     }
   }

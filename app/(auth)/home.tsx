@@ -142,9 +142,9 @@ const [email, setEmail] = useState<string | "">("");
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: "#F3F4F6", // Equivalent to bg-gray-100
+    backgroundColor: "#E7E3D6", // Sisal Light Shade 01
   },
-    headerRight: {
+  headerRight: {
     flexDirection: "row",
     alignItems: "center",
   },
@@ -152,12 +152,12 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
-    backgroundColor: "#FFFFFF", // bg-white
-    shadowColor: "#000", // shadow-sm
+    backgroundColor: "#FFFFFF", // Card/White background
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.05,
     shadowRadius: 1,
-    elevation: 2, // For Android shadow
+    elevation: 2,
     padding: 16,
     flexDirection: "row",
     justifyContent: "space-between",
@@ -166,20 +166,18 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 20,
     fontWeight: "bold",
-    color: "#1F2937", // text-gray-900
+    color: "#344E7E", // East Bay Base
   },
-
   settingsIcon: {
-    padding: 4, // Add some padding for touchability
+    padding: 4,
   },
   iconText: {
-    fontSize: 24, // Adjust size as needed for emoji/placeholder
+    fontSize: 24,
   },
   mainContent: {
     flex: 1,
-    paddingBottom: 80, // Space for bottom navigation
+    paddingBottom: 50,
   },
-
   bottomNav: {
     position: "absolute",
     bottom: 0,
@@ -187,16 +185,16 @@ const styles = StyleSheet.create({
     right: 0,
     backgroundColor: "#FFFFFF",
     borderTopWidth: 1,
-    borderTopColor: "#E5E7EB", // border-gray-200
+    borderTopColor: "#928D7C", // Sisal Dark Shade 02
     shadowColor: "#000",
     shadowOffset: { width: 0, height: -2 },
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.05,
     shadowRadius: 3,
-    elevation: 8,
+    elevation: 4,
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
-    height: 64, // h-16
+    height: 64,
   },
   navItem: {
     flex: 1,
@@ -205,26 +203,35 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   navIcon: {
-    fontSize: 24, // h-6 w-6 equivalent for emoji
-    marginBottom: 4, // mb-1
-    color: "#6B7280", // text-gray-500
+    fontSize: 24,
+    marginBottom: 4,
+    color: "#928D7C", // Sisal Dark Shade 02
   },
   navIconActive: {
-    color: "#16A34A", // text-green-600
+    color: "#344E7E", // East Bay Base
   },
   navText: {
-    fontSize: 12, // text-sm
-    color: "#6B7280", // text-gray-500
+    fontSize: 12,
+    color: "#928D7C", // Sisal Dark Shade 02
   },
   navTextActive: {
-    color: "#16A34A", // text-green-600
-    fontWeight: "600", // font-semibold
+    color: "#344E7E", // East Bay Base
+    fontWeight: "600",
   },
-
-
-
-
-
+  // Optional card-style wrapper (to match dashboard feel)
+  card: {
+    backgroundColor: "#FFFFFF",
+    borderRadius: 20,
+    padding: 16,
+    marginHorizontal: 16,
+    marginVertical: 8,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.05,
+    shadowRadius: 12,
+    elevation: 4,
+  },
 });
+
 
 export default App;

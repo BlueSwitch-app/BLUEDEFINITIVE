@@ -5,7 +5,7 @@ import { RadarChart } from "react-native-gifted-charts";
 import CarbonFootprintModal from '../componentes/ModalCO2';
 
 // API Base URL
-const API_BASE_URL = 'http://10.161.22.203:5000';
+const API_BASE_URL = 'https://bluebackkk.vercel.app';
 
 // Define the Device interface for type safety
 export interface Device {
@@ -44,8 +44,7 @@ const StatisticsScreen: React.FC<StadisticsScreenProps> = ({ email }) => {
         const response = await fetch(`${API_BASE_URL}/get_devices`, {
           method: "POST",
            headers: {
-                    "Content-Type": "application/json",
-                    "Access-Control-Allow-Origin": "*"
+                    "Content-Type": "application/json"
                 },
           body: JSON.stringify({ email }),
         });
@@ -56,8 +55,7 @@ const StatisticsScreen: React.FC<StadisticsScreenProps> = ({ email }) => {
           const response2 = await fetch(`${API_BASE_URL}/read_perDev`, {
             method: "POST",
              headers: {
-                    "Content-Type": "application/json",
-                    "Access-Control-Allow-Origin": "*"
+                    "Content-Type": "application/json"
                 },
             body: JSON.stringify({ data }),
           });
@@ -106,8 +104,7 @@ const StatisticsScreen: React.FC<StadisticsScreenProps> = ({ email }) => {
       const response = await fetch(`${API_BASE_URL}/read-CO2`, {
         method: "POST",
          headers: {
-                    "Content-Type": "application/json",
-                    "Access-Control-Allow-Origin": "*"
+                    "Content-Type": "application/json"
                 },
         body: JSON.stringify({ email: email })
       });
@@ -329,7 +326,7 @@ const { width } = Dimensions.get('window');
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ffffffff', // Light Green
+    backgroundColor: '#E7E3D6', // Sisal Light Shade
     paddingHorizontal: 20,
     paddingTop: 20,
   },
@@ -337,7 +334,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F1F8E9', // Light Green
+    backgroundColor: '#E7E3D6', // Sisal Light Shade
   },
   loadingCard: {
     backgroundColor: '#FFFFFF',
@@ -357,7 +354,7 @@ const styles = StyleSheet.create({
   loadingText: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#607D8B', // Blue Gray
+    color: '#928D7C', // Sisal Dark Shade
   },
   header: {
     flexDirection: 'row',
@@ -368,19 +365,19 @@ const styles = StyleSheet.create({
   screenTitle: {
     fontSize: 32,
     fontWeight: '700',
-    color: '#2E7D32', // Forest Green
+    color: '#344E7E', // East Bay Base
     marginBottom: 4,
   },
   screenSubtitle: {
     fontSize: 16,
-    color: '#607D8B', // Blue Gray
+    color: '#928D7C', // Sisal Dark Shade
   },
   ticketButton: {
-    backgroundColor: '#2E7D32', // Forest Green
+    backgroundColor: '#344E7E', // East Bay Base
     paddingVertical: 12,
     paddingHorizontal: 20,
     borderRadius: 12,
-    shadowColor: '#2E7D32',
+    shadowColor: '#344E7E',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.2,
     shadowRadius: 8,
@@ -389,7 +386,7 @@ const styles = StyleSheet.create({
   ticketButtonText: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#FFFFFF',
+    color: '#E7E3D6', // Sisal Light Shade
   },
   searchBarContainer: {
     marginBottom: 24,
@@ -409,13 +406,13 @@ const styles = StyleSheet.create({
   },
   searchIcon: {
     fontSize: 18,
-    color: '#607D8B', // Blue Gray
+    color: '#928D7C', // Sisal Dark Shade
     marginRight: 8,
   },
   searchInput: {
     flex: 1,
     fontSize: 16,
-    color: '#37474F', // Charcoal Gray
+    color: '#283F70', // East Bay Dark Shade
     paddingVertical: 12,
   },
   clearButton: {
@@ -423,7 +420,7 @@ const styles = StyleSheet.create({
   },
   clearIcon: {
     fontSize: 16,
-    color: '#607D8B', // Blue Gray
+    color: '#928D7C', // Sisal Dark Shade
   },
   summaryCardsContainer: {
     flexDirection: 'row',
@@ -434,7 +431,7 @@ const styles = StyleSheet.create({
   },
   summaryCard: {
     width: (width - 40 - 16) / 2,
-    backgroundColor: '#F1F8E9',
+    backgroundColor: '#FFFFFF', // Sisal Light Shade
     borderRadius: 20,
     padding: 20,
     alignItems: 'center',
@@ -448,7 +445,7 @@ const styles = StyleSheet.create({
     width: 56,
     height: 56,
     borderRadius: 28,
-    backgroundColor: '#F1F8E9', // Light Green
+    backgroundColor: '#E7E3D6', // Sisal Light Shade
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 12,
@@ -458,16 +455,16 @@ const styles = StyleSheet.create({
   },
   summaryCardLabel: {
     fontSize: 14,
-    color: '#607D8B', // Blue Gray
+    color: '#928D7C', // Sisal Dark Shade
     marginBottom: 4,
   },
   summaryCardValue: {
     fontSize: 24,
     fontWeight: '700',
-    color: '#2E7D32', // Forest Green
+    color: '#344E7E', // East Bay Base
   },
   chartContainer: {
-    backgroundColor: '#F1F8E9',
+    backgroundColor: '#FFFFFF',
     borderRadius: 24,
     padding: 24,
     marginBottom: 32,
@@ -483,12 +480,12 @@ const styles = StyleSheet.create({
   chartTitle: {
     fontSize: 20,
     fontWeight: '700',
-    color: '#37474F', // Charcoal Gray
+    color: '#283F70', // East Bay Dark Shade
     marginBottom: 4,
   },
   chartSubtitle: {
     fontSize: 14,
-    color: '#607D8B', // Blue Gray
+    color: '#928D7C', // Sisal Dark Shade
   },
   chartContent: {
     alignItems: 'center',
@@ -507,12 +504,12 @@ const styles = StyleSheet.create({
   emptyChartText: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#37474F', // Charcoal Gray
+    color: '#283F70', // East Bay Dark Shade
     marginBottom: 8,
   },
   emptyChartSubtext: {
     fontSize: 14,
-    color: '#607D8B', // Blue Gray
+    color: '#928D7C', // Sisal Dark Shade
     textAlign: 'center',
   },
   tableContainer: {
@@ -532,31 +529,31 @@ const styles = StyleSheet.create({
   tableTitle: {
     fontSize: 20,
     fontWeight: '700',
-    color: '#37474F', // Charcoal Gray
+    color: '#283F70', // East Bay Dark Shade
     marginBottom: 4,
   },
   tableSubtitle: {
     fontSize: 14,
-    color: '#607D8B', // Blue Gray
+    color: '#928D7C', // Sisal Dark Shade
   },
   tableContent: {
     borderRadius: 16,
     overflow: 'hidden',
     borderWidth: 1,
-    borderColor: '#ECEFF1', // Cloud Gray
+    borderColor: '#E7E3D6', // Sisal Light Shade
   },
   tableRowHeader: {
     flexDirection: 'row',
-    backgroundColor: '#F1F8E9', // Light Green
+    backgroundColor: '#E7E3D6', // Sisal Light Shade
     paddingVertical: 16,
     paddingHorizontal: 20,
     borderBottomWidth: 1,
-    borderBottomColor: '#ECEFF1', // Cloud Gray
+    borderBottomColor: '#E7E3D6', 
   },
   tableHeaderText: {
     fontSize: 12,
     fontWeight: '700',
-    color: '#37474F', // Charcoal Gray
+    color: '#283F70', // East Bay Dark Shade
     textTransform: 'uppercase',
   },
   tableRow: {
@@ -564,11 +561,11 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     paddingHorizontal: 20,
     borderBottomWidth: 1,
-    borderBottomColor: '#F1F8E9', // Light Green
+    borderBottomColor: '#E7E3D6', // Sisal Light Shade
   },
   tableCell: {
     fontSize: 14,
-    color: '#37474F', // Charcoal Gray
+    color: '#283F70', // East Bay Dark Shade
   },
   statusChip: {
     paddingHorizontal: 12,
@@ -576,17 +573,17 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   statusChipActive: {
-    backgroundColor: '#E8F5E9', // Light Green
+    backgroundColor: '#E7E3D6', // Sisal Light Shade
   },
   statusChipInactive: {
-    backgroundColor: '#FFEBEE', // Light Red
+    backgroundColor: '#FFE8E8', // Light Red / alert
   },
   statusChipText: {
     fontSize: 12,
     fontWeight: '600',
   },
   statusChipTextActive: {
-    color: '#2E7D32', // Forest Green
+    color: '#344E7E', // East Bay Base
   },
   statusChipTextInactive: {
     color: '#EF5350', // Coral Red
@@ -602,14 +599,15 @@ const styles = StyleSheet.create({
   emptyTableText: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#37474F', // Charcoal Gray
+    color: '#283F70', // East Bay Dark Shade
     marginBottom: 8,
   },
   emptyTableSubtext: {
     fontSize: 14,
-    color: '#607D8B', // Blue Gray
+    color: '#928D7C', // Sisal Dark Shade
     textAlign: 'center',
   },
 });
+
 
 export default StatisticsScreen;

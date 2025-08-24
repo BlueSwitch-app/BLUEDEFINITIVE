@@ -90,6 +90,7 @@ export const translations: Record<Language, Record<string, string>> = {
     "activos": "active",
       "Cargando datos del equipo...": "Loading team data...",
       //ProfileSettings
+      "Settings": "Settings",
           "Edit Profile": "Edit Profile",
     "Update your personal information and preferences": "Update your personal information and preferences",
     "Name": "Name",
@@ -310,6 +311,8 @@ export const translations: Record<Language, Record<string, string>> = {
     "activos": "activos",
     "Cargando datos del equipo...": "Cargando datos del equipo...",
   //¨ProfileSetting
+  
+      "Settings": "Ajustes",
    "Edit Profile": "Editar Perfil",
     "Update your personal information and preferences": "Actualiza tu información personal y preferencias",
     "Name": "Nombre",
@@ -535,6 +538,8 @@ export const translations: Record<Language, Record<string, string>> = {
     "activos": "活跃",
     "Cargando datos del equipo...": "正在加载团队数据...",
     //ProfileSettings
+    
+      "Settings": "Settings",
       "Edit Profile": "编辑个人资料",
     "Update your personal information and preferences": "更新您的个人信息和偏好",
     "Name": "姓名",
