@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
   modalContent: {
     borderRadius: 16,
     overflow: "hidden",
-    backgroundColor: "white",
+    backgroundColor: "#FFFFFF", // Fondo blanco obligatorio
     paddingTop: 8,
   },
   closeButton: {
@@ -140,45 +140,56 @@ const styles = StyleSheet.create({
     top: 10,
     right: 10,
     zIndex: 10,
-    backgroundColor: "rgba(255,255,255,0.9)",
+    backgroundColor: "rgba(219, 234, 254, 0.9)", // Azul muy claro con opacidad
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 20,
     width: 40,
     height: 40,
     elevation: 5,
+    borderWidth: 1,
+    borderColor: "#BFDBFE", // Borde azul claro
   },
   closeIcon: {
-    backgroundColor: "#27AE60",
+    backgroundColor: "#3B82F6", // Azul medio
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 15,
     width: 30,
     height: 30,
   },
-  closeIconText: { color: "white", fontWeight: "bold", fontSize: 18 },
+  closeIconText: { 
+    color: "#FFFFFF", // Texto blanco para contraste
+    fontWeight: "bold", 
+    fontSize: 18 
+  },
   leftButton: {
     position: "absolute",
     top: 10,
     left: 10,
     zIndex: 10,
-    backgroundColor: "rgba(255,255,255,0.9)",
+    backgroundColor: "rgba(219, 234, 254, 0.9)", // Azul muy claro con opacidad
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 20,
     width: 40,
     height: 40,
     elevation: 5,
+    borderWidth: 1,
+    borderColor: "#BFDBFE", // Borde azul claro
   },
   leftButtonIcon: {
-    backgroundColor: "#3498DB",
+    backgroundColor: "#1E40AF", // Azul oscuro
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 15,
     width: 30,
     height: 30,
   },
-  leftButtonText: { color: "white", fontWeight: "bold", fontSize: 18 },
+  leftButtonText: { 
+    color: "#FFFFFF", // Texto blanco para contraste
+    fontWeight: "bold", 
+    fontSize: 18 
+  },
 });
-
 export default CarbonFootprintModal;

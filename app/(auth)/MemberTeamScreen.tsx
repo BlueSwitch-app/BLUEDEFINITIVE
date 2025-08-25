@@ -280,25 +280,27 @@ const MemberTeamScreen: React.FC<MemberTeamScreenProps> = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#E7E3D6", // Sisal Light Shade 01
+    backgroundColor: "#FFFFFF", // Fondo blanco obligatorio
     borderRadius: 16,
     padding: 20,
-    shadowColor: "#000",
+    shadowColor: "#3B82F6", // Sombra azulada
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
+    shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 2,
+    borderWidth: 1,
+    borderColor: "#BFDBFE", // Borde azul claro
   },
   loadingContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#E7E3D6", // Sisal Light Shade 01
+    backgroundColor: "#FFFFFF", // Fondo blanco
     borderRadius: 16,
   },
   loadingText: {
     fontSize: 16,
-    color: "#928D7C", // Sisal Dark Shade 02
+    color: "#64748B", // Gris azulado
   },
   header: {
     marginBottom: 24,
@@ -306,12 +308,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: "700",
-    color: "#344E7E", // East Bay Base
+    color: "#1E40AF", // Azul oscuro
     marginBottom: 4,
   },
   subtitle: {
     fontSize: 16,
-    color: "#928D7C", // Sisal Dark Shade 02
+    color: "#64748B", // Gris azulado
   },
   tabsContainer: {
     marginBottom: 20,
@@ -321,18 +323,21 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     marginRight: 8,
     borderRadius: 8,
-    backgroundColor: "#FFFFFF", // Neutral card background
+    backgroundColor: "#FFFFFF", // Fondo blanco
+    borderWidth: 1,
+    borderColor: "#BFDBFE", // Borde azul claro
   },
   activeTab: {
-    backgroundColor: "#E7E3D6", // Sisal Light Shade 01
+    backgroundColor: "#DBEAFE", // Azul muy claro
+    borderColor: "#3B82F6", // Borde azul medio
   },
   tabText: {
     fontSize: 14,
     fontWeight: "500",
-    color: "#928D7C", // Sisal Dark Shade 02
+    color: "#64748B", // Gris azulado
   },
   activeTabText: {
-    color: "#344E7E", // East Bay Base
+    color: "#1E40AF", // Azul oscuro
     fontWeight: "600",
   },
   actionsContainer: {
@@ -347,18 +352,20 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingVertical: 12,
     marginHorizontal: 4,
-    backgroundColor: "#FFFFFF", // Card-style background
+    backgroundColor: "#FFFFFF", // Fondo blanco
     borderRadius: 8,
+    borderWidth: 1,
+    borderColor: "#BFDBFE", // Borde azul claro
   },
   actionIcon: {
     fontSize: 16,
     marginRight: 6,
-    color: "#344E7E", // East Bay Base
+    color: "#3B82F6", // Azul medio
   },
   actionText: {
     fontSize: 14,
     fontWeight: "500",
-    color: "#344E7E", // East Bay Base
+    color: "#3B82F6", // Azul medio
   },
   leaveButton: {
     flex: 1,
@@ -367,18 +374,20 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingVertical: 12,
     marginHorizontal: 4,
-    backgroundColor: "#FFEBEE", // Light Red
+    backgroundColor: "#FEE2E2", // Rojo muy claro
     borderRadius: 8,
+    borderWidth: 1,
+    borderColor: "#FECACA", // Borde rojo claro
   },
   leaveIcon: {
     fontSize: 16,
     marginRight: 6,
-    color: "#EF5350", // Coral Red
+    color: "#EF4444", // Rojo para alertas
   },
   leaveText: {
     fontSize: 14,
     fontWeight: "500",
-    color: "#EF5350", // Coral Red
+    color: "#EF4444", // Rojo para alertas
   },
   contentContainer: {
     flex: 1,
@@ -394,16 +403,17 @@ const styles = StyleSheet.create({
   emptyStateEmoji: {
     fontSize: 48,
     marginBottom: 16,
+    color: "#3B82F6", // Azul medio
   },
   emptyStateTitle: {
     fontSize: 18,
     fontWeight: "600",
-    color: "#283F70", // East Bay Dark Shade 01
+    color: "#1E40AF", // Azul oscuro
     marginBottom: 8,
   },
   emptyStateDescription: {
     fontSize: 14,
-    color: "#928D7C", // Sisal Dark Shade 02
+    color: "#64748B", // Gris azulado
     textAlign: "center",
     lineHeight: 20,
   },
@@ -412,14 +422,16 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     padding: 16,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "#FFFFFF", // Fondo blanco
     borderRadius: 12,
     marginBottom: 12,
-    shadowColor: "#000",
+    shadowColor: "#3B82F6", // Sombra azulada
     shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
+    shadowOpacity: 0.1,
     shadowRadius: 2,
     elevation: 1,
+    borderWidth: 1,
+    borderColor: "#BFDBFE", // Borde azul claro
   },
   memberInfo: {
     flex: 1,
@@ -427,12 +439,12 @@ const styles = StyleSheet.create({
   memberEmail: {
     fontSize: 16,
     fontWeight: "600",
-    color: "#283F70", // East Bay Dark Shade 01
+    color: "#1E40AF", // Azul oscuro
     marginBottom: 4,
   },
   memberRole: {
     fontSize: 14,
-    color: "#928D7C", // Sisal Dark Shade 02
+    color: "#64748B", // Gris azulado
     textTransform: "capitalize",
   },
   memberDevicesContainer: {
@@ -441,40 +453,42 @@ const styles = StyleSheet.create({
   memberDevicesCount: {
     fontSize: 20,
     fontWeight: "700",
-    color: "#344E7E", // East Bay Base
+    color: "#3B82F6", // Azul medio
   },
   memberDevicesLabel: {
     fontSize: 12,
-    color: "#928D7C", // Sisal Dark Shade 02
+    color: "#64748B", // Gris azulado
   },
   statsContainer: {
     flex: 1,
   },
   statCard: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "#FFFFFF", // Fondo blanco
     borderRadius: 12,
     padding: 16,
     marginBottom: 16,
-    shadowColor: "#000",
+    shadowColor: "#3B82F6", // Sombra azulada
     shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
+    shadowOpacity: 0.1,
     shadowRadius: 2,
     elevation: 1,
+    borderWidth: 1,
+    borderColor: "#BFDBFE", // Borde azul claro
   },
   statTitle: {
     fontSize: 14,
-    color: "#928D7C", // Sisal Dark Shade 02
+    color: "#64748B", // Gris azulado
     marginBottom: 8,
   },
   statValue: {
     fontSize: 24,
     fontWeight: "700",
-    color: "#344E7E", // East Bay Base
+    color: "#3B82F6", // Azul medio
     marginBottom: 8,
   },
   statDescription: {
     fontSize: 12,
-    color: "#928D7C", // Sisal Dark Shade 02
+    color: "#64748B", // Gris azulado
     lineHeight: 16,
   },
 });

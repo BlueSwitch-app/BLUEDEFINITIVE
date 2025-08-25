@@ -1,6 +1,7 @@
 import { getTranslation } from "@/Translations/i18n";
 import React, { useEffect, useState } from "react";
 import {
+  ActivityIndicator,
   Alert,
   Dimensions,
   Modal,
@@ -336,7 +337,10 @@ const TeamsScreen: React.FC<TeamsScreenProps> = ({ email }) => {
     return (
       <SafeAreaView style={styles.safeArea}>
         <View style={styles.loadingContainer}>
+          <View style={styles.loadingCard}>
+          <ActivityIndicator size="large" color="#1E40AF" />
           <Text style={styles.loadingText}>{getTranslation("Cargando equipos...")}</Text>
+        </View>
         </View>
       </SafeAreaView>
     );
@@ -473,20 +477,36 @@ const TeamsScreen: React.FC<TeamsScreenProps> = ({ email }) => {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: "#E7E3D6", // Sisal Light Shade
+    backgroundColor: "#FFFFFF", // Fondo blanco obligatorio
   },
   container: {
     flex: 1,
     padding: 16,
+    backgroundColor: "#FFFFFF", // Fondo blanco
   },
   loadingContainer: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#FFFFFF', // Fondo blanco
+  },
+  loadingCard: {
+    backgroundColor: '#FFFFFF', // Fondo blanco
+    borderRadius: 24,
+    padding: 40,
+    alignItems: 'center',
+    shadowColor: '#3B82F6', // Sombra azulada
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.1,
+    shadowRadius: 15,
+    elevation: 5,
+    borderWidth: 1,
+    borderColor: '#BFDBFE', // Borde azul claro
   },
   loadingText: {
-    fontSize: 16,
-    color: "#928D7C", // Sisal Dark Shade
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#64748B', // Gris azulado
   },
   header: {
     flexDirection: "row",
@@ -497,7 +517,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     fontWeight: "700",
-    color: "#344E7E", // East Bay Base
+    color: "#1E40AF", // Azul oscuro
   },
   headerActions: {
     flexDirection: "row",
@@ -507,32 +527,35 @@ const styles = StyleSheet.create({
     width: 48,
     height: 48,
     borderRadius: 24,
-    backgroundColor: "#E7E3D6", // Sisal Light Shade
+    backgroundColor: "#DBEAFE", // Azul muy claro
     justifyContent: "center",
     alignItems: "center",
   },
   actionIcon: {
     fontSize: 24,
-    color: "#344E7E", // East Bay Base
+    color: "#3B82F6", // Azul medio
   },
   contentArea: {
     flex: 1,
+    backgroundColor: "#FFFFFF", // Fondo blanco
   },
   cardSection: {
-    backgroundColor: "#E7E3D6", // Sisal Light Shade
+    backgroundColor: "#FFFFFF", // Fondo blanco
     borderRadius: 16,
     padding: 20,
     marginBottom: 24,
-    shadowColor: "#000",
+    shadowColor: "#3B82F6", // Sombra azulada
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
+    shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 2,
+    borderWidth: 1,
+    borderColor: "#BFDBFE", // Borde azul claro
   },
   sectionTitle: {
     fontSize: 18,
     fontWeight: "600",
-    color: "#283F70", // East Bay Dark Shade
+    color: "#1E40AF", // Azul oscuro
     marginBottom: 16,
   },
   teamsContainer: {
@@ -540,21 +563,21 @@ const styles = StyleSheet.create({
   },
   teamCard: {
     width: width * 0.7,
-    backgroundColor: "#E7E3D6", // Sisal Light Shade
+    backgroundColor: "#FFFFFF", // Fondo blanco
     borderRadius: 12,
     padding: 16,
     marginRight: 16,
     borderWidth: 1,
-    borderColor: "#928D7C", // Sisal Dark Shade
+    borderColor: "#BFDBFE", // Borde azul claro
   },
   teamCardSelected: {
-    backgroundColor: "#E7E3D6",
-    borderColor: "#344E7E", // East Bay Base
+    backgroundColor: "#FFFFFF", // Fondo blanco
+    borderColor: "#3B82F6", // Borde azul medio
   },
   teamCardTitle: {
     fontSize: 18,
     fontWeight: "600",
-    color: "#283F70", // East Bay Dark Shade
+    color: "#1E40AF", // Azul oscuro
     marginBottom: 8,
   },
   teamCardRole: {
@@ -568,20 +591,20 @@ const styles = StyleSheet.create({
     fontWeight: "500",
   },
   adminRole: {
-    backgroundColor: "#E7E3D6", // Sisal Light Shade
-    color: "#344E7E", // East Bay Base
+    backgroundColor: "#DBEAFE", // Azul muy claro
+    color: "#1E40AF", // Azul oscuro
     borderRadius: 10,
     padding: 5,
   },
   assistantRole: {
-    backgroundColor: "#DCEBF9", // Light Blue-ish
-    color: "#283F70", // East Bay Dark Shade
+    backgroundColor: "#BFDBFE", // Azul claro
+    color: "#1E40AF", // Azul oscuro
     borderRadius: 10,
     padding: 5,
   },
   memberRole: {
-    backgroundColor: "#F0F0F0", // Neutral Light Gray
-    color: "#928D7C", // Sisal Dark Shade
+    backgroundColor: "#F1F5F9", // Gris muy claro
+    color: "#64748B", // Gris azulado
     borderRadius: 10,
     padding: 5,
   },
@@ -589,49 +612,54 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   noTeamSelectedCard: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "#FFFFFF", // Fondo blanco
     borderRadius: 16,
     padding: 24,
     alignItems: "center",
     justifyContent: "center",
     minHeight: 120,
-    shadowColor: "#000",
+    shadowColor: "#3B82F6", // Sombra azulada
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
+    shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 2,
+    borderWidth: 1,
+    borderColor: "#BFDBFE", // Borde azul claro
   },
   noTeamSelectedText: {
     fontSize: 16,
-    color: "#928D7C", // Sisal Dark Shade
+    color: "#64748B", // Gris azulado
     textAlign: "center",
   },
   noTeamsCard: {
     flex: 1,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "#FFFFFF", // Fondo blanco
     borderRadius: 16,
     padding: 32,
     alignItems: "center",
     justifyContent: "center",
-    shadowColor: "#000",
+    shadowColor: "#3B82F6", // Sombra azulada
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
+    shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 2,
+    borderWidth: 1,
+    borderColor: "#BFDBFE", // Borde azul claro
   },
   noTeamsEmoji: {
     fontSize: 48,
     marginBottom: 16,
+    color: "#3B82F6", // Azul medio
   },
   noTeamsTitle: {
     fontSize: 22,
     fontWeight: "600",
-    color: "#283F70", // East Bay Dark Shade
+    color: "#1E40AF", // Azul oscuro
     marginBottom: 8,
   },
   noTeamsText: {
     fontSize: 16,
-    color: "#928D7C", // Sisal Dark Shade
+    color: "#64748B", // Gris azulado
     textAlign: "center",
     marginBottom: 32,
     lineHeight: 24,
@@ -643,22 +671,22 @@ const styles = StyleSheet.create({
   noTeamsButton: {
     height: 48,
     borderRadius: 8,
-    backgroundColor: "#344E7E", // East Bay Base
+    backgroundColor: "#1E40AF", // Azul oscuro
     justifyContent: "center",
     alignItems: "center",
   },
   noTeamsSecondaryButton: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "#FFFFFF", // Fondo blanco
     borderWidth: 1,
-    borderColor: "#928D7C", // Sisal Dark Shade
+    borderColor: "#BFDBFE", // Borde azul claro
   },
   noTeamsButtonText: {
     fontSize: 16,
     fontWeight: "600",
-    color: "#FFFFFF",
+    color: "#FFFFFF", // Texto blanco
   },
   noTeamsSecondaryButtonText: {
-    color: "#344E7E", // East Bay Base
+    color: "#1E40AF", // Azul oscuro
   },
   // Modal Styles
   modalOverlay: {
@@ -667,12 +695,12 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
   modalContent: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "#FFFFFF", // Fondo blanco
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
     padding: 24,
     paddingBottom: 32,
-    shadowColor: "#000",
+    shadowColor: "#3B82F6", // Sombra azulada
     shadowOffset: { width: 0, height: -5 },
     shadowOpacity: 0.1,
     shadowRadius: 10,
@@ -687,29 +715,29 @@ const styles = StyleSheet.create({
   modalTitle: {
     fontSize: 22,
     fontWeight: "700",
-    color: "#344E7E", // East Bay Base
+    color: "#1E40AF", // Azul oscuro
   },
   closeButton: {
     width: 32,
     height: 32,
     borderRadius: 16,
-    backgroundColor: "#F0F0F0", // Neutral Gray
+    backgroundColor: "#DBEAFE", // Azul muy claro
     justifyContent: "center",
     alignItems: "center",
   },
   closeButtonText: {
     fontSize: 16,
-    color: "#283F70", // East Bay Dark Shade
+    color: "#3B82F6", // Azul medio
   },
   modalInput: {
     height: 56,
-    borderColor: "#928D7C", // Sisal Dark Shade
+    borderColor: "#BFDBFE", // Borde azul claro
     borderWidth: 1,
     borderRadius: 12,
     paddingHorizontal: 16,
     fontSize: 16,
-    color: "#283F70", // East Bay Dark Shade
-    backgroundColor: "#FFFFFF",
+    color: "#1E40AF", // Azul oscuro
+    backgroundColor: "#FFFFFF", // Fondo blanco
     marginBottom: 16,
   },
   modalButtonContainer: {
@@ -725,20 +753,20 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   modalCancelButton: {
-    backgroundColor: "#F0F0F0", // Neutral Gray
+    backgroundColor: "#DBEAFE", // Azul muy claro
   },
   modalConfirmButton: {
-    backgroundColor: "#344E7E", // East Bay Base
+    backgroundColor: "#1E40AF", // Azul oscuro
   },
   modalButtonText: {
     fontSize: 16,
     fontWeight: "600",
-    color: "#FFFFFF",
+    color: "#FFFFFF", // Texto blanco
   },
   modalCancelButtonText: {
     fontSize: 16,
     fontWeight: "600",
-    color: "#283F70", // East Bay Dark Shade
+    color: "#3B82F6", // Azul medio
   },
   // Message Box Styles
   messageBoxOverlay: {
@@ -749,17 +777,24 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   messageBoxContent: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "#FFFFFF", // Fondo blanco
     borderRadius: 16,
     padding: 24,
     alignItems: "center",
     maxWidth: 300,
     width: "100%",
+    shadowColor: "#3B82F6", // Sombra azulada
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
+    borderWidth: 1,
+    borderColor: "#BFDBFE", // Borde azul claro
   },
   messageBoxText: {
     fontSize: 16,
     fontWeight: "500",
-    color: "#283F70", // East Bay Dark Shade
+    color: "#1E40AF", // Azul oscuro
     textAlign: "center",
     marginBottom: 24,
     lineHeight: 24,
@@ -767,7 +802,7 @@ const styles = StyleSheet.create({
   messageBoxButton: {
     height: 48,
     borderRadius: 8,
-    backgroundColor: "#344E7E", // East Bay Base
+    backgroundColor: "#1E40AF", // Azul oscuro
     justifyContent: "center",
     alignItems: "center",
     paddingHorizontal: 24,
@@ -775,7 +810,7 @@ const styles = StyleSheet.create({
   messageBoxButtonText: {
     fontSize: 16,
     fontWeight: "600",
-    color: "#FFFFFF",
+    color: "#FFFFFF", // Texto blanco
   },
 });
 

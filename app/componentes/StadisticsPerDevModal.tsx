@@ -168,7 +168,7 @@ const StatisticsPerDevModal: React.FC<StatisticsModalProps> = ({
                 <View style={styles.summarySection}>
                   <StatCard
                     title={getTranslation("Mi Carbon Footprint")}
-                    value={`${Co2.toFixed(2)} kg`}
+                    value={`${Co2} kg`}
                     subtitle={"CO₂"}
                     icon="🌍"
                     color="#2E7D32"
@@ -244,7 +244,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   modalContent: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#FFFFFF', // Fondo blanco obligatorio
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
     maxHeight: height * 0.85,
@@ -261,31 +261,31 @@ const styles = StyleSheet.create({
   modalTitle: {
     fontSize: 24,
     fontWeight: '700',
-    color: '#2E7D32', // Forest Green
+    color: '#1E40AF', // Azul oscuro para títulos
   },
   closeButton: {
     width: 32,
     height: 32,
     borderRadius: 16,
-    backgroundColor: '#ECEFF1', // Cloud Gray
+    backgroundColor: '#DBEAFE', // Azul muy claro para botón de cierre
     justifyContent: 'center',
     alignItems: 'center',
   },
   closeButtonText: {
     fontSize: 16,
-    color: '#37474F', // Charcoal Gray
+    color: '#3B82F6', // Azul medio para icono de cierre
   },
   modalBody: {
     paddingHorizontal: 24,
   },
   deviceInfoCard: {
-    backgroundColor: '#FFF8E1', // Sand
+    backgroundColor: '#EFF6FF', // Azul muy claro para tarjeta de dispositivo
     borderRadius: 16,
     padding: 20,
     marginBottom: 10,
-    shadowColor: '#000',
+    shadowColor: '#3B82F6', // Sombra azulada
     shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
+    shadowOpacity: 0.1,
     shadowRadius: 2,
     elevation: 1,
   },
@@ -299,22 +299,24 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 12,
+    backgroundColor: '#3B82F6', // Azul medio para indicador de estado
   },
   deviceStatusText: {
     fontSize: 12,
     fontWeight: '600',
-    color: '#FFFFFF',
+    color: '#FFFFFF', // Texto blanco para contraste
   },
   favoriteBadge: {
     width: 28,
     height: 28,
     borderRadius: 14,
-    backgroundColor: '#FFCA28', // Sunflower Yellow
+    backgroundColor: '#2563EB', // Azul vibrante para badge de favorito
     justifyContent: 'center',
     alignItems: 'center',
   },
   favoriteText: {
     fontSize: 14,
+    color: '#FFFFFF', // Texto blanco para contraste
   },
   deviceNameContainer: {
     alignItems: 'center',
@@ -322,12 +324,12 @@ const styles = StyleSheet.create({
   deviceName: {
     fontSize: 22,
     fontWeight: '700',
-    color: '#37474F', // Charcoal Gray
+    color: '#1E40AF', // Azul oscuro para nombre de dispositivo
     marginBottom: 4,
   },
   deviceType: {
     fontSize: 14,
-    color: '#607D8B', // Blue Gray
+    color: '#64748B', // Gris azulado para tipo de dispositivo
   },
   summarySection: {
     flexDirection: 'row',
@@ -338,49 +340,54 @@ const styles = StyleSheet.create({
   },
   statCard: {
     width: (width - 48 - 16) / 2,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#FFFFFF', // Fondo blanco
     borderRadius: 16,
     padding: 16,
     flexDirection: 'row',
     alignItems: 'center',
-    shadowColor: '#000',
+    shadowColor: '#3B82F6', // Sombra azulada
     shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
+    shadowOpacity: 0.1,
     shadowRadius: 2,
     elevation: 1,
+    borderWidth: 1,
+    borderColor: '#BFDBFE', // Borde azul claro
   },
   statCardIcon: {
     width: 48,
     height: 48,
     borderRadius: 24,
+    backgroundColor: '#DBEAFE', // Azul muy claro para iconos
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 12,
   },
   statCardIconText: {
     fontSize: 24,
+    color: '#2563EB', // Azul vibrante para iconos
   },
   statCardContent: {
     flex: 1,
   },
   statCardTitle: {
     fontSize: 12,
-    color: '#607D8B', // Blue Gray
+    color: '#64748B', // Gris azulado para títulos
     marginBottom: 2,
   },
   statCardValue: {
     fontSize: 18,
     fontWeight: '700',
+    color: '#1E40AF', // Azul oscuro para valores
     marginBottom: 2,
   },
   statCardSubtitle: {
     fontSize: 12,
-    color: '#90A4AE', // Neutral Baseline
+    color: '#94A3B8', // Gris azulado más claro
   },
   sectionTitle: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#37474F', // Charcoal Gray
+    color: '#1E40AF', // Azul oscuro para títulos de sección
     marginBottom: 16,
   },
   detailsSection: {
@@ -388,14 +395,16 @@ const styles = StyleSheet.create({
   },
   detailsContainer: {
     flexDirection: 'row',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#FFFFFF', // Fondo blanco
     borderRadius: 16,
     padding: 16,
-    shadowColor: '#000',
+    shadowColor: '#3B82F6', // Sombra azulada
     shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
+    shadowOpacity: 0.1,
     shadowRadius: 2,
     elevation: 1,
+    borderWidth: 1,
+    borderColor: '#BFDBFE', // Borde azul claro
   },
   detailsColumn: {
     flex: 1,
@@ -411,38 +420,42 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
+    backgroundColor: '#DBEAFE', // Azul muy claro para iconos
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 12,
   },
   deviceDetailIconText: {
     fontSize: 20,
+    color: '#3B82F6', // Azul medio para iconos
   },
   deviceDetailContent: {
     flex: 1,
   },
   deviceDetailLabel: {
     fontSize: 14,
-    color: '#607D8B', // Blue Gray
+    color: '#64748B', // Gris azulado para etiquetas
     marginBottom: 2,
   },
   deviceDetailValue: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#37474F', // Charcoal Gray
+    color: '#1E40AF', // Azul oscuro para valores
   },
   impactSection: {
     marginBottom: 24,
   },
   impactCard: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#FFFFFF', // Fondo blanco
     borderRadius: 16,
     padding: 20,
-    shadowColor: '#000',
+    shadowColor: '#3B82F6', // Sombra azulada
     shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
+    shadowOpacity: 0.1,
     shadowRadius: 2,
     elevation: 1,
+    borderWidth: 1,
+    borderColor: '#BFDBFE', // Borde azul claro
   },
   impactTextContainer: {
     alignItems: 'center',
@@ -450,18 +463,18 @@ const styles = StyleSheet.create({
   impactTitle: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#37474F', // Charcoal Gray
+    color: '#1E40AF', // Azul oscuro para título
     marginBottom: 8,
   },
   impactValue: {
     fontSize: 24,
     fontWeight: '700',
-    color: '#2E7D32', // Forest Green
+    color: '#2563EB', // Azul vibrante para valor de impacto
     marginBottom: 8,
   },
   impactDescription: {
     fontSize: 14,
-    color: '#607D8B', // Blue Gray
+    color: '#64748B', // Gris azulado para descripción
     textAlign: 'center',
     lineHeight: 20,
   },
@@ -472,7 +485,7 @@ const styles = StyleSheet.create({
   },
   loadingText: {
     fontSize: 16,
-    color: '#6B7280',
+    color: '#64748B', // Gris azulado para texto de carga
   },
 });
 

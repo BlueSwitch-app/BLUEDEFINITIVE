@@ -357,13 +357,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row',
-    backgroundColor: '#E7E3D6', // Sisal Light Shade 01
+    backgroundColor: '#FFFFFF', // Fondo blanco obligatorio
   },
   sidebar: {
     width: 280,
     backgroundColor: '#FFFFFF',
     borderRightWidth: 1,
-    borderRightColor: '#E7E3D6', // Sisal Light Shade 01
+    borderRightColor: '#BFDBFE', // Borde azul claro
     paddingVertical: 30,
   },
   userSection: {
@@ -372,35 +372,35 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     paddingBottom: 30,
     borderBottomWidth: 1,
-    borderBottomColor: '#E7E3D6', // Sisal Light Shade 01
+    borderBottomColor: '#BFDBFE', // Borde azul claro
   },
   avatar: {
     width: 50,
     height: 50,
     borderRadius: 25,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#DBEAFE', // Azul muy claro
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 15,
-    shadowColor: '#000',
+    shadowColor: '#3B82F6', // Sombra azulada
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.05,
+    shadowOpacity: 0.1,
     shadowRadius: 12,
     elevation: 4,
   },
   avatarText: {
-    color: '#344E7E', // East Bay Base
+    color: '#1E40AF', // Azul oscuro
     fontSize: 18,
     fontWeight: '500',
   },
   userName: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#283F70', // East Bay Dark Shade 01
+    color: '#1E40AF', // Azul oscuro
   },
   userEmail: {
     fontSize: 14,
-    color: '#928D7C', // Sisal Dark Shade 02
+    color: '#64748B', // Gris azulado
   },
   navMenu: {
     paddingTop: 20,
@@ -412,23 +412,23 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
   },
   navItemActive: {
-    backgroundColor: '#E7E3D6',
+    backgroundColor: '#DBEAFE', // Azul muy claro
     borderRightWidth: 3,
-    borderRightColor: '#344E7E', // East Bay Base
+    borderRightColor: '#1E40AF', // Azul oscuro
   },
   navItemText: {
     marginLeft: 15,
     fontSize: 15,
-    color: '#928D7C', // Sisal Dark Shade 02
+    color: '#64748B', // Gris azulado
     fontWeight: '500',
   },
   navItemTextActive: {
-    color: '#344E7E', // East Bay Base
+    color: '#1E40AF', // Azul oscuro
   },
   content: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#E7E3D6', // Sisal Light Shade 01
+    backgroundColor: '#FFFFFF', // Fondo blanco
   },
   mobileHeader: {
     marginBottom: 20,
@@ -436,7 +436,7 @@ const styles = StyleSheet.create({
   mobileTitle: {
     fontSize: 24,
     fontWeight: '600',
-    color: '#344E7E', // East Bay Base
+    color: '#1E40AF', // Azul oscuro
   },
   mobileNav: {
     marginBottom: 20,
@@ -451,47 +451,49 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     backgroundColor: '#FFFFFF',
     borderWidth: 1,
-    borderColor: '#E7E3D6',
+    borderColor: '#BFDBFE', // Borde azul claro
     minWidth: 80,
   },
   mobileNavItemActive: {
-    backgroundColor: '#E7E3D6',
-    borderColor: '#344E7E',
+    backgroundColor: '#DBEAFE', // Azul muy claro
+    borderColor: '#1E40AF', // Azul oscuro
   },
   mobileNavText: {
     fontSize: 12,
-    color: '#928D7C',
+    color: '#64748B', // Gris azulado
     marginTop: 5,
   },
   mobileNavTextActive: {
-    color: '#344E7E',
+    color: '#1E40AF', // Azul oscuro
   },
   panel: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#FFFFFF', // Fondo blanco
     borderRadius: 12,
     padding: 20,
     marginBottom: 20,
-    shadowColor: '#000',
+    shadowColor: '#3B82F6', // Sombra azulada
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.05,
+    shadowOpacity: 0.1,
     shadowRadius: 12,
     elevation: 4,
+    borderWidth: 1,
+    borderColor: '#BFDBFE', // Borde azul claro
   },
   panelHeader: {
     marginBottom: 20,
     paddingBottom: 15,
     borderBottomWidth: 1,
-    borderBottomColor: '#E7E3D6',
+    borderBottomColor: '#BFDBFE', // Borde azul claro
   },
   panelTitle: {
     fontSize: 24,
     fontWeight: '600',
-    color: '#344E7E',
+    color: '#1E40AF', // Azul oscuro
     marginBottom: 8,
   },
   panelSubtitle: {
     fontSize: 15,
-    color: '#928D7C',
+    color: '#64748B', // Gris azulado
   },
   formGroup: {
     marginBottom: 20,
@@ -499,17 +501,17 @@ const styles = StyleSheet.create({
   formLabel: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#283F70',
+    color: '#1E40AF', // Azul oscuro
     marginBottom: 8,
   },
   formInput: {
     borderWidth: 1,
-    borderColor: '#E7E3D6',
+    borderColor: '#BFDBFE', // Borde azul claro
     borderRadius: 12,
     padding: 12,
     fontSize: 15,
-    color: '#283F70',
-    backgroundColor: '#FFFFFF',
+    color: '#1E40AF', // Azul oscuro
+    backgroundColor: '#FFFFFF', // Fondo blanco
   },
   textArea: {
     height: 100,
@@ -524,7 +526,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#344E7E',
+    backgroundColor: '#1E40AF', // Azul oscuro
     paddingVertical: 12,
     paddingHorizontal: 20,
     borderRadius: 12,
@@ -532,7 +534,7 @@ const styles = StyleSheet.create({
     marginTop: 5
   },
   buttonText: {
-    color: '#E7E3D6',
+    color: '#FFFFFF', // Texto blanco para contraste
     fontSize: 14,
     fontWeight: '500',
     marginLeft: 8,
@@ -541,16 +543,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#FFFFFF', // Fondo blanco
     borderWidth: 1,
-    borderColor: '#E7E3D6',
+    borderColor: '#BFDBFE', // Borde azul claro
     paddingVertical: 12,
     paddingHorizontal: 20,
     borderRadius: 12,
     flex: 1,
   },
   secondaryButtonText: {
-    color: '#928D7C',
+    color: '#1E40AF', // Azul oscuro
     fontSize: 14,
     fontWeight: '500',
     marginLeft: 8,
@@ -563,12 +565,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     borderRadius: 12,
     marginBottom: 16,
-    backgroundColor: '#FFFFFF',
-    shadowColor: '#000',
+    backgroundColor: '#FFFFFF', // Fondo blanco
+    shadowColor: '#3B82F6', // Sombra azulada
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.05,
+    shadowOpacity: 0.1,
     shadowRadius: 12,
     elevation: 4,
+    borderWidth: 1,
+    borderColor: '#BFDBFE', // Borde azul claro
   },
   settingInfo: {
     flex: 1,
@@ -576,25 +580,25 @@ const styles = StyleSheet.create({
   settingTitle: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#283F70',
+    color: '#1E40AF', // Azul oscuro
     marginBottom: 5,
   },
   settingDescription: {
     fontSize: 14,
-    color: '#928D7C',
+    color: '#64748B', // Gris azulado
   },
   sectionTitle: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#283F70',
+    color: '#1E40AF', // Azul oscuro
     marginBottom: 16,
     marginTop: 20,
   },
   securityTip: {
     flexDirection: 'row',
-    backgroundColor: '#FFF8E1', // Sand, keeping for alert contrast
+    backgroundColor: '#DBEAFE', // Azul muy claro
     borderWidth: 1,
-    borderColor: '#FFCA28',
+    borderColor: '#3B82F6', // Borde azul medio
     borderRadius: 12,
     padding: 16,
     marginTop: 20,
@@ -606,17 +610,17 @@ const styles = StyleSheet.create({
   tipTitle: {
     fontSize: 15,
     fontWeight: '600',
-    color: '#283F70',
+    color: '#1E40AF', // Azul oscuro
     marginBottom: 5,
   },
   tipText: {
     fontSize: 14,
-    color: '#928D7C',
+    color: '#64748B', // Gris azulado
   },
   termsContent: {
-    backgroundColor: '#E7E3D6',
+    backgroundColor: '#FFFFFF', // Fondo blanco
     borderWidth: 1,
-    borderColor: '#FFFFFF',
+    borderColor: '#BFDBFE', // Borde azul claro
     borderRadius: 12,
     padding: 20,
     maxHeight: 400,
@@ -625,19 +629,19 @@ const styles = StyleSheet.create({
   termsTitle: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#283F70',
+    color: '#1E40AF', // Azul oscuro
     marginBottom: 16,
   },
   termsSubtitle: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#283F70',
+    color: '#1E40AF', // Azul oscuro
     marginTop: 20,
     marginBottom: 10,
   },
   termsText: {
     fontSize: 14,
-    color: '#928D7C',
+    color: '#64748B', // Gris azulado
     lineHeight: 22,
     marginBottom: 16,
   },
@@ -645,22 +649,24 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 16,
     marginBottom: 12,
-    backgroundColor: '#FFFFFF',
-    shadowColor: '#000',
+    backgroundColor: '#FFFFFF', // Fondo blanco
+    shadowColor: '#3B82F6', // Sombra azulada
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.05,
+    shadowOpacity: 0.1,
     shadowRadius: 12,
     elevation: 4,
+    borderWidth: 1,
+    borderColor: '#BFDBFE', // Borde azul claro
   },
   faqQuestion: {
     fontSize: 15,
     fontWeight: '600',
-    color: '#283F70',
+    color: '#1E40AF', // Azul oscuro
     marginBottom: 5,
   },
   faqAnswer: {
     fontSize: 14,
-    color: '#928D7C',
+    color: '#64748B', // Gris azulado
   },
   contactGrid: {
     flexDirection: 'row',
@@ -674,40 +680,42 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 20,
     alignItems: 'center',
-    backgroundColor: '#FFFFFF',
-    shadowColor: '#000',
+    backgroundColor: '#FFFFFF', // Fondo blanco
+    shadowColor: '#3B82F6', // Sombra azulada
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.05,
+    shadowOpacity: 0.1,
     shadowRadius: 12,
     elevation: 4,
+    borderWidth: 1,
+    borderColor: '#BFDBFE', // Borde azul claro
   },
   contactTitle: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#283F70',
+    color: '#1E40AF', // Azul oscuro
     marginTop: 10,
     marginBottom: 5,
   },
   contactInfo: {
     fontSize: 14,
-    color: '#928D7C',
+    color: '#64748B', // Gris azulado
     marginBottom: 5,
     textAlign: 'center',
   },
   contactDetail: {
     fontSize: 12,
-    color: '#928D7C',
+    color: '#64748B', // Gris azulado
     textAlign: 'center',
   },
   primaryButtonSmall: {
-    backgroundColor: '#344E7E',
+    backgroundColor: '#1E40AF', // Azul oscuro
     paddingVertical: 8,
     paddingHorizontal: 16,
     borderRadius: 12,
     marginTop: 10,
   },
   buttonTextSmall: {
-    color: '#E7E3D6',
+    color: '#FFFFFF', // Texto blanco para contraste
     fontSize: 12,
     fontWeight: '500',
   },

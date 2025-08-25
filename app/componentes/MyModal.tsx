@@ -28,17 +28,14 @@ import {
 import ColorPicker from "react-native-wheel-color-picker";
 import { Device } from "../(auth)/DashboardScreen";
 import { getContrastColor } from "../utils/getContrastColor";
-
 // API Base URL
 const API_BASE_URL = 'https://bluebackkk.vercel.app';
-
 // Define la interfaz del equipo para el combobox
 interface UserTeam {
   name: string;
   code: string;
   role: string;
 }
-
 interface MyModalProps {
   isModalOpen: boolean;
   setIsModalOpen: (open: boolean) => void;
@@ -46,7 +43,6 @@ interface MyModalProps {
   devices: Device[];
   setDevices: React.Dispatch<React.SetStateAction<Device[]>>;
 }
-
 // Categorías
 const categories = [
   { value: "electronica", label: "Electrónica", searchValue: "electronica" },
@@ -56,7 +52,6 @@ const categories = [
   { value: "climatizacion", label: "Climatización", searchValue: "climatizacion" },
   { value: "otros", label: "Otros", searchValue: "otros" },
 ];
-
 export default function MyModal({
   isModalOpen,
   setIsModalOpen,
@@ -67,7 +62,7 @@ export default function MyModal({
   const [nombre, setNombre] = useState("");
   const [categoria, setCategoria] = useState("");
   const [watts, setWatts] = useState("");
-  const [color, setColor] = useState("#2E7D32"); // Changed default color to Forest Green
+  const [color, setColor] = useState("#1E40AF"); // Changed default color to blue
   const [selectedFiles, setSelectedFiles] = useState<SelectedFile[]>([]);
   const [showColorModal, setShowColorModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -115,7 +110,6 @@ export default function MyModal({
     
     fetchTeams();
   }, [email]);
-
   const handleSave = async () => {
     if (!nombre || !categoria || !watts) {
       Alert.alert(getTranslation("Campos incompletos"), getTranslation("Por favor completa todos los campos obligatorios"));
@@ -173,21 +167,18 @@ export default function MyModal({
       setIsLoading(false);
     }
   };
-
   const resetForm = () => {
     setNombre("");
     setCategoria("");
     setWatts("");
-    setColor("#2E7D32"); // Reset to Forest Green
+    setColor("#1E40AF"); // Reset to blue
     setSelectedFiles([]);
     setSelectedTeam("no_team");
   };
-
   const handleCloseModal = () => {
     setIsModalOpen(false);
     resetForm();
   };
-
   return (
     <Modal 
       visible={isModalOpen} 
@@ -213,7 +204,7 @@ export default function MyModal({
               <TextInput
                 style={styles.input}
                 placeholder={getTranslation("Ej: Laptop, TV, etc.")}
-                placeholderTextColor="#90A4AE" // Neutral Baseline
+                placeholderTextColor="#64748B" // Blue gray
                 value={nombre}
                 onChangeText={setNombre}
               />
@@ -226,15 +217,19 @@ export default function MyModal({
                   <ComboboxTrigger style={styles.comboboxTrigger}>
                     <ComboboxValue placeholder={getTranslation("Selecciona una categoría")} />
                   </ComboboxTrigger>
-                  <ComboboxContent>
-                    <ComboboxInput placeholder={getTranslation("Buscar categorías...")} />
-                    <ComboboxList>
-                      <ComboboxEmpty>{getTranslation("No se encontró la categoría")}</ComboboxEmpty>
+                  <ComboboxContent >
+                    <ComboboxInput 
+                      placeholder={getTranslation("Buscar categorías...")} 
+                      style={styles.comboboxInput}
+                    />
+                    <ComboboxList style={styles.comboboxList}>
+                      <ComboboxEmpty style={styles.comboboxEmpty}>{getTranslation("No se encontró la categoría")}</ComboboxEmpty>
                       {categories.map((cat) => (
                         <ComboboxItem 
                           key={cat.value} 
                           value={cat.value} 
                           searchValue={cat.searchValue}
+                          style={styles.comboboxItem}
                         >
                           {cat.label}
                         </ComboboxItem>
@@ -255,14 +250,18 @@ export default function MyModal({
                     </Text>
                   </ComboboxTrigger>
                   <ComboboxContent>
-                    <ComboboxInput placeholder={getTranslation("Buscar equipo...")} />
-                    <ComboboxList>
-                      <ComboboxEmpty>{getTranslation("No se encontraron equipos")}</ComboboxEmpty>
+                    <ComboboxInput 
+                      placeholder={getTranslation("Buscar equipo...")} 
+                      style={styles.comboboxInput}
+                    />
+                    <ComboboxList style={styles.comboboxList}>
+                      <ComboboxEmpty style={styles.comboboxEmpty}>{getTranslation("No se encontraron equipos")}</ComboboxEmpty>
                       {userTeams.map((team: UserTeam) => (
                         <ComboboxItem
                           key={team.code}
                           value={team.code}
                           searchValue={team.name}
+                          style={styles.comboboxItem}
                         >
                           {team.name}
                         </ComboboxItem>
@@ -278,7 +277,7 @@ export default function MyModal({
               <TextInput
                 style={styles.input}
                 placeholder={getTranslation("Ej: 60")}
-                placeholderTextColor="#90A4AE" // Neutral Baseline
+                placeholderTextColor="#64748B" // Blue gray
                 value={watts}
                 onChangeText={setWatts}
                 keyboardType="numeric"
@@ -353,7 +352,6 @@ export default function MyModal({
     </Modal>
   );
 }
-
 const styles = StyleSheet.create({
   centeredView: {
     flex: 1,
@@ -362,13 +360,13 @@ const styles = StyleSheet.create({
   },
   modalView: {
     width: "100%",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "#FFFFFF", // White background
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
     paddingTop: 24,
     paddingBottom: 32,
     paddingHorizontal: 24,
-    shadowColor: "#000",
+    shadowColor: "#1E40AF", // Blue shadow
     shadowOffset: { width: 0, height: -5 },
     shadowOpacity: 0.1,
     shadowRadius: 10,
@@ -384,19 +382,19 @@ const styles = StyleSheet.create({
   modalTitle: {
     fontSize: 22,
     fontWeight: "700",
-    color: "#2E7D32", // Forest Green
+    color: "#1E40AF", // Dark blue
   },
   closeButton: {
     width: 32,
     height: 32,
     borderRadius: 16,
-    backgroundColor: "#ECEFF1", // Cloud Gray
+    backgroundColor: "#DBEAFE", // Light blue
     justifyContent: "center",
     alignItems: "center",
   },
   closeButtonText: {
     fontSize: 16,
-    color: "#37474F", // Charcoal Gray
+    color: "#3B82F6", // Medium blue
   },
   formContainer: {
     marginBottom: 24,
@@ -407,25 +405,25 @@ const styles = StyleSheet.create({
   inputLabel: {
     fontSize: 14,
     fontWeight: "600",
-    color: "#37474F", // Charcoal Gray
+    color: "#1E40AF", // Dark blue
     marginBottom: 8,
   },
   input: {
     height: 56,
-    borderColor: "#ECEFF1", // Cloud Gray
+    borderColor: "#BFDBFE", // Light blue border
     borderWidth: 1,
     borderRadius: 16,
     paddingHorizontal: 20,
     fontSize: 16,
     backgroundColor: "#FFFFFF",
-    color: "#37474F", // Charcoal Gray
+    color: "#1E40AF", // Dark blue
   },
   comboboxContainer: {
     height: 56,
   },
   comboboxTrigger: {
     height: 56,
-    borderColor: "#ECEFF1", // Cloud Gray
+    borderColor: "#BFDBFE", // Light blue border
     borderWidth: 1,
     borderRadius: 16,
     paddingHorizontal: 20,
@@ -434,14 +432,51 @@ const styles = StyleSheet.create({
   },
   comboboxText: {
     fontSize: 16,
-    color: "#37474F", // Charcoal Gray
+    color: "#1E40AF", // Dark blue
+  },
+  // Combobox styles
+  comboboxContent: {
+    backgroundColor: "#FFFFFF",
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: "#BFDBFE", // Light blue border
+    shadowColor: "#3B82F6",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 4,
+  },
+  comboboxInput: {
+    height: 48,
+    paddingHorizontal: 16,
+    fontSize: 16,
+    color: "#1E40AF", // Dark blue
+    backgroundColor: "#FFFFFF",
+    borderBottomWidth: 1,
+    borderBottomColor: "#BFDBFE", // Light blue border
+  },
+  comboboxList: {
+    backgroundColor: "#FFFFFF",
+    borderRadius: 16,
+  },
+  comboboxItem: {
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: "#EFF6FF", // Very light blue
+  },
+  comboboxEmpty: {
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    color: "#64748B", // Blue gray
+    textAlign: "center",
   },
   colorPickerButton: {
     height: 56,
     borderRadius: 16,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#2E7D32", // Forest Green
+    backgroundColor: "#1E40AF", // Dark blue
   },
   colorPickerText: {
     fontSize: 16,
@@ -458,7 +493,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   saveButton: {
-    backgroundColor: "#2E7D32", // Forest Green
+    backgroundColor: "#1E40AF", // Dark blue
   },
   saveButtonText: {
     fontSize: 16,
@@ -468,7 +503,7 @@ const styles = StyleSheet.create({
   // Color Picker Modal Styles
   colorModalContainer: {
     flex: 1,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "#FFFFFF", // White background
   },
   colorModalHeader: {
     flexDirection: "row",
@@ -481,7 +516,7 @@ const styles = StyleSheet.create({
   colorModalTitle: {
     fontSize: 22,
     fontWeight: "700",
-    color: "#2E7D32", // Forest Green
+    color: "#1E40AF", // Dark blue
   },
   colorPickerContainer: {
     flex: 1,
@@ -493,7 +528,7 @@ const styles = StyleSheet.create({
     paddingBottom: 32,
   },
   confirmButton: {
-    backgroundColor: "#2E7D32", // Forest Green
+    backgroundColor: "#1E40AF", // Dark blue
     height: 48,
     borderRadius: 16,
     justifyContent: "center",

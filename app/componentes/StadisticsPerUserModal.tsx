@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   modalContent: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#FFFFFF', // Fondo blanco obligatorio
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
     maxHeight: height * 0.85,
@@ -205,19 +205,19 @@ const styles = StyleSheet.create({
   modalTitle: {
     fontSize: 24,
     fontWeight: '700',
-    color: '#111827',
+    color: '#1E40AF', // Azul oscuro para títulos
   },
   closeButton: {
     width: 32,
     height: 32,
     borderRadius: 16,
-    backgroundColor: '#F3F4F6',
+    backgroundColor: '#DBEAFE', // Azul muy claro para botón de cierre
     justifyContent: 'center',
     alignItems: 'center',
   },
   closeButtonText: {
     fontSize: 16,
-    color: '#6B7280',
+    color: '#3B82F6', // Azul medio para icono de cierre
   },
   modalBody: {
     paddingHorizontal: 24,
@@ -231,14 +231,14 @@ const styles = StyleSheet.create({
   },
   statCard: {
     width: (width - 48 - 16) / 2,
-    backgroundColor: '#F9FAFB',
+    backgroundColor: '#EFF6FF', // Azul muy claro para tarjetas
     borderRadius: 16,
     padding: 16,
     flexDirection: 'row',
     alignItems: 'center',
-    shadowColor: '#000',
+    shadowColor: '#3B82F6', // Sombra azulada
     shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
+    shadowOpacity: 0.1,
     shadowRadius: 2,
     elevation: 1,
   },
@@ -246,41 +246,44 @@ const styles = StyleSheet.create({
     width: 48,
     height: 48,
     borderRadius: 24,
+    backgroundColor: '#DBEAFE', // Azul muy claro para iconos
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 12,
   },
   statCardIconText: {
     fontSize: 24,
+    color: '#2563EB', // Azul vibrante para iconos
   },
   statCardContent: {
     flex: 1,
   },
   statCardTitle: {
     fontSize: 12,
-    color: '#6B7280',
+    color: '#64748B', // Gris azulado para textos secundarios
     marginBottom: 2,
   },
   statCardValue: {
     fontSize: 18,
     fontWeight: '700',
+    color: '#1E40AF', // Azul oscuro para valores
     marginBottom: 2,
   },
   statCardSubtitle: {
     fontSize: 12,
-    color: '#9CA3AF',
+    color: '#94A3B8', // Gris azulado más claro
   },
   sectionTitle: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#111827',
+    color: '#1E40AF', // Azul oscuro para títulos de sección
     marginBottom: 16,
   },
   chartSection: {
     marginBottom: 32,
   },
   chartContainer: {
-    backgroundColor: '#F9FAFB',
+    backgroundColor: '#EFF6FF', // Azul muy claro para contenedor de gráficos
     borderRadius: 16,
     padding: 20,
   },
@@ -289,28 +292,29 @@ const styles = StyleSheet.create({
   },
   chartBarLabel: {
     fontSize: 14,
-    color: '#374151',
+    color: '#475569', // Gris azulado para etiquetas
     marginBottom: 8,
   },
   chartBarTrack: {
     height: 8,
-    backgroundColor: '#E5E7EB',
+    backgroundColor: '#BFDBFE', // Azul claro para barra de fondo
     borderRadius: 4,
     overflow: 'hidden',
   },
   chartBarFill: {
     height: '100%',
+    backgroundColor: '#3B82F6', // Azul medio para barra de progreso
     borderRadius: 4,
   },
   chartBarValue: {
     fontSize: 12,
-    color: '#6B7280',
+    color: '#64748B', // Gris azulado para valores
     marginTop: 4,
     textAlign: 'right',
   },
   noDataText: {
     fontSize: 14,
-    color: '#6B7280',
+    color: '#64748B', // Gris azulado para texto sin datos
     textAlign: 'center',
     paddingVertical: 20,
   },
@@ -318,14 +322,14 @@ const styles = StyleSheet.create({
     marginBottom: 32,
   },
   impactCard: {
-    backgroundColor: '#F9FAFB',
+    backgroundColor: '#EFF6FF', // Azul muy claro para tarjeta de impacto
     borderRadius: 16,
     padding: 20,
     flexDirection: 'row',
     alignItems: 'center',
-    shadowColor: '#000',
+    shadowColor: '#3B82F6', // Sombra azulada
     shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
+    shadowOpacity: 0.1,
     shadowRadius: 2,
     elevation: 1,
   },
@@ -336,13 +340,13 @@ const styles = StyleSheet.create({
     width: 56,
     height: 56,
     borderRadius: 28,
-    backgroundColor: '#4F46E5',
+    backgroundColor: '#2563EB', // Azul vibrante para icono principal
     justifyContent: 'center',
     alignItems: 'center',
   },
   impactIconText: {
     fontSize: 28,
-    color: '#FFFFFF',
+    color: '#FFFFFF', // Texto blanco para contraste
   },
   impactContent: {
     flex: 1,
@@ -350,25 +354,25 @@ const styles = StyleSheet.create({
   impactTitle: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#111827',
+    color: '#1E40AF', // Azul oscuro para título
     marginBottom: 4,
   },
   impactSubtitle: {
     fontSize: 14,
-    color: '#6B7280',
+    color: '#64748B', // Gris azulado para subtítulo
   },
   impactArrow: {
     marginLeft: 16,
   },
   impactArrowText: {
     fontSize: 24,
-    color: '#4F46E5',
+    color: '#2563EB', // Azul vibrante para flecha
   },
   activitySection: {
     marginBottom: 32,
   },
   activityContainer: {
-    backgroundColor: '#F9FAFB',
+    backgroundColor: '#EFF6FF', // Azul muy claro para contenedor de actividades
     borderRadius: 16,
     padding: 20,
   },
@@ -384,25 +388,27 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
+    backgroundColor: '#DBEAFE', // Azul muy claro para iconos de actividad
     justifyContent: 'center',
     alignItems: 'center',
   },
   activityIconText: {
     fontSize: 20,
     fontWeight: '600',
+    color: '#3B82F6', // Azul medio para iconos
   },
   activityTextContainer: {
     flex: 1,
   },
   activityTitle: {
     fontSize: 14,
-    color: '#6B7280',
+    color: '#64748B', // Gris azulado para títulos de actividad
     marginBottom: 2,
   },
   activityValue: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#111827',
+    color: '#1E40AF', // Azul oscuro para valores de actividad
   },
   loadingContainer: {
     justifyContent: 'center',
@@ -411,7 +417,7 @@ const styles = StyleSheet.create({
   },
   loadingText: {
     fontSize: 16,
-    color: '#6B7280',
+    color: '#64748B', // Gris azulado para texto de carga
   },
 });
 

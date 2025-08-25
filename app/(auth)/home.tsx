@@ -142,7 +142,7 @@ const [email, setEmail] = useState<string | "">("");
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: "#E7E3D6", // Sisal Light Shade 01
+    backgroundColor: "#FFFFFF", // Fondo blanco obligatorio
   },
   headerRight: {
     flexDirection: "row",
@@ -152,27 +152,30 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
-    backgroundColor: "#FFFFFF", // Card/White background
-    shadowColor: "#000",
+    backgroundColor: "#FFFFFF", // Fondo blanco
+    shadowColor: "#3B82F6", // Sombra azulada
     shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
+    shadowOpacity: 0.1,
     shadowRadius: 1,
     elevation: 2,
     padding: 16,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    borderBottomWidth: 1,
+    borderBottomColor: "#BFDBFE", // Borde azul claro
   },
   headerTitle: {
     fontSize: 20,
     fontWeight: "bold",
-    color: "#344E7E", // East Bay Base
+    color: "#1E40AF", // Azul oscuro
   },
   settingsIcon: {
     padding: 4,
   },
   iconText: {
     fontSize: 24,
+    color: "#3B82F6", // Azul medio
   },
   mainContent: {
     flex: 1,
@@ -183,12 +186,12 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "#FFFFFF", // Fondo blanco
     borderTopWidth: 1,
-    borderTopColor: "#928D7C", // Sisal Dark Shade 02
-    shadowColor: "#000",
+    borderTopColor: "#BFDBFE", // Borde azul claro
+    shadowColor: "#3B82F6", // Sombra azulada
     shadowOffset: { width: 0, height: -2 },
-    shadowOpacity: 0.05,
+    shadowOpacity: 0.1,
     shadowRadius: 3,
     elevation: 4,
     flexDirection: "row",
@@ -205,31 +208,33 @@ const styles = StyleSheet.create({
   navIcon: {
     fontSize: 24,
     marginBottom: 4,
-    color: "#928D7C", // Sisal Dark Shade 02
+    color: "#64748B", // Gris azulado para inactivo
   },
   navIconActive: {
-    color: "#344E7E", // East Bay Base
+    color: "#1E40AF", // Azul oscuro para activo
   },
   navText: {
     fontSize: 12,
-    color: "#928D7C", // Sisal Dark Shade 02
+    color: "#64748B", // Gris azulado para inactivo
   },
   navTextActive: {
-    color: "#344E7E", // East Bay Base
+    color: "#1E40AF", // Azul oscuro para activo
     fontWeight: "600",
   },
   // Optional card-style wrapper (to match dashboard feel)
   card: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "#FFFFFF", // Fondo blanco
     borderRadius: 20,
     padding: 16,
     marginHorizontal: 16,
     marginVertical: 8,
-    shadowColor: "#000",
+    shadowColor: "#3B82F6", // Sombra azulada
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.05,
+    shadowOpacity: 0.1,
     shadowRadius: 12,
     elevation: 4,
+    borderWidth: 1,
+    borderColor: "#BFDBFE", // Borde azul claro
   },
 });
 

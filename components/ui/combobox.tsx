@@ -272,12 +272,13 @@ export function ComboboxContent({
           style={[
             styles.dropdown,
             {
-              backgroundColor: cardColor,
+              backgroundColor: "#ffffff",
               borderColor: borderColor,
               top: triggerLayout.y + triggerLayout.height + 6,
               left: triggerLayout.x,
               width: triggerLayout.width,
               maxHeight: dropdownHeight,
+              borderRadius: 10
             },
           ]}
         >
@@ -309,7 +310,7 @@ export function ComboboxInput({
     <View
       style={[
         styles.searchContainer,
-        { borderBottomColor: borderColor },
+        { borderBottomColor: borderColor, borderRadius:10 },
         style,
       ]}
     >

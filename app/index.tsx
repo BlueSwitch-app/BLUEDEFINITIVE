@@ -319,7 +319,7 @@ export default function AuthScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#E7E3D6', // Sisal Light Shade 01 (fondo neutro claro)
+        backgroundColor: '#FFFFFF', // Fondo blanco obligatorio
     },
     content: {
         flex: 1,
@@ -330,13 +330,13 @@ const styles = StyleSheet.create({
     logo: {
         fontSize: 36,
         fontWeight: '700',
-        color: '#344E7E', // East Bay base (color principal del logo)
+        color: '#1E40AF', // Azul oscuro (equivalente a East Bay base)
         marginBottom: 8,
         letterSpacing: 1,
     },
     tagline: {
         fontSize: 16,
-        color: '#1B3062', // East Bay Dark Shade 02 (texto secundario)
+        color: '#3B82F6', // Azul medio (equivalente a East Bay Dark Shade 02)
         marginBottom: 40,
         textAlign: 'center',
     },
@@ -351,15 +351,15 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFFFFF',
         borderRadius: 24,
         padding: 32,
-        shadowColor: '#000',
+        shadowColor: '#1E40AF', // Sombra azulada
         shadowOffset: { width: 0, height: 10 },
-        shadowOpacity: 0.08,
+        shadowOpacity: 0.1,
         shadowRadius: 15,
         elevation: 5,
     },
     tabContainer: {
         flexDirection: 'row',
-        backgroundColor: '#283F70', // East Bay Dark Shade 01 (fondo de tabs)
+        backgroundColor: '#DBEAFE', // Azul muy claro (equivalente a East Bay Dark Shade 01)
         borderRadius: 16,
         marginBottom: 32,
         padding: 4,
@@ -371,22 +371,22 @@ const styles = StyleSheet.create({
         borderRadius: 12,
     },
     activeTab: {
-        backgroundColor: '#446191', // East Bay Light Shade 01 (tab activo)
+        backgroundColor: '#3B82F6', // Azul medio (equivalente a East Bay Light Shade 01)
     },
     tabText: {
-        color: '#FFFFFF', // Texto blanco en tabs inactivos
+        color: '#1E40AF', // Azul oscuro para tabs inactivos
         fontWeight: '600',
         fontSize: 16,
     },
     activeTabText: {
-        color: '#E7E3D6', // Sisal Light Shade 01 (texto activo contrastado)
+        color: '#FFFFFF', // Blanco para tab activo (máximo contraste)
         fontWeight: '700',
     },
     formContainer: {
         width: '100%',
     },
     button: {
-        backgroundColor: '#344E7E', // East Bay base (botón principal)
+        backgroundColor: '#2563EB', // Azul vibrante (equivalente a East Bay base)
         paddingVertical: 16,
         borderRadius: 12,
         alignItems: 'center',
@@ -394,18 +394,18 @@ const styles = StyleSheet.create({
         marginBottom: 16,
     },
     buttonText: {
-        color: '#E7E3D6', // Sisal Light Shade 01 (texto de botón)
+        color: '#FFFFFF', // Texto blanco en botones
         fontWeight: '600',
         fontSize: 16,
     },
     terms: {
-        color: '#283F70', // East Bay Dark Shade 01 (enlace)
+        color: '#2563EB', // Azul vibrante para enlaces
         fontSize: 14,
         textAlign: 'center',
         textDecorationLine: 'underline',
     },
     forgotPasswordLink: {
-        color: '#283F70', // East Bay Dark Shade 01 (enlace)
+        color: '#2563EB', // Azul vibrante para enlaces
         fontSize: 14,
         textAlign: 'center',
         textDecorationLine: 'underline',
@@ -418,12 +418,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         borderWidth: 1,
-        borderColor: '#B1AC9D', // Sisal Dark Shade 01 (borde inputs)
+        borderColor: '#93C5FD', // Azul claro para bordes
         borderRadius: 16,
         paddingHorizontal: 20,
         height: 56,
         backgroundColor: '#FFFFFF',
-        shadowColor: '#000',
+        shadowColor: '#2563EB',
         shadowOffset: { width: 0, height: 1 },
         shadowOpacity: 0.05,
         shadowRadius: 2,
@@ -431,17 +431,18 @@ const styles = StyleSheet.create({
     },
     inputIcon: {
         marginRight: 16,
+        tintColor: '#3B82F6', // Azul medio para iconos
     },
     input: {
         flex: 1,
         fontSize: 16,
-        color: '#344E7E', // East Bay base (texto input)
+        color: '#1E40AF', // Azul oscuro para texto
     },
     inputRight: {
         marginLeft: 16,
     },
     inputError: {
-        color: '#928D7C', // Sisal Dark Shade 02 (errores suaves pero legibles)
+        color: '#DC2626', // Rojo para errores (mantiene visibilidad)
         fontSize: 12,
         marginTop: 6,
         marginLeft: 4,

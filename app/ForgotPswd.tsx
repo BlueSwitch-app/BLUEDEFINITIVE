@@ -152,7 +152,7 @@ export default function ForgotPasswordScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#E7E3D6', // Sisal Light Shade 01 (fondo neutro claro)
+        backgroundColor: '#FFFFFF', // Fondo blanco obligatorio
     },
     content: {
         flex: 1,
@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
         width: 48,
         height: 48,
         borderRadius: 24,
-        backgroundColor: '#44619120', // East Bay Light Shade 01 (fondo translúcido)
+        backgroundColor: '#3B82F620', // Azul medio con opacidad (equivalente translúcido)
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -178,13 +178,13 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 32,
         fontWeight: '700',
-        color: '#344E7E', // East Bay base (títulos principales)
+        color: '#1E40AF', // Azul oscuro (equivalente a East Bay base)
         marginBottom: 12,
         textAlign: 'center',
     },
     subtitle: {
         fontSize: 16,
-        color: '#928D7C', // Sisal Dark Shade 02 (texto secundario gris/beige)
+        color: '#64748B', // Gris azulado (equivalente a Sisal Dark Shade 02)
         textAlign: 'center',
         lineHeight: 24,
     },
@@ -198,23 +198,23 @@ const styles = StyleSheet.create({
     },
     loadingText: {
         fontSize: 16,
-        color: '#B1AC9D', // Sisal Dark Shade 01 (texto de carga)
+        color: '#64748B', // Gris azulado (equivalente a Sisal Dark Shade 01)
         marginTop: 16,
     },
     button: {
-        backgroundColor: '#283F70', // East Bay Dark Shade 01 (botón principal)
+        backgroundColor: '#2563EB', // Azul vibrante (equivalente a East Bay Dark Shade 01)
         paddingVertical: 16,
         borderRadius: 12,
         alignItems: 'center',
         marginTop: 24,
-        shadowColor: '#1B3062',
+        shadowColor: '#1E40AF', // Sombra azulada
         shadowOffset: { width: 0, height: 4 },
         shadowOpacity: 0.2,
         shadowRadius: 8,
         elevation: 4,
     },
     buttonText: {
-        color: '#E7E3D6', // Sisal Light Shade 01 (texto del botón)
+        color: '#FFFFFF', // Texto blanco (máximo contraste)
         fontWeight: '600',
         fontSize: 16,
     },
@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
         marginTop: 24,
     },
     returnButtonText: {
-        color: '#446191', // East Bay Light Shade 01 (enlace retorno)
+        color: '#3B82F6', // Azul medio (equivalente a East Bay Light Shade 01)
         fontSize: 16,
         fontWeight: '500',
     },
@@ -239,8 +239,8 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         height: 56,
         backgroundColor: '#FFFFFF',
-        borderColor: '#D1CDBF', // Sisal base (bordes inputs)
-        shadowColor: '#000',
+        borderColor: '#93C5FD', // Azul claro (equivalente a Sisal base)
+        shadowColor: '#3B82F6',
         shadowOffset: { width: 0, height: 1 },
         shadowOpacity: 0.05,
         shadowRadius: 2,
@@ -248,17 +248,18 @@ const styles = StyleSheet.create({
     },
     inputIcon: {
         marginRight: 16,
+        tintColor: '#3B82F6', // Azul medio para iconos
     },
     input: {
         flex: 1,
         fontSize: 16,
-        color: '#344E7E', // East Bay base (texto input)
+        color: '#1E40AF', // Azul oscuro (equivalente a East Bay base)
     },
     inputRight: {
         marginLeft: 16,
     },
     inputError: {
-        color: '#928D7C', // Sisal Dark Shade 02 (error suave, elegante)
+        color: '#DC2626', // Rojo para errores (mantiene visibilidad)
         fontSize: 12,
         marginTop: 6,
         marginLeft: 4,

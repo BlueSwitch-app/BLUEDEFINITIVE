@@ -195,8 +195,10 @@ const fetchDevices = useCallback(async () => {
   if (isLoading) {
     return (
       <View style={dashboardStyles.loadingContainer}>
-        <ActivityIndicator size="large" color="#2E7D32" />
-        <Text style={dashboardStyles.loadingText}>Cargando tus dispositivos...</Text>
+        <View style={dashboardStyles.loadingCard}>
+                  <ActivityIndicator size="large" color="#1E40AF" />
+        <Text style={dashboardStyles.loadingText}>{getTranslation("Cargando tus dispositivos...")}</Text>
+      </View>
       </View>
     );
   }
@@ -323,7 +325,7 @@ const fetchDevices = useCallback(async () => {
 const dashboardStyles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#E7E3D6', // Sisal Light Shade 01
+    backgroundColor: '#FFFFFF', // Fondo blanco obligatorio
   },
   scrollView: {
     flex: 1,
@@ -333,15 +335,27 @@ const dashboardStyles = StyleSheet.create({
   },
   loadingContainer: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: '#E7E3D6',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#FFFFFF', // Fondo blanco
+  },
+  loadingCard: {
+    backgroundColor: '#FFFFFF', // Fondo blanco
+    borderRadius: 24,
+    padding: 40,
+    alignItems: 'center',
+    shadowColor: '#3B82F6', // Sombra azulada
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.1,
+    shadowRadius: 15,
+    elevation: 5,
+    borderWidth: 1,
+    borderColor: '#BFDBFE', // Borde azul claro
   },
   loadingText: {
-    marginTop: 16,
-    fontSize: 16,
-    color: '#928D7C', // Sisal Dark Shade 02
-    fontFamily: 'System',
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#64748B', // Gris azulado
   },
   // Header
   header: {
@@ -355,12 +369,12 @@ const dashboardStyles = StyleSheet.create({
   headerTitle: {
     fontSize: 28,
     fontWeight: '700',
-    color: '#344E7E', // East Bay Base
+    color: '#1E40AF', // Azul oscuro para títulos principales
     fontFamily: 'System',
   },
   headerSubtitle: {
     fontSize: 16,
-    color: '#928D7C', // Sisal Dark Shade 02
+    color: '#64748B', // Gris azulado para texto secundario
     marginTop: 4,
     fontFamily: 'System',
   },
@@ -368,23 +382,23 @@ const dashboardStyles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: '#44619120', // East Bay Light Shade 01 translúcido
+    backgroundColor: '#DBEAFE', // Azul muy claro para botón de refresco
     justifyContent: 'center',
     alignItems: 'center',
   },
   refreshIcon: {
     fontSize: 20,
-    color: '#344E7E', // East Bay Base
+    color: '#3B82F6', // Azul medio para iconos
   },
   // Carbon Footprint Card
   footprintCard: {
     marginHorizontal: 24,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#FFFFFF', // Fondo blanco
     borderRadius: 20,
     padding: 24,
-    shadowColor: '#000',
+    shadowColor: '#3B82F6', // Sombra azulada
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.05,
+    shadowOpacity: 0.1,
     shadowRadius: 12,
     elevation: 4,
     marginBottom: 24,
@@ -398,7 +412,7 @@ const dashboardStyles = StyleSheet.create({
   footprintTitle: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#283F70', // East Bay Dark Shade 01
+    color: '#1E40AF', // Azul oscuro para títulos
     fontFamily: 'System',
   },
   footprintValueContainer: {
@@ -409,14 +423,14 @@ const dashboardStyles = StyleSheet.create({
   footprintValue: {
     fontSize: 48,
     fontWeight: '700',
-    color: '#344E7E', // East Bay Base
+    color: '#2563EB', // Azul vibrante para valores principales
     lineHeight: 56,
     fontFamily: 'System',
   },
   footprintUnit: {
     fontSize: 18,
     fontWeight: '500',
-    color: '#928D7C', // Sisal Dark Shade 02
+    color: '#64748B', // Gris azulado para unidades
     marginBottom: 8,
     marginLeft: 4,
     fontFamily: 'System',
@@ -426,7 +440,7 @@ const dashboardStyles = StyleSheet.create({
   },
   footprintDescription: {
     fontSize: 14,
-    color: '#928D7C', // Sisal Dark Shade 02
+    color: '#64748B', // Gris azulado para descripciones
     fontFamily: 'System',
   },
   // Devices Section
@@ -442,22 +456,22 @@ const dashboardStyles = StyleSheet.create({
   sectionTitle: {
     fontSize: 20,
     fontWeight: '600',
-    color: '#283F70', // East Bay Dark Shade 01
+    color: '#1E40AF', // Azul oscuro para títulos de sección
     fontFamily: 'System',
   },
   addButton: {
-    backgroundColor: '#344E7E', // East Bay Base
+    backgroundColor: '#2563EB', // Azul vibrante para botones principales
     paddingVertical: 10,
     paddingHorizontal: 16,
     borderRadius: 12,
-    shadowColor: '#1B3062',
+    shadowColor: '#1E40AF', // Sombra azulada
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 4,
     elevation: 4,
   },
   addButtonText: {
-    color: '#E7E3D6', // Sisal Light Shade 01
+    color: '#FFFFFF', // Texto blanco para contraste
     fontSize: 14,
     fontWeight: '600',
     fontFamily: 'System',
@@ -469,25 +483,27 @@ const dashboardStyles = StyleSheet.create({
   searchBar: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#FFFFFF', // Fondo blanco
     borderRadius: 16,
     paddingHorizontal: 16,
     paddingVertical: 12,
-    shadowColor: '#000',
+    shadowColor: '#3B82F6', // Sombra azulada
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
+    shadowOpacity: 0.1,
     shadowRadius: 8,
     elevation: 2,
+    borderWidth: 1,
+    borderColor: '#BFDBFE', // Borde azul muy claro
   },
   searchIcon: {
     fontSize: 18,
     marginRight: 12,
-    color: '#928D7C', // Sisal Dark Shade 02
+    color: '#64748B', // Gris azulado para iconos
   },
   searchInput: {
     flex: 1,
     fontSize: 16,
-    color: '#283F70', // East Bay Dark Shade 01
+    color: '#1E40AF', // Azul oscuro para texto de entrada
     fontFamily: 'System',
   },
   clearButton: {
@@ -495,7 +511,7 @@ const dashboardStyles = StyleSheet.create({
   },
   clearButtonText: {
     fontSize: 16,
-    color: '#928D7C', // Sisal Dark Shade 02
+    color: '#64748B', // Gris azulado para texto secundario
   },
   // Device List
   deviceList: {
@@ -510,36 +526,37 @@ const dashboardStyles = StyleSheet.create({
   emptyStateEmoji: {
     fontSize: 48,
     marginBottom: 16,
+    color: '#3B82F6', // Azul medio para emoji
   },
   emptyStateTitle: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#283F70', // East Bay Dark Shade 01
+    color: '#1E40AF', // Azul oscuro para título
     marginBottom: 8,
     textAlign: 'center',
     fontFamily: 'System',
   },
   emptyStateDescription: {
     fontSize: 14,
-    color: '#928D7C', // Sisal Dark Shade 02
+    color: '#64748B', // Gris azulado para descripción
     textAlign: 'center',
     marginBottom: 24,
     lineHeight: 20,
     fontFamily: 'System',
   },
   emptyStateButton: {
-    backgroundColor: '#344E7E', // East Bay Base
+    backgroundColor: '#2563EB', // Azul vibrante para botón principal
     paddingVertical: 12,
     paddingHorizontal: 24,
     borderRadius: 12,
-    shadowColor: '#1B3062',
+    shadowColor: '#1E40AF', // Sombra azulada
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 4,
     elevation: 4,
   },
   emptyStateButtonText: {
-    color: '#E7E3D6', // Sisal Light Shade 01
+    color: '#FFFFFF', // Texto blanco para contraste
     fontSize: 14,
     fontWeight: '600',
     fontFamily: 'System',
