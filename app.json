@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Blue Switch",
-    "slug": "BlueSwitch",
+    "slug": "firebaseApp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/BlueLogo.png",
@@ -96,6 +96,7 @@
         "https": true,
         "port": 19000
       }
-    }
+    },
+    "owner": "blueswitch"
   }
 }
