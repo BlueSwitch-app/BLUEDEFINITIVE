@@ -155,8 +155,10 @@ const StatisticsScreen: React.FC<StadisticsScreenProps> = ({ email }) => {
       {/* Header */}
       <View style={styles.header}>
         <View>
+          
           <Text style={styles.screenTitle}>{getTranslation("Estadísticas")}</Text>
           <Text style={styles.screenSubtitle}>{getTranslation("Análisis de consumo y huella de carbono")}</Text>
+          
         </View>
         <TouchableOpacity 
           onPress={generateTicket}
@@ -168,6 +170,7 @@ const StatisticsScreen: React.FC<StadisticsScreenProps> = ({ email }) => {
 
       {/* Search Bar */}
       <View style={styles.searchBarContainer}>
+        
         <View style={styles.searchBar}>
           <Text style={styles.searchIcon}>🔍</Text>
           <TextInput
@@ -187,6 +190,7 @@ const StatisticsScreen: React.FC<StadisticsScreenProps> = ({ email }) => {
 
       {/* Summary Cards */}
       <View style={styles.summaryCardsContainer}>
+        
         <View style={styles.summaryCard}>
           <View style={styles.summaryCardIconContainer}>
             <Text style={styles.summaryCardIcon}>💻</Text>
@@ -329,7 +333,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#FFFFFF', // Fondo blanco obligatorio
     paddingHorizontal: 20,
-    paddingTop: 20,
+ 
+    paddingTop: 30 // Fondo blanco
   },
   loadingContainer: {
     flex: 1,
@@ -360,6 +365,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 24,
+    marginRight:50
   },
   screenTitle: {
     fontSize: 32,
@@ -381,9 +387,9 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 8,
     elevation: 4,
+    width: 60
   },
   ticketButtonText: {
-    fontSize: 14,
     fontWeight: '600',
     color: '#FFFFFF', // Texto blanco para contraste
   },

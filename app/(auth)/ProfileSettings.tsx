@@ -162,7 +162,6 @@ const ProfileSettingsScreen: React.FC<props> = ({email}) => {
         {[
           { id: 'profile', icon: 'person-outline', label: getTranslation('Edit Profile') },
           { id: 'security', icon: 'shield-checkmark-outline', label: getTranslation('Security') },
-          { id: 'terms', icon: 'document-text-outline', label: getTranslation('Terms & Conditions') },
           { id: 'help', icon: 'help-circle-outline', label: getTranslation('Help & Support') },
         ].map((item) => (
           <TouchableOpacity
@@ -259,21 +258,7 @@ const ProfileSettingsScreen: React.FC<props> = ({email}) => {
     </View>
   );
 
-  const renderTermsPanel = () => (
-    <View style={styles.panel}>
-      <View style={styles.panelHeader}>
-        <Text style={styles.panelTitle}>{getTranslation("Terms & Conditions")}</Text>
-        <Text style={styles.panelSubtitle}>{getTranslation("Review our terms of service and privacy policy")}</Text>
-      </View>
-      <View style={{ flex: 1 }}>
-        <iframe
-          src="https://drive.google.com/file/d/1i1r4xRQnzhvCVsNH3EestwHwd7rI5ewx/preview"
-          style={{ width: '100%', height: 550 }}
-          title="PDF Viewer"
-        />
-      </View>
-    </View>
-  );
+
 
   const renderHelpPanel = () => (
     <View style={styles.panel}>
@@ -318,7 +303,6 @@ const ProfileSettingsScreen: React.FC<props> = ({email}) => {
             {[
               { id: 'profile', icon: 'person-outline', label: 'Profile' },
               { id: 'security', icon: 'shield-checkmark-outline', label: 'Security' },
-              { id: 'terms', icon: 'document-text-outline', label: 'Terms' },
               { id: 'help', icon: 'help-circle-outline', label: 'Help' },
             ].map((item) => (
               <TouchableOpacity
@@ -346,7 +330,6 @@ const ProfileSettingsScreen: React.FC<props> = ({email}) => {
         )}
         {activePanel === 'profile' && renderProfilePanel()}
         {activePanel === 'security' && renderSecurityPanel()}
-        {activePanel === 'terms' && renderTermsPanel()}
         {activePanel === 'help' && renderHelpPanel()}
       </ScrollView>
     </View>
@@ -358,6 +341,8 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     backgroundColor: '#FFFFFF', // Fondo blanco obligatorio
+    
+    paddingTop: 30 // Fondo blanco
   },
   sidebar: {
     width: 280,

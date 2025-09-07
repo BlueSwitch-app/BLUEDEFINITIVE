@@ -5,15 +5,14 @@ import { View } from '@/components/ui/view';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { getTranslation } from '@/Translations/i18n';
 import { Link, useRouter } from 'expo-router';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
 import { Eye, EyeOff, Lock, Mail, MapPin, Phone, User } from 'lucide-react-native';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Linking, Pressable, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { auth2 } from './firebaseConfig';
 
 // API Base URL
 const API_BASE_URL = 'https://bluebackkk.vercel.app';
-
 
 // Custom Input Component
 interface CustomInputProps {
@@ -26,7 +25,6 @@ interface CustomInputProps {
     keyboardType?: 'default' | 'email-address' | 'numeric' | 'phone-pad';
     rightComponent?: React.ReactNode;
 }
-
 const CustomInput: React.FC<CustomInputProps> = ({
     placeholder,
     icon,
@@ -68,7 +66,6 @@ const CustomInput: React.FC<CustomInputProps> = ({
         </View>
     );
 };
-
 export default function AuthScreen() {
     const { toast } = useToast();
     const [tab, setTab] = useState<'login' | 'signup'>('login');
@@ -78,11 +75,25 @@ export default function AuthScreen() {
     const [city, setCity] = useState('');
     const [phone, setPhone] = useState('');
     const [loading, setLoading] = useState(false);
+    const [checkingAuth, setCheckingAuth] = useState(true); // Nuevo estado para verificar la autenticación
     const router = useRouter();
     const emailError = email && !email.includes('@') ? getTranslation('Please enter a valid email address') : '';
     const passwordError = password && password.length < 6 ? getTranslation('Password must be at least 6 characters') : '';
     const muted = useThemeColor({}, 'mutedForeground');
     const [showPassword, setShowPassword] = useState(false);
+
+    // Verificar si hay un usuario autenticado al cargar la pantalla
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth2, (user) => {
+            if (user) {
+                // Si hay un usuario autenticado, redirigir a la pantalla principal
+                router.push({ pathname: '/home', params: { email: user.email } });
+            }
+            setCheckingAuth(false); // Terminar la verificación
+        });
+
+        return () => unsubscribe(); // Limpiar el suscriptor al desmontar el componente
+    }, []);
 
     const handleSignup = async () => {
         if (!nombre || !email || !password || !city || !phone) {
@@ -136,7 +147,6 @@ export default function AuthScreen() {
             setLoading(false);
         }
     };
-
     const handleLogin = async () => {
         if (!email || !password) {
             toast({
@@ -189,6 +199,17 @@ export default function AuthScreen() {
             setLoading(false);
         }
     };
+
+    // Si estamos verificando la autenticación, mostrar un indicador de carga
+    if (checkingAuth) {
+        return (
+            <View style={styles.container}>
+                <View style={styles.content}>
+                    <Spinner color="#1565C0" />
+                </View>
+            </View>
+        );
+    }
 
     return (
         <View style={styles.container}>
@@ -315,7 +336,6 @@ export default function AuthScreen() {
         </View>
     );
 }
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,
