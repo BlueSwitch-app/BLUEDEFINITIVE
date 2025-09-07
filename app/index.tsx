@@ -1,18 +1,139 @@
 import { Spinner } from '@/components/ui/spinner';
 import { Text } from '@/components/ui/text';
-import { useToast } from '@/components/ui/toast';
 import { View } from '@/components/ui/view';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { getTranslation } from '@/Translations/i18n';
 import { Link, useRouter } from 'expo-router';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
-import { Eye, EyeOff, Lock, Mail, MapPin, Phone, User } from 'lucide-react-native';
-import React, { useState, useEffect } from 'react';
-import { Linking, Pressable, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth';
+import { AlertCircle, CheckCircle, Eye, EyeOff, Lock, Mail, MapPin, Phone, User, XCircle } from 'lucide-react-native';
+import React, { useEffect, useState } from 'react';
+import { Animated, Easing, Linking, Pressable, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { auth2 } from './firebaseConfig';
 
 // API Base URL
 const API_BASE_URL = 'https://bluebackkk.vercel.app';
+
+// Custom Toast Component
+const CustomToast = ({ visible, message, type = 'success', onHide }: { 
+  visible: boolean; 
+  message: string; 
+  type?: 'success' | 'error' | 'warning';
+  onHide?: () => void;
+}) => {
+  const [opacity] = useState(new Animated.Value(0));
+  const [position] = useState(new Animated.Value(100));
+  
+  useEffect(() => {
+    if (visible) {
+      // Show animation
+      Animated.parallel([
+        Animated.timing(opacity, {
+          toValue: 1,
+          duration: 300,
+          useNativeDriver: true,
+        }),
+        Animated.timing(position, {
+          toValue: 0,
+          duration: 300,
+          easing: Easing.out(Easing.cubic),
+          useNativeDriver: true,
+        }),
+      ]).start();
+      
+      // Auto-hide after duration
+      const timer = setTimeout(() => {
+        hideToast();
+      }, 3000);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [visible]);
+  
+  const hideToast = () => {
+    Animated.parallel([
+      Animated.timing(opacity, {
+        toValue: 0,
+        duration: 300,
+        useNativeDriver: true,
+      }),
+      Animated.timing(position, {
+        toValue: 100,
+        duration: 300,
+        easing: Easing.in(Easing.cubic),
+        useNativeDriver: true,
+      }),
+    ]).start(() => {
+      if (onHide) onHide();
+    });
+  };
+  
+  if (!visible) return null;
+  
+  // Determine colors based on toast type
+  let bgColor = '#FFFFFF';
+  let textColor = '#1E40AF'; // Default blue
+  let progressColor = '#3B82F6'; // Default blue
+  let borderColor = '#3B82F6'; // Default blue
+  let iconColor = '#3B82F6'; // Default blue
+  
+  if (type === 'error') {
+    textColor = '#DC2626'; // Red for errors
+    progressColor = '#DC2626';
+    borderColor = '#FECACA';
+    iconColor = '#DC2626';
+  } else if (type === 'warning') {
+    textColor = '#D97706'; // Orange for warnings
+    progressColor = '#D97706';
+    borderColor = '#FEF3C7';
+    iconColor = '#D97706';
+  }
+  
+  // Select icon based on type
+  const renderIcon = () => {
+    if (type === 'error') {
+      return <XCircle size={20} color={iconColor} />;
+    } else if (type === 'warning') {
+      return <AlertCircle size={20} color={iconColor} />;
+    } else {
+      return <CheckCircle size={20} color={iconColor} />;
+    }
+  };
+  
+  return (
+    <Animated.View
+      style={[
+        styles.toastContainer,
+        {
+          opacity: opacity,
+          transform: [{ translateY: position }],
+          backgroundColor: bgColor,
+          borderColor: borderColor,
+        },
+      ]}
+    >
+      <View style={styles.toastContent}>
+        <View style={styles.toastIcon}>
+          {renderIcon()}
+        </View>
+        <Text style={[styles.toastMessage, { color: textColor }]}>{message}</Text>
+      </View>
+      <View style={styles.toastProgress}>
+        <Animated.View
+          style={[
+            styles.toastProgressBar,
+            { backgroundColor: progressColor },
+            {
+              width: opacity.interpolate({
+                inputRange: [0, 1],
+                outputRange: ['0%', '100%'],
+              }),
+            },
+          ]}
+        />
+      </View>
+    </Animated.View>
+  );
+};
 
 // Custom Input Component
 interface CustomInputProps {
@@ -66,8 +187,8 @@ const CustomInput: React.FC<CustomInputProps> = ({
         </View>
     );
 };
+
 export default function AuthScreen() {
-    const { toast } = useToast();
     const [tab, setTab] = useState<'login' | 'signup'>('login');
     const [nombre, setNombre] = useState('');
     const [email, setEmail] = useState('');
@@ -75,43 +196,44 @@ export default function AuthScreen() {
     const [city, setCity] = useState('');
     const [phone, setPhone] = useState('');
     const [loading, setLoading] = useState(false);
-    const [checkingAuth, setCheckingAuth] = useState(true); // Nuevo estado para verificar la autenticación
+    const [checkingAuth, setCheckingAuth] = useState(true);
+    const [toastVisible, setToastVisible] = useState(false);
+    const [toastMessage, setToastMessage] = useState('');
+    const [toastType, setToastType] = useState<'success' | 'error' | 'warning'>('success');
     const router = useRouter();
     const emailError = email && !email.includes('@') ? getTranslation('Please enter a valid email address') : '';
     const passwordError = password && password.length < 6 ? getTranslation('Password must be at least 6 characters') : '';
     const muted = useThemeColor({}, 'mutedForeground');
     const [showPassword, setShowPassword] = useState(false);
-
+    
+    // Toast function
+    const showToast = (message: string, type: 'success' | 'error' | 'warning' = 'success') => {
+      setToastMessage(message);
+      setToastType(type);
+      setToastVisible(true);
+    };
+    
     // Verificar si hay un usuario autenticado al cargar la pantalla
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth2, (user) => {
             if (user) {
-                // Si hay un usuario autenticado, redirigir a la pantalla principal
                 router.push({ pathname: '/home', params: { email: user.email } });
             }
-            setCheckingAuth(false); // Terminar la verificación
+            setCheckingAuth(false);
         });
-
-        return () => unsubscribe(); // Limpiar el suscriptor al desmontar el componente
+        return () => unsubscribe();
     }, []);
-
+    
     const handleSignup = async () => {
         if (!nombre || !email || !password || !city || !phone) {
-            toast({
-                title: getTranslation('Warning!'),
-                description: getTranslation('All fields must be filled.'),
-                variant: 'warning',
-                duration: 2000
-            });
+            showToast(getTranslation('All fields must be filled.'), 'warning');
             return;
         }
         
         setLoading(true);
         try {
-            // Create user in Firebase
             await createUserWithEmailAndPassword(auth2, email, password);
             
-            // Create user in backend
             const response = await fetch(`${API_BASE_URL}/create_user`, {
                 method: "POST",
                 headers: {
@@ -127,43 +249,26 @@ export default function AuthScreen() {
                 throw new Error(data.error || 'Failed to create user in backend');
             }
             
-            toast({
-                title: getTranslation('Success!'),
-                description: getTranslation('User created successfully.'),
-                variant: 'success',
-                duration: 2000
-            });
-            
+            showToast(getTranslation('User created successfully.'), 'success');
             router.push({ pathname: '/home', params: { email } });
         } catch (e: any) {
             console.error('Signup error:', e);
-            toast({
-                title: getTranslation('Error!'),
-                description: e.message || getTranslation('An error occurred during signup'),
-                variant: 'error',
-                duration: 2000
-            });
+            showToast(e.message || getTranslation('An error occurred during signup'), 'error');
         } finally {
             setLoading(false);
         }
     };
+    
     const handleLogin = async () => {
         if (!email || !password) {
-            toast({
-                title: getTranslation('Warning!'),
-                description: getTranslation('All fields must be filled.'),
-                variant: 'warning',
-                duration: 2000
-            });
+            showToast(getTranslation('All fields must be filled.'), 'warning');
             return;
         }
         
         setLoading(true);
         try {
-            // Sign in with Firebase
             await signInWithEmailAndPassword(auth2, email, password);
             
-            // Get user data from backend
             const response = await fetch(`${API_BASE_URL}/get_user`, {
                 method: "POST",
                 headers: {
@@ -179,28 +284,16 @@ export default function AuthScreen() {
                 throw new Error(data.error || 'Failed to get user data');
             }
             
-            toast({
-                title: getTranslation('Success!'),
-                description: getTranslation('Logged in successfully.'),
-                variant: 'success',
-                duration: 2000
-            });
-            
+            showToast(getTranslation('Logged in successfully.'), 'success');
             router.push({ pathname: '/home', params: { email } });
         } catch (e: any) {
             console.error('Login error:', e);
-            toast({
-                title: getTranslation('Error!'),
-                description: e.message || getTranslation('An error occurred during login'),
-                variant: 'error',
-                duration: 2000
-            });
+            showToast(e.message || getTranslation('An error occurred during login'), 'error');
         } finally {
             setLoading(false);
         }
     };
-
-    // Si estamos verificando la autenticación, mostrar un indicador de carga
+    
     if (checkingAuth) {
         return (
             <View style={styles.container}>
@@ -210,7 +303,7 @@ export default function AuthScreen() {
             </View>
         );
     }
-
+    
     return (
         <View style={styles.container}>
             <View style={styles.content}>
@@ -333,13 +426,22 @@ export default function AuthScreen() {
                     </View>
                 )}
             </View>
+            
+            {/* Custom Toast Component */}
+            <CustomToast
+                visible={toastVisible}
+                message={toastMessage}
+                type={toastType}
+                onHide={() => setToastVisible(false)}
+            />
         </View>
     );
 }
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#FFFFFF', // Fondo blanco obligatorio
+        backgroundColor: '#FFFFFF',
     },
     content: {
         flex: 1,
@@ -350,13 +452,13 @@ const styles = StyleSheet.create({
     logo: {
         fontSize: 36,
         fontWeight: '700',
-        color: '#1E40AF', // Azul oscuro (equivalente a East Bay base)
+        color: '#1E40AF',
         marginBottom: 8,
         letterSpacing: 1,
     },
     tagline: {
         fontSize: 16,
-        color: '#3B82F6', // Azul medio (equivalente a East Bay Dark Shade 02)
+        color: '#3B82F6',
         marginBottom: 40,
         textAlign: 'center',
     },
@@ -371,7 +473,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFFFFF',
         borderRadius: 24,
         padding: 32,
-        shadowColor: '#1E40AF', // Sombra azulada
+        shadowColor: '#1E40AF',
         shadowOffset: { width: 0, height: 10 },
         shadowOpacity: 0.1,
         shadowRadius: 15,
@@ -379,7 +481,7 @@ const styles = StyleSheet.create({
     },
     tabContainer: {
         flexDirection: 'row',
-        backgroundColor: '#DBEAFE', // Azul muy claro (equivalente a East Bay Dark Shade 01)
+        backgroundColor: '#DBEAFE',
         borderRadius: 16,
         marginBottom: 32,
         padding: 4,
@@ -391,22 +493,22 @@ const styles = StyleSheet.create({
         borderRadius: 12,
     },
     activeTab: {
-        backgroundColor: '#3B82F6', // Azul medio (equivalente a East Bay Light Shade 01)
+        backgroundColor: '#3B82F6',
     },
     tabText: {
-        color: '#1E40AF', // Azul oscuro para tabs inactivos
+        color: '#1E40AF',
         fontWeight: '600',
         fontSize: 16,
     },
     activeTabText: {
-        color: '#FFFFFF', // Blanco para tab activo (máximo contraste)
+        color: '#FFFFFF',
         fontWeight: '700',
     },
     formContainer: {
         width: '100%',
     },
     button: {
-        backgroundColor: '#2563EB', // Azul vibrante (equivalente a East Bay base)
+        backgroundColor: '#2563EB',
         paddingVertical: 16,
         borderRadius: 12,
         alignItems: 'center',
@@ -414,18 +516,18 @@ const styles = StyleSheet.create({
         marginBottom: 16,
     },
     buttonText: {
-        color: '#FFFFFF', // Texto blanco en botones
+        color: '#FFFFFF',
         fontWeight: '600',
         fontSize: 16,
     },
     terms: {
-        color: '#2563EB', // Azul vibrante para enlaces
+        color: '#2563EB',
         fontSize: 14,
         textAlign: 'center',
         textDecorationLine: 'underline',
     },
     forgotPasswordLink: {
-        color: '#2563EB', // Azul vibrante para enlaces
+        color: '#2563EB',
         fontSize: 14,
         textAlign: 'center',
         textDecorationLine: 'underline',
@@ -438,7 +540,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         borderWidth: 1,
-        borderColor: '#93C5FD', // Azul claro para bordes
+        borderColor: '#93C5FD',
         borderRadius: 16,
         paddingHorizontal: 20,
         height: 56,
@@ -451,20 +553,58 @@ const styles = StyleSheet.create({
     },
     inputIcon: {
         marginRight: 16,
-        tintColor: '#3B82F6', // Azul medio para iconos
     },
     input: {
         flex: 1,
         fontSize: 16,
-        color: '#1E40AF', // Azul oscuro para texto
+        color: '#1E40AF',
     },
     inputRight: {
         marginLeft: 16,
     },
     inputError: {
-        color: '#DC2626', // Rojo para errores (mantiene visibilidad)
+        color: '#DC2626',
         fontSize: 12,
         marginTop: 6,
         marginLeft: 4,
+    },
+    // Enhanced Toast styles
+    toastContainer: {
+        position: 'absolute',
+        bottom: 50,
+        left: 20,
+        right: 20,
+        borderRadius: 12,
+        borderWidth: 1,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.15,
+        shadowRadius: 8,
+        elevation: 5,
+        overflow: 'hidden',
+        padding: 16,
+        paddingBottom: 12,
+    },
+    toastContent: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 12,
+    },
+    toastIcon: {
+        marginRight: 12,
+    },
+    toastMessage: {
+        flex: 1,
+        fontSize: 16,
+        fontWeight: '500',
+    },
+    toastProgress: {
+        height: 4,
+        backgroundColor: '#E0E7FF',
+        borderRadius: 2,
+    },
+    toastProgressBar: {
+        height: '100%',
+        borderRadius: 2,
     },
 });
